@@ -9,7 +9,7 @@
         name="route-trans"
         mode="out-in"
       >
-        <router-view />
+        <router-view :key="$route.path"/>
       </transition>
     </div>
     <div class="state-stub" v-if="resizing">
