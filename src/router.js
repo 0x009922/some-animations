@@ -1,11 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import ViewFirst from './views/First'
+import ViewNEF from './views/NeverEndingFun'
 // import Home from './views/Home.vue'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
+    {
+      path: '/first',
+      component: ViewFirst
+    },
+    {
+      path: '/never-ending-fun',
+      component: ViewNEF
+    }
     // {
     //   path: '/',
     //   name: 'home',

@@ -5,52 +5,79 @@ Vue.use(Vuex)
 
 /* eslint-disable eqeqeq */
 
+function debouncer () {
+  let timer
+  return (func, delay) => {
+    if (timer) {
+      clearTimeout(timer)
+    }
+    timer = setTimeout(() => {
+      func()
+      timer = null
+    }, delay)
+  }
+}
+
+let someDebouncer = debouncer()
+
 export default new Vuex.Store({
   state: {
     viewport: null,
-    handlers: [],
+    loop: null,
     paused: false,
-    lastFrame: Date.now(),
-    elapsed: 0
+    processing: false,
+    resizing: false,
+    navigating: false
+  },
+  getters: {
+    loopPlaying: state => {
+      return (
+        !state.paused &&
+        !state.resizing &&
+        !state.navigating &&
+        typeof state.loop === 'function'
+      )
+    }
   },
   mutations: {
     setViewport (state, { width, height }) {
       state.viewport = { width, height }
       console.log('New viewport', width, height)
     },
-    setHandler (state, { key, handler }) {
-      let existing = state.handlers.find(x => x.key == key)
-      if (existing) {
-        existing.handler = handler
-      } else {
-        state.handlers.push({ key, handler })
-      }
+    resizing (state) {
+      state.resizing = true
     },
-    removeHandler (state, key) {
-      let index = state.handlers.findIndex(x => x.key == key)
-      if (index >= 0) {
-        state.handlers.splice(index, 1)
-      }
+    endResizing (state) {
+      state.resizing = false
+    },
+    setLoop (state, func) {
+      state.loop = func
+    },
+    removeLoop (state) {
+      state.loop = null
     },
     play (state) {
+      if (state.resizing) return
       state.paused = false
     },
     pause (state) {
+      if (state.resizing) return
       state.paused = true
     },
-    updateTimestumps (state) {
-      let now = Date.now()
-      state.elapsed = now - state.lastFrame
-      state.lastFrame = now
+    showNavigation (state) {
+      state.navigating = true
+    },
+    hideNavigation (state) {
+      state.navigating = false
     }
   },
   actions: {
-    loop ({ commit, dispatch, state }) {
-      commit('updateTimestumps')
-      if (!state.paused) {
-        state.handlers.forEach(x => x.handler())
-      }
-      window.requestAnimationFrame(() => dispatch('loop'))
+    resized ({ commit }, { width, height }) {
+      commit('resizing')
+      someDebouncer(() => {
+        commit('setViewport', { width, height })
+        commit('endResizing')
+      }, 800)
     }
   },
   strict: process.env.NODE_ENV !== 'production'
