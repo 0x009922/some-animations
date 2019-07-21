@@ -11,6 +11,7 @@ import ViewBox from './components/TheViewBox'
 import { mapGetters, mapState } from 'vuex'
 
 let lastFrame = window.performance.now()
+let elapsed = 0
 
 export default {
   name: 'App',
@@ -46,13 +47,14 @@ export default {
     },
     work () {
       let now = window.performance.now()
-      let elapsed = now - lastFrame
 
       const { paused, loop } = this.$store.state
 
       try {
         if (this.loopPlaying) {
-          loop(elapsed, lastFrame)
+          let delta = now - lastFrame
+          elapsed += delta
+          loop(delta, elapsed)
         }
       } catch (e) {
         console.error('Error in loop:', e)
