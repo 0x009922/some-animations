@@ -75,7 +75,6 @@ export default {
 <style lang="sass">
 @import './assets/sass/style'
 #app
-  font-family: sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   width: 100vw
