@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Animation from '../animations/first'
+import Animation from '../animations/three/first'
 import { mapState } from 'vuex'
 
 export default {
@@ -39,6 +39,7 @@ export default {
 
   beforeDestroy () {
     this.$store.commit('removeLoop')
+    this.animation.destroy()
   }
 }
 </script>

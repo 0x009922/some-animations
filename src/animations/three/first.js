@@ -41,6 +41,9 @@ export default class Animation {
     this.camera.updateProjectionMatrix()
     this.render()
   }
+  destroy () {
+    this.renderer.dispose()
+  }
   render () {
     this.renderer.render(this.scene, this.camera)
   }
