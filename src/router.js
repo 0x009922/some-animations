@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import ViewFirst from './views/First'
+// import ViewFirst from './views/First'
 import ViewNEF from './views/NeverEndingFun'
+import SimpleThree from './views/SimpleThree'
 // import Home from './views/Home.vue'
+import ThreeFirst from './animations/three/first'
+import ThreeHexagon from './animations/three/hexagon-experiment'
+import ThreeSpace from './animations/three/space'
 
 Vue.use(Router)
 
@@ -10,24 +14,28 @@ export default new Router({
   routes: [
     {
       path: '/first',
-      component: ViewFirst
+      component: SimpleThree,
+      props: {
+        animationClass: ThreeFirst
+      }
+    },
+    {
+      path: '/hexagon-experiment',
+      component: SimpleThree,
+      props: {
+        animationClass: ThreeHexagon
+      }
+    },
+    {
+      path: '/space',
+      component: SimpleThree,
+      props: {
+        animationClass: ThreeSpace
+      }
     },
     {
       path: '/never-ending-fun',
       component: ViewNEF
     }
-    // {
-    //   path: '/',
-    //   name: 'home',
-    //   component: Home
-    // },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    // }
   ]
 })

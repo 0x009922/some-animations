@@ -9,11 +9,16 @@
 </template>
 
 <script>
-import Animation from '../animations/three/first'
 import { mapState } from 'vuex'
 
 export default {
   name: 'First',
+
+  props: {
+    animationClass: {
+      required: true
+    }
+  },
 
   data () {
     return {
@@ -32,7 +37,7 @@ export default {
   },
 
   mounted () {
-    this.animation = new Animation(this.$refs.target)
+    this.animation = new this.animationClass(this.$refs.target)
     this.animation.setSize(this.viewport)
     this.$store.commit('setLoop', this.animation.animate.bind(this.animation))
   },

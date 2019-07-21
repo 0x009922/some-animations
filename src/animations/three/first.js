@@ -1,7 +1,9 @@
 import * as THREE from 'three'
+import { Animation } from './Animation'
 
-export default class Animation {
+export default class extends Animation {
   constructor (target) {
+    super()
     let scene = new THREE.Scene()
     let camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
 
@@ -34,17 +36,5 @@ export default class Animation {
     this.cube.rotation.x += 0.01
     this.cube.rotation.y += 0.02
     this.render()
-  }
-  setSize ({ width, height }) {
-    this.renderer.setSize(width, height)
-    this.camera.aspect = width / height
-    this.camera.updateProjectionMatrix()
-    this.render()
-  }
-  destroy () {
-    this.renderer.dispose()
-  }
-  render () {
-    this.renderer.render(this.scene, this.camera)
   }
 }

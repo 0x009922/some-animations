@@ -8,20 +8,12 @@ export default {
           path: '/first'
         },
         {
-          title: 'First',
-          path: '/first'
+          title: 'Hexagon Experiment',
+          path: '/hexagon-experiment'
         },
         {
-          title: 'First',
-          path: '/first'
-        },
-        {
-          title: 'First',
-          path: '/first'
-        },
-        {
-          title: 'First',
-          path: '/first'
+          title: 'Space',
+          path: '/space'
         }
       ]
     },
