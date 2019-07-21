@@ -1,20 +1,26 @@
 <template>
-  <transition
+  <!-- <transition
     appear
     @before-appear="before"
     @appear="appear"
-  >
+  > -->
     <div
       class="tile"
+      @click="navigate"
     >
-      <slot>Tile ._.</slot>
+      {{ title }}
     </div>
-  </transition>
+  <!-- </transition> -->
 </template>
 
 <script>
 export default {
   name: 'Tile',
+
+  props: {
+    title: String,
+    path: String
+  },
 
   data () {
     return {
@@ -27,27 +33,9 @@ export default {
 
   // }
   methods: {
-    before (el) {
-      el.style.opacity = 0
-      el.style.transform = 'translateZ(50px)'
-      // el.style.background = 'tomato'
-      el.style.transition = `all ${this.duration}s ease`
-      console.log('before')
-    },
-    appear (el, done) {
-      setTimeout(() => {
-        console.log('set')
-        el.style.opacity = 1
-        el.style.transform = ''
-        // el.style.background = 'blue'
-      }, this.delay * 1000)
-      setTimeout(() => {
-        console.log('done')
-        done()
-      }, (this.delay + this.duration) * 1000 )
-    },
-    after (el) {
-      console.log('after')
+    navigate () {
+      this.$store.commit('hideNavigation')
+      this.$router.push(this.path)
     }
   }
 }
@@ -55,12 +43,18 @@ export default {
 
 <style lang="sass" scoped>
 .tile
-  // transition-duration: .5s
-  // transition-property: all
-  // transition-timing-function: ease
-  background: green
-  border: 2px dashed white
-  // opacity: 0
+  cursor: pointer
+  width: 250px
+  height: 150px
+  background: #BCCCE0
+  color: #3B3561
+  font-size: 1.5em
+  transition: all .27s ease
+  padding: 20px
+  opacity: 0.5
+  &:hover
+    opacity: 1
+    transform: translateZ(30px)
 
 // .tile-appear-to
 //   opacity: 1
