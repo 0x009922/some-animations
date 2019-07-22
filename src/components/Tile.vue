@@ -1,29 +1,24 @@
-<template>
-  <div
-    class="tile"
-    @click="navigate"
-    v-text="name"
-  />
-</template>
-
 <script>
 export default {
   name: 'Tile',
+  functional: true,
   props: {
     name: String,
     path: String
   },
-  data () {
-    return {
-      duration: 0.6,
-      delay: 0.2 + Math.random() * 0.3
-    }
-  },
-  methods: {
-    navigate () {
-      this.$store.commit('hideNavigation')
-      this.$router.push(this.path)
-    }
+  render (h, ctx) {
+    let { name, path } = ctx.props
+    let { $store, $router } = ctx.parent
+
+    return h('div', {
+      class: 'tile',
+      on: {
+        click () {
+          $store.commit('hideNavigation')
+          $router.push(path)
+        }
+      }
+    }, name)
   }
 }
 </script>
