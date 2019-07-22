@@ -15,7 +15,7 @@ export default {
   name: 'First',
 
   props: {
-    animationClass: {
+    AnimationClass: {
       required: true
     }
   },
@@ -37,7 +37,7 @@ export default {
   },
 
   mounted () {
-    this.animation = new this.animationClass(this.$refs.target)
+    this.animation = new this.AnimationClass(this.$refs.target)
     this.animation.setSize(this.viewport)
     this.$store.commit('setLoop', this.animation.animate.bind(this.animation))
   },

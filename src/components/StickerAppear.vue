@@ -36,4 +36,3 @@ export default {
   transform: translateZ(50px) rotateX(15deg)
   opacity: 0
 </style>
-

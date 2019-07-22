@@ -73,5 +73,5 @@ export default {
   opacity: 0.3
   // clip-path: circle(0% at 50% 50%)
   clip-path: polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%)
-  transform: translateZ(-50px)  
+  transform: translateZ(-50px)
 </style>

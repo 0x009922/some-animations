@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import IconButton from './IconButton'
 import Controls from './NavigationControls'
 import Tile from './Tile'
 import StickerAppear from './StickerAppear'
@@ -75,7 +74,6 @@ export default {
   },
 
   components: {
-    IconButton,
     Tile,
     StickerAppear,
     Controls

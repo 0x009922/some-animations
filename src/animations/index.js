@@ -13,7 +13,7 @@ export default {
       path: '/triangles-and-floor',
       component: CompThreeSimple,
       props: {
-        animationClass: ThreeTriangles
+        AnimationClass: ThreeTriangles
       }
     },
     {
@@ -21,7 +21,7 @@ export default {
       path: '/space',
       component: CompThreeSimple,
       props: {
-        animationClass: ThreeSpace
+        AnimationClass: ThreeSpace
       }
     },
     {
@@ -29,7 +29,7 @@ export default {
       path: '/hexagon-experiment',
       component: CompThreeSimple,
       props: {
-        animationClass: ThreeHexagon
+        AnimationClass: ThreeHexagon
       }
     },
     {
@@ -37,7 +37,7 @@ export default {
       path: '/first',
       component: CompThreeSimple,
       props: {
-        animationClass: ThreeFirst
+        AnimationClass: ThreeFirst
       }
     }
   ],
