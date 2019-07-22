@@ -5,7 +5,7 @@
     <transition name="view-fade">
       <div class="view" v-if="navigating">
         <div class="layout">
-          <template v-for="({ name, tiles }, i) in tileGroups">
+          <template v-for="({ name, tiles }, i) in groups">
             <h2
               :key="i + 'n'"
               class="group-name"
@@ -34,8 +34,7 @@ import IconButton from './IconButton'
 import Controls from './NavigationControls'
 import Tile from './Tile'
 import StickerAppear from './StickerAppear'
-
-import tilesData from '../animations/tiles-compilation'
+import animations from '../animations'
 import { mapState, mapMutations } from 'vuex'
 
 export default {
@@ -43,13 +42,25 @@ export default {
 
   data () {
     return {
-      tileGroups: tilesData.groups,
       flag: false
     }
   },
 
   computed: {
-    ...mapState(['paused', 'navigating'])
+    ...mapState(['paused', 'navigating']),
+
+    groups () {
+      return [
+        {
+          name: 'Three',
+          tiles: animations.three
+        },
+        {
+          name: 'Canvas',
+          tiles: animations.canvas
+        }
+      ]
+    }
   },
 
   methods: {

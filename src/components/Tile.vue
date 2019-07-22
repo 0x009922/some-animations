@@ -1,37 +1,24 @@
 <template>
-  <!-- <transition
-    appear
-    @before-appear="before"
-    @appear="appear"
-  > -->
-    <div
-      class="tile"
-      @click="navigate"
-    >
-      {{ title }}
-    </div>
-  <!-- </transition> -->
+  <div
+    class="tile"
+    @click="navigate"
+    v-text="name"
+  />
 </template>
 
 <script>
 export default {
   name: 'Tile',
-
   props: {
-    title: String,
+    name: String,
     path: String
   },
-
   data () {
     return {
       duration: 0.6,
       delay: 0.2 + Math.random() * 0.3
     }
   },
-  // functional: true,
-  // render (h, context) {
-
-  // }
   methods: {
     navigate () {
       this.$store.commit('hideNavigation')
@@ -55,11 +42,4 @@ export default {
   &:hover
     opacity: 1
     transform: translateZ(30px)
-
-// .tile-appear-to
-//   opacity: 1
-
-// .tile-appear
-//   // transition: all .5s ease
-//   opacity: 0
 </style>

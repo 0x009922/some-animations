@@ -5,7 +5,7 @@
       v-if="showPause"
       :icon="{ name: 'pause', scale: 1.3 }"
       class="pause"
-      :class="{ paused }"
+      :class="{ active: paused }"
       @click="paused ? play() : pause()"
     />
     <IconButton
@@ -115,7 +115,7 @@ export default {
     grid-row: 1
     &:hover
       animation: none
-    &.paused
+    &.active
       // opacity: 1
       color: black
       background: white
