@@ -7,6 +7,7 @@ import SimpleThree from './views/SimpleThree'
 import ThreeFirst from './animations/three/first'
 import ThreeHexagon from './animations/three/hexagon-experiment'
 import ThreeSpace from './animations/three/space'
+import ThreeTrianglesAndFloor from './animations/three/triangles-n-floor'
 
 Vue.use(Router)
 
@@ -31,6 +32,13 @@ export default new Router({
       component: SimpleThree,
       props: {
         animationClass: ThreeSpace
+      }
+    },
+    {
+      path: '/triangles-and-floor',
+      component: SimpleThree,
+      props: {
+        animationClass: ThreeTrianglesAndFloor
       }
     },
     {

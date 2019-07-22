@@ -4,16 +4,20 @@ export default {
       name: 'Three',
       tiles: [
         {
-          title: 'First',
-          path: '/first'
+          title: 'Triangles and Floor',
+          path: '/triangles-and-floor'
+        },
+        {
+          title: 'Space',
+          path: '/space'
         },
         {
           title: 'Hexagon Experiment',
           path: '/hexagon-experiment'
         },
         {
-          title: 'Space',
-          path: '/space'
+          title: 'First',
+          path: '/first'
         }
       ]
     },
