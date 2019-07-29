@@ -39,10 +39,11 @@ export default {
 
 .view-box
   height: 100vh
+  position: relative
   overflow: hidden
-  transition: filter .5s ease
-  &.blured
-    filter: blur(13px)
+  // transition: filter .5s ease
+  // &.blured
+  //   filter: blur(13px)
   .view
     perspective: 1000px
     height: 100%
@@ -68,10 +69,12 @@ export default {
   opacity: 0
 .route-trans-leave
   // clip-path: circle(150% at 50% 50%)
+  filter: grayscale(0%)
   clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)
 .route-trans-leave-to
-  opacity: 0.3
+  // opacity: 0.3
   // clip-path: circle(0% at 50% 50%)
+  filter: grayscale(100%)
   clip-path: polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%)
   transform: translateZ(-50px)
 </style>
