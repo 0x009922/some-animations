@@ -7,7 +7,7 @@
 
 <script>
 import Navigation from './components/Navigation'
-import ViewBox from './components/TheViewBox'
+import ViewBox from './components/ViewBox'
 import { mapGetters, mapState } from 'vuex'
 
 let lastFrame = window.performance.now()

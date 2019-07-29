@@ -1,5 +1,5 @@
 <template>
-  <div class="navigation">
+  <div class="navigation" v-spray>
     <Controls />
 
     <transition name="view-fade">
@@ -35,19 +35,17 @@ import Tile from './Tile'
 import StickerAppear from './StickerAppear'
 import animations from '../animations'
 import { mapState, mapMutations } from 'vuex'
+import spray from '@/directives/spray'
 
 export default {
   name: 'Navigation',
-
   data () {
     return {
       flag: false
     }
   },
-
   computed: {
     ...mapState(['paused', 'navigating']),
-
     groups () {
       return [
         {
@@ -61,7 +59,6 @@ export default {
       ]
     }
   },
-
   methods: {
     ...mapMutations(['play', 'pause']),
     ...mapMutations({
@@ -72,11 +69,13 @@ export default {
       console.log('test')
     }
   },
-
   components: {
     Tile,
     StickerAppear,
     Controls
+  },
+  directives: {
+    spray
   }
 }
 </script>
@@ -94,10 +93,11 @@ export default {
     @include stretch
     z-index: 1
     padding: 50px 20px
-    perspective: 1000px
+    perspective: 2000px
     overflow-x: hidden
     overflow: auto
-    color: #3E92CC
+    background: $nav-back
+    color: $nav-fore
     // border: 2px dashed white
     &::-webkit-scrollbar
       width: 0

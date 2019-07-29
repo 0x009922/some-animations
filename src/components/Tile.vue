@@ -24,17 +24,18 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+@import '../assets/sass/style'
+
 .tile
   cursor: pointer
   width: 250px
   height: 150px
-  background: #BCCCE0
-  color: #3B3561
+  background: fade-out($nav-tile, 0.5)
+  color: $nav-tile-fore
   font-size: 1.5em
   transition: all .27s ease
   padding: 20px
-  opacity: 0.5
   &:hover
-    opacity: 1
+    background: $nav-tile
     transform: translateZ(30px)
 </style>
