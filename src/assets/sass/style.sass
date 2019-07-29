@@ -1,5 +1,6 @@
 @import 'mixins'
-  
+@import 'const'
+
 @font-face
   font-family: 'Monofur'
   src: url('/assets/monofur.ttf') format('ttf')
@@ -10,3 +11,29 @@ body
   margin: 0
   font-family: sans-serif
   background: black
+  overflow: hidden
+  
+.spray-dash
+  position: absolute
+  width: 6px
+  height: 2px
+  border-radius: 2px
+  background: #2A9D8F
+  z-index: 5
+  pointer-events: none
+  $dur: .4s
+  $func: cubic-bezier(.14,.69,.36,.97)
+  transition: all $dur $func
+  animation-timing-function: $func
+  animation-duration: $dur + .05s
+
+@keyframes spray-animation
+  from
+    opacity: 0
+  30%
+    opacity: 1
+  70%
+    opacity: 1
+  to
+    opacity: 0
+
