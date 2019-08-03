@@ -1,5 +1,6 @@
 import * as THREE from 'three'
-import { Animation, tween } from './Animation'
+import { Animation } from './Animation'
+import { tween } from '../tools'
 
 const _count = 1000
 const _speed = [5, 10]
