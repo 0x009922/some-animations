@@ -1,7 +1,6 @@
 let leashes = new Map()
 let keys = keyGen()
 let nextKey = () => keys.next().value
-const count = 15
 
 function * keyGen () {
   let i = 0
@@ -19,7 +18,7 @@ class Dash {
     this.cx = cx
     this.cy = cy
     this.angle = angle
-    this.distance = 18 + Math.random() * 4
+    this.distance = 8 + Math.random() * 4
     this.el = document.createElement('div')
     this.el.className = 'spray-dash'
 
@@ -36,7 +35,7 @@ class Dash {
     this.el.style.transform = `rotate(${this.angle}rad)`
   }
   move () {
-    this.distance += 10
+    this.distance += 10 + Math.random() * 25
     this.takePos()
     // this.el.style.animationName = 'spray-animation'
   }
