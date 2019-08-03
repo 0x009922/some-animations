@@ -1,8 +1,16 @@
 export function tween (...args) {
+  let n, start, end
   if (args.length === 2) {
-    let [[start, end], n] = args
-    return n * (end - start) + start
+    start = args[0][0]
+    end = args[0][1]
+    n = args[1]
   }
+  if (args.length === 3) {
+    start = args[0]
+    end = args[1]
+    n = args[2]
+  }
+  return n * (end - start) + start
 }
 
 export function rgb (...args) {

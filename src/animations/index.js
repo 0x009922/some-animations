@@ -3,7 +3,12 @@ import ThreeHexagon from './three/hexagon-experiment'
 import ThreeSpace from './three/space'
 import ThreeTriangles from './three/triangles-n-floor'
 
+import CanvasGalaxyV2 from './canvas/galaxy-v2'
+
 import CompNEF from '../views/NeverEndingFun'
+import CompSticks from '../views/Sticks'
+import CompGalaxyV2 from '../views/GalaxyV2'
+
 import CompThreeSimple from '../views/SimpleThree'
 
 export default {
@@ -41,7 +46,20 @@ export default {
       }
     }
   ],
-  canvas: [
+  other: [
+    {
+      name: 'Galaxy v2',
+      path: '/galaxy-v2',
+      component: CompGalaxyV2,
+      props: {
+        SceneClass: CanvasGalaxyV2
+      }
+    },
+    {
+      name: 'Sticks',
+      path: '/sticks',
+      component: CompSticks
+    },
     {
       name: 'Never ending fun',
       path: '/never-ending-fun',

@@ -30,12 +30,12 @@ export default {
   cursor: pointer
   width: 250px
   height: 150px
-  background: fade-out($nav-tile, 0.5)
-  color: $nav-tile-fore
+  background: fade-out($tile-back, 0.5)
+  color: $tile-fore
   font-size: 1.5em
   transition: all .27s ease
   padding: 20px
   &:hover
-    background: $nav-tile
+    background: $tile-back
     transform: translateZ(30px)
 </style>

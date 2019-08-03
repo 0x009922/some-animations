@@ -1,9 +1,9 @@
 <template>
-  <div class="navigation" v-spray>
+  <div class="navigation">
     <Controls />
 
     <transition name="view-fade">
-      <div class="view" v-if="navigating">
+      <div class="view" v-if="navigating" v-spray>
         <div class="layout">
           <template v-for="({ name, tiles }, i) in groups">
             <h2
@@ -53,8 +53,8 @@ export default {
           tiles: animations.three
         },
         {
-          name: 'Canvas',
-          tiles: animations.canvas
+          name: 'Other',
+          tiles: animations.other
         }
       ]
     }
@@ -96,8 +96,8 @@ export default {
     perspective: 2000px
     overflow-x: hidden
     overflow: auto
-    background: $nav-back
-    color: $nav-fore
+    background: $back
+    color: $fore
     // border: 2px dashed white
     &::-webkit-scrollbar
       width: 0
