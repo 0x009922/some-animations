@@ -47,21 +47,21 @@ export default {
     },
     work () {
       let now = window.performance.now()
-
-      const { paused, loop } = this.$store.state
-
-      try {
-        if (this.loopPlaying) {
-          let delta = now - lastFrame
-          elapsed += delta
-          loop(delta, elapsed)
-        }
-      } catch (e) {
-        console.error('Error in loop:', e)
-        this.$store.commit('pause')
-      }
-
+      let delta = now - lastFrame
       lastFrame = now
+
+      if (delta < 300) {
+        const { paused, loop } = this.$store.state
+        try {
+          if (this.loopPlaying) {
+            elapsed += delta
+            loop(delta, elapsed)
+          }
+        } catch (e) {
+          console.error('Error in loop:', e)
+          this.$store.commit('pause')
+        }
+      }
 
       window.requestAnimationFrame(() => this.work())
     }
