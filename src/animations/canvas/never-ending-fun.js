@@ -135,6 +135,7 @@ function wordPositions (word, x0, y0) {
       })
     })
     x += longestLength + 2
+    if (char === 'V') x -= 1
   })
   return positions
 }
