@@ -3,6 +3,7 @@ import ThreeHexagon from './three/hexagon-experiment'
 import ThreeSpace from './three/space'
 import ThreeTriangles from './three/triangles-n-floor'
 import ThreeGalaxy from './three/galaxy'
+import ThreeSticksScene from './three/sticks-scene'
 
 import CanvasGalaxyV2 from './canvas/galaxy-v2'
 
@@ -14,6 +15,14 @@ import CompThreeSimple from '../views/SimpleThree'
 
 export default {
   three: [
+    {
+      name: 'Sticks scene',
+      path: '/sticks-scene',
+      component: CompThreeSimple,
+      props: {
+        AnimationClass: ThreeSticksScene
+      }
+    },
     {
       name: 'Galaxy',
       path: '/three-galaxy',
