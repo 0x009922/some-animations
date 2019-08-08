@@ -4,6 +4,7 @@ import ThreeSpace from './three/space'
 import ThreeTriangles from './three/triangles-n-floor'
 import ThreeGalaxy from './three/galaxy'
 import ThreeSticksScene from './three/sticks-scene'
+import ThreeSticksHole from './three/sticks-hole'
 
 import CanvasGalaxyV2 from './canvas/galaxy-v2'
 
@@ -15,6 +16,14 @@ import CompThreeSimple from '../views/SimpleThree'
 
 export default {
   three: [
+    {
+      name: 'Sticks hole',
+      path: '/sticks-hole',
+      component: CompThreeSimple,
+      props: {
+        AnimationClass: ThreeSticksHole
+      }
+    },
     {
       name: 'Sticks scene',
       path: '/sticks-scene',
