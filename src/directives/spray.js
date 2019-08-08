@@ -22,6 +22,7 @@ class Dash {
     this.el = document.createElement('div')
     this.el.className = 'spray-dash'
 
+    this.el.style.width = ~~(Math.random() * 10) + 3 + 'px'
     this.el.style.animationName = 'spray-animation'
 
     this.takePos()
@@ -35,7 +36,7 @@ class Dash {
     this.el.style.transform = `rotate(${this.angle}rad)`
   }
   move () {
-    this.distance += 10 + Math.random() * 25
+    this.distance += 10 + Math.random() * 10
     this.takePos()
     // this.el.style.animationName = 'spray-animation'
   }
