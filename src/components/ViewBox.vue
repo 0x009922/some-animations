@@ -45,7 +45,7 @@ export default {
   // &.blured
   //   filter: blur(13px)
   .view
-    perspective: 1000px
+    perspective: 2000px
     height: 100%
 .state-stub
   @include stretch
@@ -62,19 +62,19 @@ export default {
     padding: 10px
     line-height: 1em
 .route-trans-enter-active
-  transition: all .6s .5s ease
+  transition: all .6s ease
 .route-trans-leave-active
-  transition: all 1s ease
+  transition: all .5s ease
 .route-trans-enter
   opacity: 0
 .route-trans-leave
   // clip-path: circle(150% at 50% 50%)
-  filter: grayscale(0%)
-  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)
+  opacity: 1
+  // clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)
 .route-trans-leave-to
   // opacity: 0.3
   // clip-path: circle(0% at 50% 50%)
-  filter: grayscale(100%)
-  clip-path: polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%)
-  transform: translateZ(-50px)
+  opacity: 0
+  // clip-path: polygon(0% 50%, 100% 50%, 100% 50%, 0% 50%)
+  transform: translateZ(-100px)
 </style>
