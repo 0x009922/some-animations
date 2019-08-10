@@ -86,7 +86,7 @@ export default {
   //     opacity: 1
   button
     transition: all .25s ease
-    background: transparent
+    // background: transparent
     color: white
     display: flex
     align-items: center
@@ -95,7 +95,7 @@ export default {
     width: 55px
     height: 55px
     padding: 0
-    // background: blue
+    background: fade-out(gray, 0.9)
     border-radius: 50%
     cursor: pointer
     &:focus
@@ -104,7 +104,7 @@ export default {
       opacity: 0.4
       pointer-events: none
     &:hover
-      background: fade-out(white, 0.8)
+      background: fade-out(gray, 0.8)
   button + button
     margin-left: 10px
   .buffer
