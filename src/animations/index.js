@@ -6,11 +6,10 @@ import ThreeGalaxy from './three/galaxy'
 import ThreeSticksScene from './three/sticks-scene'
 import ThreeSticksHole from './three/sticks-hole'
 
-import CanvasGalaxyV2 from './canvas/galaxy-v2'
-
 import CompNEF from '../views/NeverEndingFun'
 import CompSticks from '../views/Sticks'
 import CompGalaxyV2 from '../views/GalaxyV2'
+import CompFade from '../views/Fade'
 
 import CompThreeSimple from '../views/SimpleThree'
 
@@ -75,12 +74,14 @@ export default {
   ],
   other: [
     {
+      name: 'Fade',
+      path: '/fade',
+      component: CompFade
+    },
+    {
       name: 'Galaxy v2',
       path: '/galaxy-v2',
-      component: CompGalaxyV2,
-      props: {
-        SceneClass: CanvasGalaxyV2
-      }
+      component: CompGalaxyV2
     },
     {
       name: 'Sticks',
