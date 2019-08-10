@@ -11,6 +11,8 @@
 <script>
 import { mapState } from 'vuex'
 
+let animation = null
+
 export default {
   name: 'First',
   props: {
@@ -18,27 +20,22 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      animation: null
-    }
-  },
   computed: {
     ...mapState(['viewport'])
   },
   watch: {
     viewport (value) {
-      this.animation.setSize(value)
+      animation.setSize(value)
     }
   },
   mounted () {
-    this.animation = new this.AnimationClass(this.$refs.target)
-    this.animation.setSize(this.viewport)
-    this.$store.commit('setLoop', this.animation.animate.bind(this.animation))
+    animation = new this.AnimationClass(this.$refs.target)
+    animation.setSize(this.viewport)
+    this.$store.commit('setLoop', animation.animate.bind(animation))
   },
   beforeDestroy () {
     this.$store.commit('removeLoop')
-    this.animation.destroy()
+    animation.destroy()
   }
 }
 </script>

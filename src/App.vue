@@ -13,30 +13,55 @@ import { mapGetters, mapState } from 'vuex'
 let lastFrame = window.performance.now()
 let elapsed = 0
 
+let opts = {
+  paused: false,
+  loop: null,
+  loopPlaying: false,
+  errorCallback: null
+}
+
+window.requestAnimationFrame(() => work())
+
+function work () {
+  let now = window.performance.now()
+  let delta = now - lastFrame
+  lastFrame = now
+
+  if (delta < 300) {
+    const { paused, loop, loopPlaying } = opts
+    try {
+      if (loopPlaying) {
+        elapsed += delta
+        // console.time('loop')
+        loop(delta, elapsed)
+        // console.timeEnd('loop')
+      }
+    } catch (e) {
+      console.error('Error in loop:', e)
+      if (opts.errorCallback)
+        opts.errorCallback()
+    }
+  }
+  window.requestAnimationFrame(() => work())
+}
+
 export default {
   name: 'App',
-
-  data () {
-    return {
-      // worker: new Worker()
-    }
-  },
-
-  created () {
-    window.addEventListener('resize', e => this.resized(e))
-    window.requestAnimationFrame(() => this.work())
-
-    this.$store.commit('setViewport', {
-      width: window.innerWidth,
-      height: window.innerHeight
-    })
-  },
-
   computed: {
     ...mapGetters(['loopPlaying']),
-    ...mapState(['navigating'])
+    ...mapState(['navigating', 'paused', 'loop'])
   },
-
+  watch: {
+    loopPlaying () {
+      this.setOpts()
+    },
+    paused () {
+      this.setOpts()
+    },
+    loop () {
+      this.setOpts()
+    }
+  },
   methods: {
     resized (e) {
       // window.innerWidth
@@ -45,28 +70,22 @@ export default {
         height: window.innerHeight
       })
     },
-    work () {
-      let now = window.performance.now()
-      let delta = now - lastFrame
-      lastFrame = now
-
-      if (delta < 300) {
-        const { paused, loop } = this.$store.state
-        try {
-          if (this.loopPlaying) {
-            elapsed += delta
-            loop(delta, elapsed)
-          }
-        } catch (e) {
-          console.error('Error in loop:', e)
-          this.$store.commit('pause')
-        }
+    setOpts () {
+      let { loopPlaying, paused, loop } = this
+      opts = { loopPlaying, paused, loop }
+      opts.errorCallback = () => {
+        this.$store.commit('pause')
       }
-
-      window.requestAnimationFrame(() => this.work())
     }
   },
-
+  created () {
+    window.addEventListener('resize', e => this.resized(e))
+    this.$store.commit('setViewport', {
+      width: window.innerWidth,
+      height: window.innerHeight
+    })
+    this.setOpts()
+  },
   components: {
     Navigation,
     ViewBox
