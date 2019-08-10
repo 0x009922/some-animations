@@ -14,8 +14,10 @@ export default {
       class: 'tile',
       on: {
         click () {
-          $store.commit('hideNavigation')
-          $router.push(path)
+          setTimeout(() => {
+            $store.commit('hideNavigation')
+            $router.push(path)
+          }, 30)
         }
       }
     }, name)
