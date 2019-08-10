@@ -15,12 +15,11 @@
 </template>
 
 <script>
+import Scene from '../animations/canvas/galaxy-v2'
+
 export default {
   name: 'SimpleCanvasScene',
   props: {
-    SceneClass: {
-      required: true
-    },
     width: {
       default: 1000
     },
@@ -40,7 +39,7 @@ export default {
     }
   },
   mounted () {
-    this.scene = new this.SceneClass(this.$refs.target)
+    this.scene = new Scene(this.$refs.target)
     this.$store.commit('setLoop', this.scene.render.bind(this.scene))
   },
   beforeDestroy () {
