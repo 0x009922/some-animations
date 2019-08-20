@@ -6,6 +6,7 @@ import ThreeGalaxy from './three/galaxy'
 import ThreeSticksScene from './three/sticks-scene'
 import ThreeSticksHole from './three/sticks-hole'
 import ThreeRedRoom from './three/red-room'
+import ThreeGeodesicDome from './three/geodesic-dome'
 
 import CompNEF from '../views/NeverEndingFun'
 import CompSticks from '../views/Sticks'
@@ -16,6 +17,14 @@ import CompThreeSimple from '../views/SimpleThree'
 
 export default {
   three: [
+    {
+      name: 'Geodesic dome',
+      path: '/geodesic-dome',
+      component: CompThreeSimple,
+      props: {
+        AnimationClass: ThreeGeodesicDome
+      }
+    },
     {
       name: 'Red room',
       path: '/red-room',

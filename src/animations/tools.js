@@ -20,5 +20,41 @@ export function rgb (...args) {
   if (args.length === 3) {
     return `rgb(${args.join(',')})`
   }
-  return null
+  throw new TypeError('Invalid arguments:', args)
+}
+
+export function sum (...args) {
+  // if (Array.isArray(args[0])) {
+  //   return args[0].reduce((sum, v) => sum + v, 0)
+  // }
+  if ('length' in args[0]) {
+    let result = 0
+    for (let i = 0; i < args[0].length; i++) {
+      result += args[0][i]
+    }
+    return result
+  }
+  return args.reduce((sum, v) => sum + v, 0)
+}
+
+export function random (...params) {
+  if (!params.length) return Math.random()
+  let start = 0
+  let end = 1
+  if (params.length === 1) {
+    end = params[0]
+  }
+  if (params.length === 2) {
+    start = params[0]
+    end = params[1]
+  }
+  return (end - start) * Math.random() + start
+}
+
+export function rgbByHex (hex) {
+  return {
+    r: hex >> 16,
+    g: (hex & 0xff00) >> 8,
+    b: hex & 0xff
+  }
 }
