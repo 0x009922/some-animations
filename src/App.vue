@@ -38,8 +38,7 @@ function work () {
       }
     } catch (e) {
       console.error('Error in loop:', e)
-      if (opts.errorCallback)
-        opts.errorCallback()
+      if (opts.errorCallback) { opts.errorCallback() }
     }
   }
   window.requestAnimationFrame(() => work())
