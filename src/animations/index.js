@@ -7,6 +7,7 @@ import ThreeSticksScene from './three/sticks-scene'
 import ThreeSticksHole from './three/sticks-hole'
 import ThreeRedRoom from './three/red-room'
 import ThreeGeodesicDome from './three/geodesic-dome'
+import ThreeDoYouWantToTalk from './three/do-you-want-to-talk'
 
 import CompNEF from '../views/NeverEndingFun'
 import CompSticks from '../views/Sticks'
@@ -17,6 +18,14 @@ import CompThreeSimple from '../views/SimpleThree'
 
 export default {
   three: [
+    {
+      name: 'Do you want to talk?',
+      path: '/do-you-want-to-talk',
+      component: CompThreeSimple,
+      props: {
+        AnimationClass: ThreeDoYouWantToTalk
+      }
+    },
     {
       name: 'Geodesic dome',
       path: '/geodesic-dome',
