@@ -5,7 +5,9 @@
  * http://en.wikipedia.org/wiki/Luminosity
  */
 
-THREE.LuminosityHighPassShader = {
+import * as THREE from 'three'
+
+export const LuminosityHighPassShader = {
 
   shaderID: 'luminosityHighPass',
 
