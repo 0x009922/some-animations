@@ -1,16 +1,11 @@
 export function tween (...args) {
-  let n, start, end
   if (args.length === 2) {
-    start = args[0][0]
-    end = args[0][1]
-    n = args[1]
+    return args[1] * (args[0][1] - args[0][0]) + args[0][0]
   }
   if (args.length === 3) {
-    start = args[0]
-    end = args[1]
-    n = args[2]
+    return args[2] * (args[1] - args[0]) + args[0]
   }
-  return n * (end - start) + start
+  throw new TypeError('Invalid arguments:', args)
 }
 
 export function rgb (...args) {
