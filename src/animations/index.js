@@ -8,6 +8,7 @@ import ThreeSticksHole from './three/sticks-hole'
 import ThreeRedRoom from './three/red-room'
 import ThreeGeodesicDome from './three/geodesic-dome'
 import ThreeDoYouWantToTalk from './three/do-you-want-to-talk'
+import ThreeAsymptotic from './three/asymptotic'
 
 import CompNEF from '../views/NeverEndingFun'
 import CompSticks from '../views/Sticks'
@@ -18,6 +19,14 @@ import CompThreeSimple from '../views/SimpleThree'
 
 export default {
   three: [
+    {
+      name: 'Asymptotic',
+      path: '/asymptotic',
+      component: CompThreeSimple,
+      props: {
+        AnimationClass: ThreeAsymptotic
+      }
+    },
     {
       name: 'Do you want to talk?',
       path: '/do-you-want-to-talk',
