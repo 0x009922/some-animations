@@ -9,6 +9,7 @@ import ThreeRedRoom from './three/red-room'
 import ThreeGeodesicDome from './three/geodesic-dome'
 import ThreeDoYouWantToTalk from './three/do-you-want-to-talk'
 import ThreeAsymptotic from './three/asymptotic'
+import ThreeConcentricCubes from './three/concentric-cubes'
 
 import CompNEF from '../views/NeverEndingFun'
 import CompSticks from '../views/Sticks'
@@ -19,6 +20,14 @@ import CompThreeSimple from '../views/SimpleThree'
 
 export default {
   three: [
+    {
+      name: 'Concentric cubes',
+      path: '/concentric-cubes',
+      component: CompThreeSimple,
+      props: {
+        AnimationClass: ThreeConcentricCubes
+      }
+    },
     {
       name: 'Asymptotic',
       path: '/asymptotic',
