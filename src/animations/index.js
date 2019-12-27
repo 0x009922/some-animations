@@ -15,6 +15,7 @@ import CompNEF from '../views/NeverEndingFun'
 import CompSticks from '../views/Sticks'
 import CompGalaxyV2 from '../views/GalaxyV2'
 import CompFade from '../views/Fade'
+import CompPairs from '../views/Pairs'
 
 import CompThreeSimple from '../views/SimpleThree'
 
@@ -118,6 +119,11 @@ export default {
     }
   ],
   other: [
+    {
+      name: 'Pairs',
+      path: '/pairs',
+      component: CompPairs
+    },
     {
       name: 'Fade',
       path: '/fade',
