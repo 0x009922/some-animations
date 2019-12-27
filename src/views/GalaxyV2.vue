@@ -15,37 +15,37 @@
 </template>
 
 <script>
-import Scene from '../animations/canvas/galaxy-v2'
+import Scene from '../animations/canvas/galaxy-v2';
 
 export default {
   name: 'SimpleCanvasScene',
   props: {
     width: {
-      default: 1000
+      default: 1000,
     },
     height: {
-      default: 1000
+      default: 1000,
     },
     containerWidth: {
-      default: 700
+      default: 700,
     },
     containerHeight: {
-      default: 700
-    }
+      default: 700,
+    },
   },
-  data () {
+  data() {
     return {
-      scene: null
-    }
+      scene: null,
+    };
   },
-  mounted () {
-    this.scene = new Scene(this.$refs.target)
-    this.$store.commit('setLoop', this.scene.render.bind(this.scene))
+  mounted() {
+    this.scene = new Scene(this.$refs.target);
+    this.$store.commit('setLoop', this.scene.render.bind(this.scene));
   },
-  beforeDestroy () {
-    this.$store.commit('removeLoop')
-  }
-}
+  beforeDestroy() {
+    this.$store.commit('removeLoop');
+  },
+};
 </script>
 
 <style lang="sass" scoped>

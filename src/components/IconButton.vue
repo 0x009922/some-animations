@@ -2,14 +2,14 @@
 export default {
   functional: true,
 
-  render (createElement, context) {
-    let icon = context.props.icon
+  render(createElement, context) {
+    const { icon } = context.props;
 
-    let content = icon && icon.name
+    const content = icon && icon.name
       ? [createElement('v-icon', { props: icon })]
-      : null
+      : null;
 
-    return createElement('button', context.data, content)
-  }
-}
+    return createElement('button', context.data, content);
+  },
+};
 </script>

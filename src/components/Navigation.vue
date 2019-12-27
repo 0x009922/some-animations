@@ -30,54 +30,54 @@
 </template>
 
 <script>
-import Controls from './NavigationControls'
-import Tile from './Tile'
-import StickerAppear from './StickerAppear'
-import animations from '../animations'
-import { mapState, mapMutations } from 'vuex'
-import spray from '@/directives/spray'
+import { mapState, mapMutations } from 'vuex';
+import Controls from './NavigationControls';
+import Tile from './Tile';
+import StickerAppear from './StickerAppear';
+import animations from '../animations';
+import spray from '@/directives/spray';
 
 export default {
   name: 'Navigation',
-  data () {
+  data() {
     return {
-      flag: false
-    }
+      flag: false,
+    };
   },
   computed: {
     ...mapState(['paused', 'navigating']),
-    groups () {
+    groups() {
       return [
         {
           name: 'Three',
-          tiles: animations.three
+          tiles: animations.three,
         },
         {
           name: 'Other',
-          tiles: animations.other
-        }
-      ]
-    }
+          tiles: animations.other,
+        },
+      ];
+    },
   },
   methods: {
     ...mapMutations(['play', 'pause']),
     ...mapMutations({
       show: 'showNavigation',
-      hide: 'hideNavigation'
+      hide: 'hideNavigation',
     }),
-    test () {
-      console.log('test')
-    }
+    test() {
+      console.log('test');
+    },
   },
   components: {
     Tile,
     StickerAppear,
-    Controls
+    Controls,
   },
   directives: {
-    spray
-  }
-}
+    spray,
+  },
+};
 </script>
 
 <style lang="sass" scoped>

@@ -9,8 +9,8 @@ THREE.UnpackDepthRGBAShader = {
 
   uniforms: {
 
-    'tDiffuse': { value: null },
-    'opacity': { value: 1.0 }
+    tDiffuse: { value: null },
+    opacity: { value: 1.0 },
 
   },
 
@@ -23,7 +23,7 @@ THREE.UnpackDepthRGBAShader = {
     'vUv = uv;',
     'gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
 
-    '}'
+    '}',
 
   ].join('\n'),
 
@@ -42,8 +42,8 @@ THREE.UnpackDepthRGBAShader = {
     'float depth = 1.0 - unpackRGBAToDepth( texture2D( tDiffuse, vUv ) );',
     'gl_FragColor = vec4( vec3( depth ), opacity );',
 
-    '}'
+    '}',
 
-  ].join('\n')
+  ].join('\n'),
 
-}
+};

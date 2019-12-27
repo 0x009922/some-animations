@@ -4,25 +4,25 @@ export default {
   functional: true,
   props: {
     name: String,
-    path: String
+    path: String,
   },
-  render (h, ctx) {
-    let { name, path } = ctx.props
-    let { $store, $router } = ctx.parent
+  render(h, ctx) {
+    const { name, path } = ctx.props;
+    const { $store, $router } = ctx.parent;
 
     return h('div', {
       class: 'tile',
       on: {
-        click () {
+        click() {
           setTimeout(() => {
-            $store.commit('hideNavigation')
-            $router.push(path)
-          }, 30)
-        }
-      }
-    }, name)
-  }
-}
+            $store.commit('hideNavigation');
+            $router.push(path);
+          }, 30);
+        },
+      },
+    }, name);
+  },
+};
 </script>
 
 <style lang="sass" scoped>

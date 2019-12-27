@@ -2,11 +2,13 @@
 export default {
   name: 'Pair',
   functional: true,
-  render (h, context) {
-    let { num, distance, size, delay } = context.props
-    let rad = distance / 2
-    let animationDelay = `${delay}s`
-    const gap = 3
+  render(h, context) {
+    const {
+      num, distance, size, delay,
+    } = context.props;
+    const rad = distance / 2;
+    const animationDelay = `${delay}s`;
+    const gap = 3;
     return (
       <transition name="pair-rotation" vOn:after-enter={afterEnter}>
         <g class="pair" key={num} style={{ animationDelay }}>
@@ -22,15 +24,15 @@ export default {
           <circle cx={rad} cy="0" r={size} class="dot" />
         </g>
       </transition>
-    )
+    );
 
-    function afterEnter () {
+    function afterEnter() {
       if (context.listeners.done) {
-        context.listeners.done()
+        context.listeners.done();
       }
     }
-  }
-}
+  },
+};
 </script>
 
 <style lang="sass" scoped>

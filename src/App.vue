@@ -6,90 +6,90 @@
 </template>
 
 <script>
-import Navigation from './components/Navigation'
-import ViewBox from './components/ViewBox'
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters, mapState } from 'vuex';
+import Navigation from './components/Navigation';
+import ViewBox from './components/ViewBox';
 
-let lastFrame = window.performance.now()
-let elapsed = 0
+let lastFrame = window.performance.now();
+let elapsed = 0;
 
 let opts = {
   paused: false,
   loop: null,
   loopPlaying: false,
-  errorCallback: null
-}
+  errorCallback: null,
+};
 
-window.requestAnimationFrame(() => work())
+window.requestAnimationFrame(() => work());
 
-function work () {
-  let now = window.performance.now()
-  let delta = now - lastFrame
-  lastFrame = now
+function work() {
+  const now = window.performance.now();
+  const delta = now - lastFrame;
+  lastFrame = now;
 
   if (delta < 300) {
-    const { paused, loop, loopPlaying } = opts
+    const { paused, loop, loopPlaying } = opts;
     try {
       if (loopPlaying) {
-        elapsed += delta
+        elapsed += delta;
         // console.time('loop')
-        loop(delta, elapsed)
+        loop(delta, elapsed);
         // console.timeEnd('loop')
       }
     } catch (e) {
-      console.error('Error in loop:', e)
-      if (opts.errorCallback) { opts.errorCallback() }
+      console.error('Error in loop:', e);
+      if (opts.errorCallback) { opts.errorCallback(); }
     }
   }
-  window.requestAnimationFrame(() => work())
+  window.requestAnimationFrame(() => work());
 }
 
 export default {
   name: 'App',
   computed: {
     ...mapGetters(['loopPlaying']),
-    ...mapState(['navigating', 'paused', 'loop'])
+    ...mapState(['navigating', 'paused', 'loop']),
   },
   watch: {
-    loopPlaying () {
-      this.setOpts()
+    loopPlaying() {
+      this.setOpts();
     },
-    paused () {
-      this.setOpts()
+    paused() {
+      this.setOpts();
     },
-    loop () {
-      this.setOpts()
-    }
+    loop() {
+      this.setOpts();
+    },
   },
   methods: {
-    resized (e) {
+    resized(e) {
       // window.innerWidth
       this.$store.dispatch('resized', {
         width: window.innerWidth,
-        height: window.innerHeight
-      })
+        height: window.innerHeight,
+      });
     },
-    setOpts () {
-      let { loopPlaying, paused, loop } = this
-      opts = { loopPlaying, paused, loop }
+    setOpts() {
+      const { loopPlaying, paused, loop } = this;
+      opts = { loopPlaying, paused, loop };
       opts.errorCallback = () => {
-        this.$store.commit('pause')
-      }
-    }
+        this.$store.commit('pause');
+      };
+    },
   },
-  created () {
-    window.addEventListener('resize', e => this.resized(e))
+  created() {
+    window.addEventListener('resize', (e) => this.resized(e));
     this.$store.commit('setViewport', {
       width: window.innerWidth,
-      height: window.innerHeight
-    })
-    this.setOpts()
+      height: window.innerHeight,
+    });
+    this.setOpts();
   },
   components: {
     Navigation,
-    ViewBox
-  }
-}
+    ViewBox,
+  },
+};
 </script>
 
 <style lang="sass">

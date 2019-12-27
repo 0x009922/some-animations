@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import IconButton from './IconButton'
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex';
+import IconButton from './IconButton';
 
 export default {
   name: 'NavigationControls',
@@ -33,26 +33,26 @@ export default {
   computed: {
     ...mapState(['paused', 'navigating', 'resizing']),
 
-    showPause () {
+    showPause() {
       return (
-        !this.navigating &&
-        !this.resizing
-      )
-    }
+        !this.navigating
+        && !this.resizing
+      );
+    },
   },
 
   methods: {
     ...mapMutations(['play', 'pause']),
     ...mapMutations({
       show: 'showNavigation',
-      hide: 'hideNavigation'
-    })
+      hide: 'hideNavigation',
+    }),
   },
 
   components: {
-    IconButton
-  }
-}
+    IconButton,
+  },
+};
 </script>
 
 <style lang="sass">

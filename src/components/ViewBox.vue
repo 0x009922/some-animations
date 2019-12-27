@@ -19,19 +19,19 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex';
 
 export default {
   name: 'TheViewBox',
 
   computed: {
-    ...mapState(['navigating', 'resizing', 'paused'])
+    ...mapState(['navigating', 'resizing', 'paused']),
   },
 
   methods: {
-    ...mapMutations(['pause', 'play'])
-  }
-}
+    ...mapMutations(['pause', 'play']),
+  },
+};
 </script>
 
 <style lang="sass">

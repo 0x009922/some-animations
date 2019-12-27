@@ -24,12 +24,12 @@ export const FilmShader = {
 
   uniforms: {
 
-    'tDiffuse': { value: null },
-    'time': { value: 0.0 },
-    'nIntensity': { value: 0.5 },
-    'sIntensity': { value: 0.05 },
-    'sCount': { value: 4096 },
-    'grayscale': { value: 1 }
+    tDiffuse: { value: null },
+    time: { value: 0.0 },
+    nIntensity: { value: 0.5 },
+    sIntensity: { value: 0.05 },
+    sCount: { value: 4096 },
+    grayscale: { value: 1 },
 
   },
 
@@ -42,7 +42,7 @@ export const FilmShader = {
     'vUv = uv;',
     'gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
 
-    '}'
+    '}',
 
   ].join('\n'),
 
@@ -97,8 +97,8 @@ export const FilmShader = {
 
     'gl_FragColor =  vec4( cResult, cTextureScreen.a );',
 
-    '}'
+    '}',
 
-  ].join('\n')
+  ].join('\n'),
 
-}
+};

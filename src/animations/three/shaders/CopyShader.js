@@ -8,8 +8,8 @@ export const CopyShader = {
 
   uniforms: {
 
-    'tDiffuse': { value: null },
-    'opacity': { value: 1.0 }
+    tDiffuse: { value: null },
+    opacity: { value: 1.0 },
 
   },
 
@@ -22,7 +22,7 @@ export const CopyShader = {
     'vUv = uv;',
     'gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
 
-    '}'
+    '}',
 
   ].join('\n'),
 
@@ -39,8 +39,8 @@ export const CopyShader = {
     'vec4 texel = texture2D( tDiffuse, vUv );',
     'gl_FragColor = opacity * texel;',
 
-    '}'
+    '}',
 
-  ].join('\n')
+  ].join('\n'),
 
-}
+};

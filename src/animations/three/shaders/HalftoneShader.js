@@ -10,19 +10,19 @@
 THREE.HalftoneShader = {
 
   uniforms: {
-    'tDiffuse': { value: null },
-    'shape': { value: 1 },
-    'radius': { value: 4 },
-    'rotateR': { value: Math.PI / 12 * 1 },
-    'rotateG': { value: Math.PI / 12 * 2 },
-    'rotateB': { value: Math.PI / 12 * 3 },
-    'scatter': { value: 0 },
-    'width': { value: 1 },
-    'height': { value: 1 },
-    'blending': { value: 1 },
-    'blendingMode': { value: 1 },
-    'greyscale': { value: false },
-    'disable': { value: false }
+    tDiffuse: { value: null },
+    shape: { value: 1 },
+    radius: { value: 4 },
+    rotateR: { value: Math.PI / 12 * 1 },
+    rotateG: { value: Math.PI / 12 * 2 },
+    rotateB: { value: Math.PI / 12 * 3 },
+    scatter: { value: 0 },
+    width: { value: 1 },
+    height: { value: 1 },
+    blending: { value: 1 },
+    blendingMode: { value: 1 },
+    greyscale: { value: false },
+    disable: { value: false },
   },
 
   vertexShader: [
@@ -34,7 +34,7 @@ THREE.HalftoneShader = {
     'vUV = uv;',
     'gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
 
-    '}'
+    '}',
 
   ].join('\n'),
 
@@ -307,8 +307,8 @@ THREE.HalftoneShader = {
 
     '}',
 
-    '}'
+    '}',
 
-  ].join('\n')
+  ].join('\n'),
 
-}
+};

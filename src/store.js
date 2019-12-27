@@ -1,24 +1,24 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 /* eslint-disable eqeqeq */
 
-function debouncer () {
-  let timer
+function debouncer() {
+  let timer;
   return (func, delay) => {
     if (timer) {
-      clearTimeout(timer)
+      clearTimeout(timer);
     }
     timer = setTimeout(() => {
-      func()
-      timer = null
-    }, delay)
-  }
+      func();
+      timer = null;
+    }, delay);
+  };
 }
 
-let someDebouncer = debouncer()
+const someDebouncer = debouncer();
 
 export default new Vuex.Store({
   state: {
@@ -27,59 +27,57 @@ export default new Vuex.Store({
     paused: false,
     processing: false,
     resizing: false,
-    navigating: false
+    navigating: false,
   },
   getters: {
-    loopPlaying: state => {
-      return (
-        !state.paused &&
-        !state.resizing &&
-        !state.navigating &&
-        typeof state.loop === 'function'
-      )
-    }
+    loopPlaying: (state) => (
+      !state.paused
+        && !state.resizing
+        && !state.navigating
+        && typeof state.loop === 'function'
+    ),
   },
   mutations: {
-    setViewport (state, { width, height }) {
-      state.viewport = { width, height }
-      console.log('New viewport', width, height)
+    setViewport(state, { width, height }) {
+      state.viewport = { width, height };
+      console.log('New viewport', width, height);
     },
-    resizing (state) {
-      state.resizing = true
+    resizing(state) {
+      state.resizing = true;
     },
-    endResizing (state) {
-      state.resizing = false
+    endResizing(state) {
+      state.resizing = false;
     },
-    setLoop (state, func) {
-      state.loop = func
+    setLoop(state, func) {
+      state.loop = func;
     },
-    removeLoop (state) {
-      state.loop = null
+    removeLoop(state) {
+      state.loop = null;
     },
-    play (state) {
-      if (state.resizing) return
-      state.paused = false
+    play(state) {
+      if (state.resizing) return;
+      state.paused = false;
     },
-    pause (state) {
-      if (state.resizing) return
-      state.paused = true
+    pause(state) {
+      if (state.resizing) return;
+      state.paused = true;
     },
-    showNavigation (state) {
-      state.navigating = true
+    showNavigation(state) {
+      state.navigating = true;
     },
-    hideNavigation (state) {
-      state.navigating = false
-      console.log('hided')
-    }
+    hideNavigation(state) {
+      state.navigating = false;
+      console.log('hided');
+    },
   },
   actions: {
-    resized ({ commit }, { width, height }) {
-      commit('resizing')
+    resized({ commit }, { width, height }) {
+      commit('resizing');
       someDebouncer(() => {
-        commit('setViewport', { width, height })
-        commit('endResizing')
-      }, 800)
-    }
+        commit('setViewport', { width, height });
+        commit('endResizing');
+      }, 800);
+    },
   },
-  strict: process.env.NODE_ENV !== 'production'
-})
+  strict: process.env.NODE_ENV !== 'production',
+});

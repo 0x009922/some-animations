@@ -5,7 +5,7 @@
  * http://en.wikipedia.org/wiki/Luminosity
  */
 
-import * as THREE from 'three'
+import * as THREE from 'three';
 
 export const LuminosityHighPassShader = {
 
@@ -13,11 +13,11 @@ export const LuminosityHighPassShader = {
 
   uniforms: {
 
-    'tDiffuse': { value: null },
-    'luminosityThreshold': { value: 1.0 },
-    'smoothWidth': { value: 1.0 },
-    'defaultColor': { value: new THREE.Color(0x000000) },
-    'defaultOpacity': { value: 0.0 }
+    tDiffuse: { value: null },
+    luminosityThreshold: { value: 1.0 },
+    smoothWidth: { value: 1.0 },
+    defaultColor: { value: new THREE.Color(0x000000) },
+    defaultOpacity: { value: 0.0 },
 
   },
 
@@ -31,7 +31,7 @@ export const LuminosityHighPassShader = {
 
     'gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
 
-    '}'
+    '}',
 
   ].join('\n'),
 
@@ -59,8 +59,8 @@ export const LuminosityHighPassShader = {
 
     'gl_FragColor = mix( outputColor, texel, alpha );',
 
-    '}'
+    '}',
 
-  ].join('\n')
+  ].join('\n'),
 
-}
+};

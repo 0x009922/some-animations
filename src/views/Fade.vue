@@ -11,23 +11,23 @@
 </template>
 
 <script>
-import Scene from '../animations/canvas/fade'
+import Scene from '../animations/canvas/fade';
 
 export default {
   name: 'Fade',
-  data () {
+  data() {
     return {
-      scene: null
-    }
+      scene: null,
+    };
   },
-  mounted () {
-    this.scene = new Scene(this.$refs.target)
-    this.$store.commit('setLoop', this.scene.render.bind(this.scene))
+  mounted() {
+    this.scene = new Scene(this.$refs.target);
+    this.$store.commit('setLoop', this.scene.render.bind(this.scene));
   },
-  beforeDestroy () {
-    this.$store.commit('removeLoop')
-  }
-}
+  beforeDestroy() {
+    this.$store.commit('removeLoop');
+  },
+};
 </script>
 
 <style lang="sass" scoped>

@@ -1,8 +1,8 @@
-import * as THREE from 'three'
-import { Animation } from './Animation'
-import { tween, random } from '../tools'
+import * as THREE from 'three';
+import { Animation } from './Animation';
+import { tween, random } from '../tools';
 
-const { Vector3 } = THREE
+const { Vector3 } = THREE;
 
 const config = {
   detail: 4,
@@ -12,156 +12,161 @@ const config = {
   lights: [
     {
       value: new THREE.Color(0xD72638),
-      position: new Vector3(0.5, 0.2, -0.4)
+      position: new Vector3(0.5, 0.2, -0.4),
     },
     {
       value: new THREE.Color(0x00ff00),
-      position: new Vector3(-0.5, 0, -0.4)
+      position: new Vector3(-0.5, 0, -0.4),
     },
     {
       value: new THREE.Color(0xFF2ECC),
-      position: new Vector3(0, -0.5, 0)
+      position: new Vector3(0, -0.5, 0),
     },
     {
       value: new THREE.Color(0x016FB9),
-      position: new Vector3(0, 0.4, 0.5)
-    }
+      position: new Vector3(0, 0.4, 0.5),
+    },
   ],
   lightsRange: [2.5, 2.7],
   defaultColor: new THREE.Color(0),
   camYSpeed: Math.PI * 2 * 0.0132,
   camXSpeed: Math.PI * 2 * 0.003,
-  camStartElapsed: random(100)
-}
+  camStartElapsed: random(100),
+};
 
 export default class extends Animation {
-  constructor (canvas) {
-    super()
-    this.geometry = new THREE.IcosahedronBufferGeometry(config.icosahedronRadius, config.detail)
+  constructor(canvas) {
+    super();
+    this.geometry = new THREE.IcosahedronBufferGeometry(config.icosahedronRadius, config.detail);
     this.geometry.addAttribute('color', new THREE.Float32BufferAttribute(
       new Array(this.geometry.attributes.position.array.length).fill(0),
-      3
-    ))
-    let material = new THREE.MeshBasicMaterial({
+      3,
+    ));
+    const material = new THREE.MeshBasicMaterial({
       side: THREE.BackSide,
-      vertexColors: THREE.VertexColors
-    })
-    let mesh = new THREE.Mesh(this.geometry, material)
+      vertexColors: THREE.VertexColors,
+    });
+    const mesh = new THREE.Mesh(this.geometry, material);
 
-    this.scene = new THREE.Scene()
-    this.camera = new THREE.PerspectiveCamera(65, 1, 0.1, 1000)
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(65, 1, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer({
       canvas,
-      antialias: true
-    })
+      antialias: true,
+    });
 
-    this.scene.add(mesh)
+    this.scene.add(mesh);
 
-    this.prepareFaces()
-    this.skew()
-    this.computeColors()
-    this.updateLook()
+    this.prepareFaces();
+    this.skew();
+    this.computeColors();
+    this.updateLook();
   }
-  animate (delta, elapsed) {
-    this.updateLook(elapsed * 0.001)
-    this.render()
+
+  animate(delta, elapsed) {
+    this.updateLook(elapsed * 0.001);
+    this.render();
   }
-  updateLook (elapsed) {
-    elapsed += config.camStartElapsed
-    let y = -elapsed * config.camYSpeed
-    let x = elapsed * config.camXSpeed
 
-    let pos = new Vector3(Math.cos(y), 0, Math.sin(y))
-    let axis = new Vector3(0, Math.sin(x), Math.cos(x))
-    let quaternion = new THREE.Quaternion()
-    quaternion.setFromAxisAngle(axis, Math.PI / 2)
+  updateLook(elapsed) {
+    elapsed += config.camStartElapsed;
+    const y = -elapsed * config.camYSpeed;
+    const x = elapsed * config.camXSpeed;
 
-    pos.applyQuaternion(quaternion).multiplyScalar(2)
+    const pos = new Vector3(Math.cos(y), 0, Math.sin(y));
+    const axis = new Vector3(0, Math.sin(x), Math.cos(x));
+    const quaternion = new THREE.Quaternion();
+    quaternion.setFromAxisAngle(axis, Math.PI / 2);
 
-    this.camera.rotation.y = -y
-    this.camera.rotation.x = -x
-    this.camera.position.set(...pos.toArray())
+    pos.applyQuaternion(quaternion).multiplyScalar(2);
+
+    this.camera.rotation.y = -y;
+    this.camera.rotation.x = -x;
+    this.camera.position.set(...pos.toArray());
   }
-  prepareFaces () {
-    this.faces = []
 
-    let { array } = this.geometry.attributes.position
+  prepareFaces() {
+    this.faces = [];
+
+    const { array } = this.geometry.attributes.position;
     for (let i = 0; i < array.length; i += 9) {
-      let vts = [
+      const vts = [
         new THREE.Vector3(...array.slice(i, i + 3)),
         new THREE.Vector3(...array.slice(i + 3, i + 6)),
-        new THREE.Vector3(...array.slice(i + 6, i + 9))
-      ]
-      let c = new THREE.Vector3()
-      c.add(vts[0])
-      c.add(vts[1])
-      c.add(vts[2])
-      c.divideScalar(3)
+        new THREE.Vector3(...array.slice(i + 6, i + 9)),
+      ];
+      const c = new THREE.Vector3();
+      c.add(vts[0]);
+      c.add(vts[1]);
+      c.add(vts[2]);
+      c.divideScalar(3);
       vts.forEach((v, j) => {
         if (config.faceScale) {
-          let direction = new Vector3(...c.toArray())
-          direction.sub(v)
-          direction.multiplyScalar(1 - config.faceScale)
-          v.add(direction)
+          const direction = new Vector3(...c.toArray());
+          direction.sub(v);
+          direction.multiplyScalar(1 - config.faceScale);
+          v.add(direction);
         }
-        let points = v.toArray()
+        const points = v.toArray();
         points.forEach((v, k) => {
-          array[i + j * 3 + k] = v
-        })
-      })
+          array[i + j * 3 + k] = v;
+        });
+      });
       this.faces.push({
         center: c,
-        direction: new Vector3(...c.toArray()).divideScalar(c.length())
-      })
+        direction: new Vector3(...c.toArray()).divideScalar(c.length()),
+      });
     }
-    this.source = [...array]
-    this.geometry.attributes.position.needsUpdate = true
+    this.source = [...array];
+    this.geometry.attributes.position.needsUpdate = true;
   }
-  skew () {
+
+  skew() {
     this.faces.forEach(({ direction, swing }, i) => {
-      let shift = random(config.maxShift)
-      let deltas = direction.toArray().map(coord => coord * shift)
-      let { array: positions } = this.geometry.attributes.position
+      const shift = random(config.maxShift);
+      const deltas = direction.toArray().map((coord) => coord * shift);
+      const { array: positions } = this.geometry.attributes.position;
       for (let index = i * 9; index < i * 9 + 9; index++) {
-        positions[index] = this.source[index] + deltas[index % 3]
+        positions[index] = this.source[index] + deltas[index % 3];
       }
-    })
-    this.geometry.attributes.position.needsUpdate = true
+    });
+    this.geometry.attributes.position.needsUpdate = true;
   }
-  computeColors () {
-    let { array: colors } = this.geometry.attributes.color
+
+  computeColors() {
+    const { array: colors } = this.geometry.attributes.color;
 
     this.faces.forEach(({ center }, index) => {
-      let summary = [0, 0, 0]
+      const summary = [0, 0, 0];
       for (let j = 0; j < config.lights.length; j++) {
-        let computed = compute(config.lights[j], center)
-        for (let k in computed) {
-          summary[k] += computed[k]
+        const computed = compute(config.lights[j], center);
+        for (const k in computed) {
+          summary[k] += computed[k];
         }
       }
       for (let j = 0; j < 9; j++) {
-        colors[index * 9 + j] = summary[j % 3] / 3
+        colors[index * 9 + j] = summary[j % 3] / 3;
       }
-    })
+    });
 
-    this.geometry.attributes.color.needsUpdate = true
+    this.geometry.attributes.color.needsUpdate = true;
 
-    function compute (light, vec) {
-      let pos = light.position
-      let length = new Vector3(
+    function compute(light, vec) {
+      const pos = light.position;
+      const length = new Vector3(
         pos.x - vec.x,
         pos.y - vec.y,
-        pos.z - vec.z
-      ).length()
-      if (length <= config.lightsRange[0]) return light.value.toArray()
-      if (length >= config.lightsRange[1]) return config.defaultColor.toArray()
-      let x = (length - config.lightsRange[0])
-      x /= (config.lightsRange[1] - config.lightsRange[0])
-      return ['r', 'g', 'b'].map(component => tween(
+        pos.z - vec.z,
+      ).length();
+      if (length <= config.lightsRange[0]) return light.value.toArray();
+      if (length >= config.lightsRange[1]) return config.defaultColor.toArray();
+      let x = (length - config.lightsRange[0]);
+      x /= (config.lightsRange[1] - config.lightsRange[0]);
+      return ['r', 'g', 'b'].map((component) => tween(
         light.value[component],
         config.defaultColor[component],
-        x
-      ))
+        x,
+      ));
     }
   }
 }

@@ -31,60 +31,56 @@ const deltas = [
   [-45, -45, 405, -495, -45, -45, -45, -45],
   [45, 45, 45, 45, 45, 45, -405, 315],
   [-45, -45, -45, -45, 45, -135, 405, -315],
-  [45, -315, 225, 45, 45, 45, 45, 45]
-]
+  [45, -315, 225, 45, 45, 45, 45, 45],
+];
 
 export default {
   name: 'Sticks',
-  data () {
+  data() {
     return {
       iteration: -1,
       elapsed: 0,
       columns: 5,
       rows: 5,
       interval: 450,
-      rotations: [0, 0, 0, 0, 0]
-    }
+      rotations: [0, 0, 0, 0, 0],
+    };
   },
   computed: {
-    currentDeltas () {
-      return deltas.map(list => {
-        return list[this.iteration % list.length]
-      })
+    currentDeltas() {
+      return deltas.map((list) => list[this.iteration % list.length]);
     },
-    sticks () {
-      let arr = []
+    sticks() {
+      const arr = [];
       for (let row = 0; row < this.rows; row++) {
         for (let col = 0; col < this.columns; col++) {
-          arr.push({ row, col })
+          arr.push({ row, col });
         }
       }
-      return arr
-    }
+      return arr;
+    },
   },
   watch: {
-    currentDeltas (values) {
-      this.rotations = this.rotations.map((current, i) => {
-        return current + values[i]
-      })
-    }
+    currentDeltas(values) {
+      this.rotations = this.rotations.map((current, i) => current + values[i]);
+    },
   },
   methods: {
-    loop (delta) {
-      this.elapsed += delta
+    loop(delta) {
+      this.elapsed += delta;
       if (this.elapsed >= this.interval) {
-        this.iteration += 1
-        this.elapsed %= this.interval
+        this.iteration += 1;
+        this.elapsed %= this.interval;
       }
-    }
+    },
   },
-  mounted () {
-    this.$store.commit('setLoop', this.loop)
+  mounted() {
+    this.$store.commit('setLoop', this.loop);
   },
-  beforeDestroy () {
-    this.$store.commit('removeLoop')
-  }
-}
+  beforeDestroy() {
+    this.$store.commit('removeLoop');
+  },
+};
 </script>
 
 <style lang="sass" scoped>

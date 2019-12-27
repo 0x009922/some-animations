@@ -10,11 +10,11 @@ THREE.DotScreenShader = {
 
   uniforms: {
 
-    'tDiffuse': { value: null },
-    'tSize': { value: new THREE.Vector2(256, 256) },
-    'center': { value: new THREE.Vector2(0.5, 0.5) },
-    'angle': { value: 1.57 },
-    'scale': { value: 1.0 }
+    tDiffuse: { value: null },
+    tSize: { value: new THREE.Vector2(256, 256) },
+    center: { value: new THREE.Vector2(0.5, 0.5) },
+    angle: { value: 1.57 },
+    scale: { value: 1.0 },
 
   },
 
@@ -27,7 +27,7 @@ THREE.DotScreenShader = {
     'vUv = uv;',
     'gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
 
-    '}'
+    '}',
 
   ].join('\n'),
 
@@ -61,8 +61,8 @@ THREE.DotScreenShader = {
 
     'gl_FragColor = vec4( vec3( average * 10.0 - 5.0 + pattern() ), color.a );',
 
-    '}'
+    '}',
 
-  ].join('\n')
+  ].join('\n'),
 
-}
+};

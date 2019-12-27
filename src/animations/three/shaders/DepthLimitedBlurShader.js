@@ -1,18 +1,18 @@
 THREE.DepthLimitedBlurShader = {
   defines: {
-    'KERNEL_RADIUS': 4,
-    'DEPTH_PACKING': 1,
-    'PERSPECTIVE_CAMERA': 1
+    KERNEL_RADIUS: 4,
+    DEPTH_PACKING: 1,
+    PERSPECTIVE_CAMERA: 1,
   },
   uniforms: {
-    'tDiffuse': { value: null },
-    'size': { value: new THREE.Vector2(512, 512) },
-    'sampleUvOffsets': { value: [ new THREE.Vector2(0, 0) ] },
-    'sampleWeights': { value: [ 1.0 ] },
-    'tDepth': { value: null },
-    'cameraNear': { value: 10 },
-    'cameraFar': { value: 1000 },
-    'depthCutoff': { value: 10 }
+    tDiffuse: { value: null },
+    size: { value: new THREE.Vector2(512, 512) },
+    sampleUvOffsets: { value: [new THREE.Vector2(0, 0)] },
+    sampleWeights: { value: [1.0] },
+    tDepth: { value: null },
+    cameraNear: { value: 10 },
+    cameraFar: { value: 1000 },
+    depthCutoff: { value: 10 },
   },
   vertexShader: [
     '#include <common>',
@@ -27,7 +27,7 @@ THREE.DepthLimitedBlurShader = {
     '	vInvSize = 1.0 / size;',
 
     '	gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );',
-    '}'
+    '}',
 
   ].join('\n'),
   fragmentShader: [
@@ -103,41 +103,41 @@ THREE.DepthLimitedBlurShader = {
     '	}',
 
     '	gl_FragColor = diffuseSum / weightSum;',
-    '}'
-  ].join('\n')
-}
+    '}',
+  ].join('\n'),
+};
 
 THREE.BlurShaderUtils = {
 
-  createSampleWeights: function (kernelRadius, stdDev) {
-    var gaussian = function (x, stdDev) {
-      return Math.exp(-(x * x) / (2.0 * (stdDev * stdDev))) / (Math.sqrt(2.0 * Math.PI) * stdDev)
+  createSampleWeights(kernelRadius, stdDev) {
+    const gaussian = function (x, stdDev) {
+      return Math.exp(-(x * x) / (2.0 * (stdDev * stdDev))) / (Math.sqrt(2.0 * Math.PI) * stdDev);
+    };
+
+    const weights = [];
+
+    for (let i = 0; i <= kernelRadius; i++) {
+      weights.push(gaussian(i, stdDev));
     }
 
-    var weights = []
-
-    for (var i = 0; i <= kernelRadius; i++) {
-      weights.push(gaussian(i, stdDev))
-    }
-
-    return weights
+    return weights;
   },
 
-  createSampleOffsets: function (kernelRadius, uvIncrement) {
-    var offsets = []
+  createSampleOffsets(kernelRadius, uvIncrement) {
+    const offsets = [];
 
-    for (var i = 0; i <= kernelRadius; i++) {
-      offsets.push(uvIncrement.clone().multiplyScalar(i))
+    for (let i = 0; i <= kernelRadius; i++) {
+      offsets.push(uvIncrement.clone().multiplyScalar(i));
     }
 
-    return offsets
+    return offsets;
   },
 
-  configure: function (material, kernelRadius, stdDev, uvIncrement) {
-    material.defines[ 'KERNEL_RADIUS' ] = kernelRadius
-    material.uniforms[ 'sampleUvOffsets' ].value = THREE.BlurShaderUtils.createSampleOffsets(kernelRadius, uvIncrement)
-    material.uniforms[ 'sampleWeights' ].value = THREE.BlurShaderUtils.createSampleWeights(kernelRadius, stdDev)
-    material.needsUpdate = true
-  }
+  configure(material, kernelRadius, stdDev, uvIncrement) {
+    material.defines.KERNEL_RADIUS = kernelRadius;
+    material.uniforms.sampleUvOffsets.value = THREE.BlurShaderUtils.createSampleOffsets(kernelRadius, uvIncrement);
+    material.uniforms.sampleWeights.value = THREE.BlurShaderUtils.createSampleWeights(kernelRadius, stdDev);
+    material.needsUpdate = true;
+  },
 
-}
+};

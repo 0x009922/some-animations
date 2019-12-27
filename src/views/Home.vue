@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import spray from '../directives/spray'
+import spray from '../directives/spray';
 
 export default {
   name: 'Home',
-  directives: { spray }
-}
+  directives: { spray },
+};
 </script>
 
 <style lang="sass" scoped>

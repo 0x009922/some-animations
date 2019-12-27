@@ -9,37 +9,37 @@
 </template>
 
 <script>
-import Animation from '../animations/canvas/never-ending-fun'
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
+import Animation from '../animations/canvas/never-ending-fun';
 
 export default {
   name: 'NeverEndingFun',
 
-  data () {
+  data() {
     return {
-      animation: null
-    }
+      animation: null,
+    };
   },
 
   computed: {
-    ...mapState(['viewport'])
+    ...mapState(['viewport']),
   },
 
   watch: {
-    viewport (value) {
+    viewport(value) {
       // this.animation.setSize(value)
-    }
+    },
   },
 
-  mounted () {
-    this.animation = new Animation(this.$refs.target)
-    this.$store.commit('setLoop', this.animation.animate.bind(this.animation))
+  mounted() {
+    this.animation = new Animation(this.$refs.target);
+    this.$store.commit('setLoop', this.animation.animate.bind(this.animation));
   },
 
-  beforeDestroy () {
-    this.$store.commit('removeLoop')
-  }
-}
+  beforeDestroy() {
+    this.$store.commit('removeLoop');
+  },
+};
 </script>
 
 <style lang="sass" scoped>

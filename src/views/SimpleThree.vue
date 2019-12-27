@@ -9,33 +9,33 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 
-let animation = null
+let animation = null;
 
 export default {
   name: 'First',
   props: {
     AnimationClass: {
-      required: true
-    }
+      required: true,
+    },
   },
   computed: {
-    ...mapState(['viewport'])
+    ...mapState(['viewport']),
   },
   watch: {
-    viewport (value) {
-      animation.setSize(value)
-    }
+    viewport(value) {
+      animation.setSize(value);
+    },
   },
-  mounted () {
-    animation = new this.AnimationClass(this.$refs.target)
-    animation.setSize(this.viewport)
-    this.$store.commit('setLoop', animation.animate.bind(animation))
+  mounted() {
+    animation = new this.AnimationClass(this.$refs.target);
+    animation.setSize(this.viewport);
+    this.$store.commit('setLoop', animation.animate.bind(animation));
   },
-  beforeDestroy () {
-    this.$store.commit('removeLoop')
-    animation.destroy()
-  }
-}
+  beforeDestroy() {
+    this.$store.commit('removeLoop');
+    animation.destroy();
+  },
+};
 </script>
