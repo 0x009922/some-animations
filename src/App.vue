@@ -1,8 +1,5 @@
 <template>
-  <div
-    id="app"
-    v-resize="resized"
-  >
+  <div id="app">
     <the-navigation />
     <the-route-scope />
     <the-resizing-overlay />
@@ -19,13 +16,8 @@ import TheRouteScope from '@/components/TheRouteScope';
 import TheResizingOverlay from '@/components/TheResizingOverlay';
 import TheControls from '@/components/TheControls';
 
-import Resize from '@/directives/Resize';
-
 export default {
   name: 'App',
-  directives: {
-    Resize,
-  },
   components: {
     TheRouteScope,
     TheNavigation,
@@ -37,17 +29,21 @@ export default {
       'isResizing',
     ]),
   },
+  mounted() {
+    // Слежу за изменением размеров окна
+    window.addEventListener('resize', this.resized);
+  },
   methods: {
-    resized(newViewport) {
-      this.setViewport(newViewport);
+    resized() {
+      this.debouncedUpdateViewport();
 
       if (!this.$store.state.isResizing) {
         this.$store.commit('resizing');
       }
     },
-    setViewport: debounce(
-      function (value) {
-        this.$store.commit('setViewport', value);
+    debouncedUpdateViewport: debounce(
+      function () {
+        this.$store.commit('updateViewport');
         this.$store.commit('resizingDone');
       },
       800,
@@ -57,19 +53,12 @@ export default {
 </script>
 
 <style lang="sass">
+// Импорт всяких глобальных штук
 @import './assets/sass/style'
+
 #app
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   width: 100vw
   height: 100vh
-  // overflow: hidden
-
-.router-view-box
-  // margin-right: 50px
-  // margin: 50px
-  overflow: hidden
-  transition: filter .3s ease
-  &.blured
-    filter: blur(13px)
 </style>

@@ -50,8 +50,11 @@ export default new Vuex.Store({
     ),
   },
   mutations: {
-    setViewport(state, { width, height }) {
-      state.viewport = { width, height };
+    updateViewport(state) {
+      state.viewport = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
     },
     resizing(state) {
       state.isResizing = true;
