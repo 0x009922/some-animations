@@ -7,5 +7,5 @@ export default {
     component: Sticks,
   },
   tile: 'Палочки',
-  category: 'canvas',
+  category: 'other',
 };
