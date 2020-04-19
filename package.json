@@ -12,6 +12,7 @@
     "lodash": "^4.17.15",
     "three": "^0.115.0",
     "vue": "^2.6.11",
+    "vue-functional-data-merge": "^3.1.0",
     "vue-global-events": "^1.1.2",
     "vue-router": "^3.1.6",
     "vuex": "^3.1.3"
