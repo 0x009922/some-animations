@@ -11,4 +11,5 @@ export default {
     },
   },
   tile: 'Асимптотическая',
+  category: 'three',
 };

@@ -1,36 +1,23 @@
 <template>
-  <tile-transition
-    @after-enter="appeared = true"
-    @before-leave="beforeLeave"
+  <div
+    v-sparks="'dark'"
+    class="the-navigation-tile"
+    :class="{
+      'the-navigation-tile--appeared': appeared,
+      'the-navigation-tile--active': isActive,
+    }"
+    @mouseenter="hovered"
+    @mouseleave="unhovered"
+    @click="$emit('click')"
   >
-    <div v-if="show">
-      <div
-        v-sparks="'dark'"
-        class="the-navigation-tile"
-        :class="{
-          'the-navigation-tile--appeared': appeared,
-          'the-navigation-tile--active': isActive,
-        }"
-        @mouseenter="hovered"
-        @mouseleave="unhovered"
-        @click="$emit('click')"
-      >
-        <slot />
-      </div>
-    </div>
-  </tile-transition>
+    <slot />
+  </div>
 </template>
 
 <script>
-import TileTransition from './TheNavigationTileTransition';
-
 export default {
   name: 'TheNavigationTile',
-  components: {
-    TileTransition,
-  },
   props: {
-    show: Boolean,
     blur: Boolean,
     isActive: Boolean,
   },
@@ -87,7 +74,7 @@ export default {
   cursor: pointer
   width: 250px
   height: 150px
-  background: white
+  background: $background
   color: $text-primary
   font-size: 1.5em
   padding: 20px

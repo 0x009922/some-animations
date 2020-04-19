@@ -7,4 +7,5 @@ export default {
     component: Fade,
   },
   tile: 'Fade',
+  category: 'canvas',
 };

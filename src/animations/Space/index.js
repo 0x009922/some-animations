@@ -11,4 +11,5 @@ export default {
     },
   },
   tile: 'Space',
+  category: 'three',
 };

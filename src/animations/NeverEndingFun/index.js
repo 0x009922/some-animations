@@ -7,4 +7,5 @@ export default {
     component: NeverEndingFun,
   },
   tile: 'Never Ending Fun',
+  category: 'canvas',
 };

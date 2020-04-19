@@ -11,4 +11,5 @@ export default {
     },
   },
   tile: 'Triangles and floor',
+  category: 'three',
 };

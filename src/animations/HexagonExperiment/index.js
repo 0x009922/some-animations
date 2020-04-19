@@ -11,4 +11,5 @@ export default {
     },
   },
   tile: 'Hexagon experiment',
+  category: 'three',
 };

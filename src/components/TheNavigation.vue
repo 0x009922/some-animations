@@ -21,24 +21,43 @@
       <div
         class="the-navigation__tiles-grid"
       >
-        <router-link
-          v-for="(item, i) in animations"
-          :key="i"
-          #default="{ isActive, navigate, route }"
-          :to="item.to"
-          tag="div"
-        >
-          <tile
-            :show="isNavigating"
-            :blur="anythingFocused && !(i in focusedTiles)"
-            :is-active="isActive"
-            @focus="$set(focusedTiles, i, true)"
-            @blur="$delete(focusedTiles, i)"
-            @click="isActive ? hideNavigation() : navigate(route)"
-          >
-            {{ item.tile }}
-          </tile>
-        </router-link>
+        <template v-for="[category, items] in categorizedAnimations">
+          <tile-transition :key="`category-${category}`">
+            <div
+              v-if="isNavigating"
+              class="the-navigation__tiles-category"
+              :class="{
+                'the-navigation__tiles-category--empty': !category
+              }"
+            >
+              <template v-if="category in categories">
+                {{ categories[category].title }}
+              </template>
+            </div>
+          </tile-transition>
+
+          <template v-for="(item, i) in items">
+            <tile-transition :key="`${category}-${i}`">
+              <router-link
+                v-if="isNavigating"
+                #default="{ isActive, navigate, route }"
+                :to="{ name: item.route.name }"
+              >
+                <div>
+                  <tile
+                    :blur="anythingFocused && !(i in focusedTiles)"
+                    :is-active="isActive"
+                    @focus="$set(focusedTiles, i, true)"
+                    @blur="$delete(focusedTiles, i)"
+                    @click="isActive ? hideNavigation() : navigate(route)"
+                  >
+                    {{ item.tile }}
+                  </tile>
+                </div>
+              </router-link>
+            </tile-transition>
+          </template>
+        </template>
       </div>
     </div>
 
@@ -53,19 +72,23 @@ import { mapState, mapMutations } from 'vuex';
 import GlobalEvents from 'vue-global-events';
 
 import Tile from './TheNavigationTile';
+import TileTransition from './TheNavigationTileTransition';
 import animations from '@/animations';
+import animationsCategories from '@/animations/categories';
 
 export default {
   name: 'TheNavigation',
   components: {
     Tile,
     GlobalEvents,
+    TileTransition,
   },
   data: () => ({
     animations: animations.map(({ route, tile }) => ({
       to: { name: route.name },
       tile,
     })),
+    categories: animationsCategories,
     focusedTiles: {},
   }),
   computed: {
@@ -75,6 +98,21 @@ export default {
     ]),
     anythingFocused() {
       return Object.keys(this.focusedTiles).length > 0;
+    },
+    categorizedAnimations() {
+      const groups = animations.reduce((prev, val) => {
+        const cat = val.category || null;
+
+        if (prev.has(cat)) {
+          prev.get(cat).push(val);
+        } else {
+          prev.set(cat, [val]);
+        }
+
+        return prev;
+      }, new Map());
+
+      return [...groups];
     },
   },
   watch: {
@@ -155,4 +193,13 @@ export default {
     justify-content: center
     grid-template-columns: repeat(3, max-content)
     gap: 16px
+
+  &__tiles-category
+    grid-column: 1 / 4
+    font-size: 3em
+    color: $background
+
+    &--empty
+      height: 20px
+      // border: 1px solid $background
 </style>

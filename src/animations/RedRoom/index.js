@@ -11,4 +11,5 @@ export default {
     },
   },
   tile: 'Red Room',
+  category: 'three',
 };

@@ -11,4 +11,5 @@ export default {
     },
   },
   tile: 'Sticks hole',
+  category: 'three',
 };

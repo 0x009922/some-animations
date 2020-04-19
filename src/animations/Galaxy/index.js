@@ -11,4 +11,5 @@ export default {
     },
   },
   tile: 'Galaxy',
+  category: 'three',
 };

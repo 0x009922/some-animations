@@ -7,4 +7,5 @@ export default {
     component: Pairs,
   },
   tile: 'Pairs',
+  category: 'canvas',
 };

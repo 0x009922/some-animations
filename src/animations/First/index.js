@@ -11,5 +11,5 @@ export default {
     },
   },
   tile: 'First',
-  // category: 'three.js',
+  category: 'three',
 };

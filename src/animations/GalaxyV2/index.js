@@ -7,4 +7,5 @@ export default {
     component: Galaxy,
   },
   tile: 'Galaxy v2',
+  category: 'canvas',
 };

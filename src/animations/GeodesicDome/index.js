@@ -11,4 +11,5 @@ export default {
     },
   },
   tile: 'Геодезический купол',
+  category: 'three',
 };

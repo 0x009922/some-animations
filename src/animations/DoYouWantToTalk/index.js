@@ -11,4 +11,5 @@ export default {
     },
   },
   tile: 'Do you want to talk?',
+  category: 'three',
 };
