@@ -1,93 +1,57 @@
 <template>
-  <div id="app">
-    <Navigation />
-    <ViewBox />
+  <div
+    id="app"
+    v-resize="resized"
+  >
+    <the-navigation />
+    <the-route-scope />
+    <the-resizing-overlay />
+    <the-controls />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapState } from 'vuex';
-import Navigation from './components/Navigation';
-import ViewBox from './components/ViewBox';
+import { mapState } from 'vuex';
+import debounce from 'lodash/debounce';
 
-let lastFrame = window.performance.now();
-let elapsed = 0;
+import TheNavigation from '@/components/TheNavigation';
+import TheRouteScope from '@/components/TheRouteScope';
+import TheResizingOverlay from '@/components/TheResizingOverlay';
+import TheControls from '@/components/TheControls';
 
-let opts = {
-  paused: false,
-  loop: null,
-  loopPlaying: false,
-  errorCallback: null,
-};
-
-window.requestAnimationFrame(() => work());
-
-function work() {
-  const now = window.performance.now();
-  const delta = now - lastFrame;
-  lastFrame = now;
-
-  if (delta < 300) {
-    const { paused, loop, loopPlaying } = opts;
-    try {
-      if (loopPlaying) {
-        elapsed += delta;
-        // console.time('loop')
-        loop(delta, elapsed);
-        // console.timeEnd('loop')
-      }
-    } catch (e) {
-      console.error('Error in loop:', e);
-      if (opts.errorCallback) { opts.errorCallback(); }
-    }
-  }
-  window.requestAnimationFrame(() => work());
-}
+import Resize from '@/directives/Resize';
 
 export default {
   name: 'App',
-  computed: {
-    ...mapGetters(['loopPlaying']),
-    ...mapState(['navigating', 'paused', 'loop']),
-  },
-  watch: {
-    loopPlaying() {
-      this.setOpts();
-    },
-    paused() {
-      this.setOpts();
-    },
-    loop() {
-      this.setOpts();
-    },
-  },
-  methods: {
-    resized(e) {
-      // window.innerWidth
-      this.$store.dispatch('resized', {
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    },
-    setOpts() {
-      const { loopPlaying, paused, loop } = this;
-      opts = { loopPlaying, paused, loop };
-      opts.errorCallback = () => {
-        this.$store.commit('pause');
-      };
-    },
-  },
-  created() {
-    window.addEventListener('resize', (e) => this.resized(e));
-    this.$store.commit('setViewport', {
-      width: window.innerWidth,
-      height: window.innerHeight,
-    });
-    this.setOpts();
+  directives: {
+    Resize,
   },
   components: {
-    Navigation,
-    ViewBox,
+    TheRouteScope,
+    TheNavigation,
+    TheResizingOverlay,
+    TheControls,
+  },
+  computed: {
+    ...mapState([
+      'isResizing',
+    ]),
+  },
+  methods: {
+    resized(newViewport) {
+      this.setViewport(newViewport);
+
+      if (!this.$store.state.isResizing) {
+        this.$store.commit('resizing');
+      }
+    },
+    setViewport: debounce(
+      function (value) {
+        this.$store.commit('setViewport', value);
+        this.$store.commit('resizingDone');
+      },
+      800,
+    ),
   },
 };
 </script>

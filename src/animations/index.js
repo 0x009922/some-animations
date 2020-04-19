@@ -1,148 +1,72 @@
-import ThreeFirst from './three/first';
-import ThreeHexagon from './three/hexagon-experiment';
-import ThreeSpace from './three/space';
-import ThreeTriangles from './three/triangles-n-floor';
-import ThreeGalaxy from './three/galaxy';
-import ThreeSticksScene from './three/sticks-scene';
-import ThreeSticksHole from './three/sticks-hole';
-import ThreeRedRoom from './three/red-room';
-import ThreeGeodesicDome from './three/geodesic-dome';
-import ThreeDoYouWantToTalk from './three/do-you-want-to-talk';
-import ThreeAsymptotic from './three/asymptotic';
-import ThreeConcentricCubes from './three/concentric-cubes';
+const ctx = require.context('./', true, /^\.\/\w+\/index\.js$/);
 
-import CompNEF from '../views/NeverEndingFun';
-import CompSticks from '../views/Sticks';
-import CompGalaxyV2 from '../views/GalaxyV2';
-import CompFade from '../views/Fade';
-import CompPairs from '../views/Pairs';
+/**
+ * @typedef {{
+ * route: import('vue-router').RouteConfig,
+ * tile: String,
+ * }} AnimationDeclaration
+ * @type {AnimationDeclaration[]}
+ */
+export default ctx.keys().map((val) => ctx(val).default);
 
-import CompThreeSimple from '../views/SimpleThree';
+/**
+ * Настройка тика - функции, которая будет каждый анимационный фрейм
+ * вызывать функцию `loop` в хранилище Vuex.
+ *
+ * @param {import('vuex').Store} store Хранилище Vuex
+ * @todo Сделать замедление и ускорение времени. При паузе и вручную
+ */
+export function setupTicks(store) {
+  let lastFrame = window.performance.now();
+  let elapsed = 0;
+  let frame = null;
 
-export default {
-  three: [
-    {
-      name: 'Concentric cubes',
-      path: '/concentric-cubes',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeConcentricCubes,
-      },
+  // Запускаю/останавливаю цикл в зависимости от состояния приложения
+  store.watch(
+    (state, getters) => getters.loopPlaying,
+    (val) => {
+      if (val) {
+        run();
+      } else {
+        stop();
+      }
     },
-    {
-      name: 'Asymptotic',
-      path: '/asymptotic',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeAsymptotic,
-      },
-    },
-    {
-      name: 'Do you want to talk?',
-      path: '/do-you-want-to-talk',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeDoYouWantToTalk,
-      },
-    },
-    {
-      name: 'Geodesic dome',
-      path: '/geodesic-dome',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeGeodesicDome,
-      },
-    },
-    {
-      name: 'Red room',
-      path: '/red-room',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeRedRoom,
-      },
-    },
-    {
-      name: 'Sticks hole',
-      path: '/sticks-hole',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeSticksHole,
-      },
-    },
-    {
-      name: 'Sticks scene',
-      path: '/sticks-scene',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeSticksScene,
-      },
-    },
-    {
-      name: 'Galaxy',
-      path: '/three-galaxy',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeGalaxy,
-      },
-    },
-    {
-      name: 'Triangles and Floor',
-      path: '/triangles-and-floor',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeTriangles,
-      },
-    },
-    {
-      name: 'Space',
-      path: '/space',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeSpace,
-      },
-    },
-    {
-      name: 'Hexagon Experiment',
-      path: '/hexagon-experiment',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeHexagon,
-      },
-    },
-    {
-      name: 'First',
-      path: '/first',
-      component: CompThreeSimple,
-      props: {
-        AnimationClass: ThreeFirst,
-      },
-    },
-  ],
-  other: [
-    {
-      name: 'Pairs',
-      path: '/pairs',
-      component: CompPairs,
-    },
-    {
-      name: 'Fade',
-      path: '/fade',
-      component: CompFade,
-    },
-    {
-      name: 'Galaxy v2',
-      path: '/galaxy-v2',
-      component: CompGalaxyV2,
-    },
-    {
-      name: 'Sticks',
-      path: '/sticks',
-      component: CompSticks,
-    },
-    {
-      name: 'Never ending fun',
-      path: '/never-ending-fun',
-      component: CompNEF,
-    },
-  ],
-};
+    { immediate: true },
+  );
+
+  /**
+   * Запуск цикла
+   */
+  function run() {
+    tick();
+  }
+
+  /**
+   * Остановка цикла
+   */
+  function stop() {
+    cancelAnimationFrame(frame);
+  }
+
+  /**
+   * Тик. Самовоспроизводящаяся функция цикла.
+   * Считает время и запускает loop в хранилище
+   */
+  function tick() {
+    const now = performance.now();
+    const delta = now - lastFrame;
+    lastFrame = now;
+
+    if (delta < 300) {
+      try {
+        elapsed += delta;
+        store.state.loop(delta, elapsed);
+      } catch (err) {
+        console.error('Error in loop:', err);
+        store.commit('loopErrorOccured', err);
+      }
+    }
+
+    frame = requestAnimationFrame(tick);
+  }
+}

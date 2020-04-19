@@ -3,80 +3,94 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-/* eslint-disable eqeqeq */
-
-function debouncer() {
-  let timer;
-  return (func, delay) => {
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      func();
-      timer = null;
-    }, delay);
-  };
-}
-
-const someDebouncer = debouncer();
-
 export default new Vuex.Store({
   state: {
-    viewport: null,
+    /**
+     * Размер окна
+     * @type {{ width: number, height: number }}
+     */
+    viewport: {
+      width: window.innerWidth,
+      height: window.innerHeight,
+    },
+
+    /**
+     * Функция-петля, которая вызывается в анимационном фрейме
+     * @type {Function}
+     */
     loop: null,
-    paused: false,
-    processing: false,
-    resizing: false,
-    navigating: false,
+
+    /**
+     * Ошибка, случившаяся в петле
+     * @type {Error}
+     */
+    loopError: null,
+
+    /**
+     * Остановлен ли анимационный цикл
+     */
+    isPaused: false,
+
+    /**
+     * Происходит ли смена размеров окна
+     */
+    isResizing: false,
+
+    /**
+     * Открыто ли меню навигации
+     */
+    isNavigating: false,
   },
   getters: {
     loopPlaying: (state) => (
-      !state.paused
-        && !state.resizing
-        && !state.navigating
-        && typeof state.loop === 'function'
+      !state.isPaused
+      && !state.isResizing
+      && !state.isNavigating
+      && typeof state.loop === 'function'
     ),
   },
   mutations: {
     setViewport(state, { width, height }) {
       state.viewport = { width, height };
-      console.log('New viewport', width, height);
     },
     resizing(state) {
-      state.resizing = true;
+      state.isResizing = true;
     },
-    endResizing(state) {
-      state.resizing = false;
+    resizingDone(state) {
+      state.isResizing = false;
     },
+
     setLoop(state, func) {
       state.loop = func;
     },
-    removeLoop(state) {
+    clearLoop(state) {
       state.loop = null;
     },
-    play(state) {
-      if (state.resizing) return;
-      state.paused = false;
+    loopErrorOccured(state, error) {
+      state.isPaused = true;
+      state.loopError = error;
+    },
+
+    resume(state) {
+      if (!state.isResizing) {
+        state.isPaused = false;
+        state.loopError = null;
+      }
     },
     pause(state) {
-      if (state.resizing) return;
-      state.paused = true;
+      if (!state.isResizing) {
+        state.isPaused = true;
+      }
     },
+
     showNavigation(state) {
-      state.navigating = true;
+      state.isNavigating = true;
     },
     hideNavigation(state) {
-      state.navigating = false;
-      console.log('hided');
+      state.isNavigating = false;
     },
-  },
-  actions: {
-    resized({ commit }, { width, height }) {
-      commit('resizing');
-      someDebouncer(() => {
-        commit('setViewport', { width, height });
-        commit('endResizing');
-      }, 800);
+    toggleNavigation(state) {
+      state.isNavigating = !state.isNavigating;
     },
   },
   strict: process.env.NODE_ENV !== 'production',

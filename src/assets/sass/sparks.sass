@@ -1,0 +1,29 @@
+.v-spark-dash
+  position: absolute
+  width: 6px
+  height: 2px
+  border-radius: 2px
+  background: $spark
+  z-index: 99
+  pointer-events: none
+  $dur: .4s
+  $func: $ease-out-quart
+  transition: all $dur $func
+  animation-timing-function: $func
+  animation-duration: $dur + .05s
+  &--primary
+    background: $spark-primary
+  &--dark
+    background: $spark-dark
+  &--light
+    background: $spark-light
+
+@keyframes sparkDashAnimation
+  from
+    opacity: 0
+  30%
+    opacity: 1
+  // 50%
+  //   opacity: 1
+  to
+    opacity: 0

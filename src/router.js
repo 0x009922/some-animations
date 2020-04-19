@@ -1,17 +1,19 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+import Home from '@/components/TheHome';
 
-import animations from './animations';
+import animations from '@/animations';
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
-    ...animations.three,
-    ...animations.other,
+    ...animations.map((val) => val.route),
+    // ...animations.three,
+    // ...animations.other,
     {
       path: '*',
+      name: 'home',
       component: Home,
     },
   ],
