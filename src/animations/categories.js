@@ -5,4 +5,7 @@ export default {
   canvas: {
     title: 'Canvas',
   },
+  other: {
+    title: 'Прочее',
+  },
 };
