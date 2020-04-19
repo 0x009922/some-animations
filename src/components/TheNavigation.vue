@@ -45,10 +45,7 @@
               >
                 <div>
                   <tile
-                    :blur="anythingFocused && !(i in focusedTiles)"
                     :is-active="isActive"
-                    @focus="$set(focusedTiles, i, true)"
-                    @blur="$delete(focusedTiles, i)"
                     @click="isActive ? hideNavigation() : navigate(route)"
                   >
                     {{ item.tile }}
@@ -89,16 +86,12 @@ export default {
       tile,
     })),
     categories: animationsCategories,
-    focusedTiles: {},
   }),
   computed: {
     ...mapState([
       'isNavigating',
       'isPaused',
     ]),
-    anythingFocused() {
-      return Object.keys(this.focusedTiles).length > 0;
-    },
     categorizedAnimations() {
       const groups = animations.reduce((prev, val) => {
         const cat = val.category || null;
@@ -142,9 +135,9 @@ export default {
   pointer-events: none
   z-index: 10
 
-  $origin-x: 40px
-  $origin-y: 40px
-  $radius:  max(140vw, 140vh)
+  $origin-x: 30px
+  $origin-y: 30px
+  $radius: max(140vw, 140vh)
 
   &__background
     position: fixed

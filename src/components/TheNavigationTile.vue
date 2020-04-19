@@ -3,72 +3,51 @@
     v-sparks="'dark'"
     class="the-navigation-tile"
     :class="{
-      'the-navigation-tile--appeared': appeared,
       'the-navigation-tile--active': isActive,
     }"
-    @mouseenter="hovered"
-    @mouseleave="unhovered"
     @click="$emit('click')"
   >
     <slot />
+
+    <!-- <app-icon
+      v-if="isActive"
+      class="the-navigation-tile__active-chevron"
+      size="40"
+    >
+      {{ mdiChevronUp }}
+    </app-icon> -->
   </div>
 </template>
 
 <script>
+import { mdiChevronUp } from '@mdi/js';
+// import AppIcon from './AppIcon';
+
 export default {
   name: 'TheNavigationTile',
+  // components: {
+  //   AppIcon,
+  // },
   props: {
-    blur: Boolean,
     isActive: Boolean,
   },
   data: () => ({
-    appeared: false,
-    hover: false,
-    unhoverTimer: null,
+    mdiChevronUp,
   }),
-  computed: {
-    focused() {
-      return this.appeared && this.hover;
-    },
-  },
-  watch: {
-    active(val) {
-      if (!val) {
-        this.hover = false;
-      }
-    },
-    focused(val) {
-      if (val) {
-        this.$emit('focus');
-      } else {
-        this.$emit('blur');
-      }
-    },
-  },
-  methods: {
-    beforeLeave(el) {
-      // Нужно для корректной смены transition
-      // Потому что при удалении элемента с него не снимется этот класс средствами Vue
-      el.classList.remove('the-navigation-tile--appeared');
-
-      this.appeared = false;
-    },
-    hovered() {
-      clearTimeout(this.unhoverTimer);
-      this.hover = true;
-    },
-    unhovered() {
-      clearTimeout(this.unhoverTimer);
-      this.unhoverTimer = setTimeout(() => {
-        this.hover = false;
-      }, 200);
-    },
-  },
 };
 </script>
 
 <style lang="sass" scoped>
 @import '../assets/sass/style'
+
+@keyframes the-navigation-tile__chevron-animaion
+  0%
+    opacity: 1
+    transform: translateY(5px)
+  20%
+    transform: none
+  100%
+    opacity: 0
 
 .the-navigation-tile
   cursor: pointer
@@ -79,16 +58,18 @@ export default {
   font-size: 1.5em
   padding: 20px
   transition: transform .3s $ease-out-back
-
-  // &--appeared
-    //
+  position: relative
 
   &:active
     transform: scale(0.98)
 
-  &--blur
-    opacity: 0.5
-
   &--active
     color: $primary
+
+  &__active-chevron
+    position: absolute
+    bottom: 0
+    left: 10px
+    animation: the-navigation-tile__chevron-animaion 1s $ease-out-expo
+    animation-iteration-count: infinite
 </style>
