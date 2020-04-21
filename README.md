@@ -1,11 +1,8 @@
 # Анимации
 
-Здесь собраны различные анимации.
+Здесь собраны различные Web-анимации.
 
-### Deploy
-```
-sh deploy.sh
-```
+[Открыть демо](https://liquidsolid.github.io/some-animations).
 
 ### TODO
 
