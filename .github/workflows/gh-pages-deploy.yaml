@@ -18,13 +18,13 @@ jobs:
       with:
         node-version: 12.16
 
-    - name: Set up Yarn
+    - name: Install packages
       uses: Borales/actions-yarn@v2.1.0
 
-    - name: Building SPA
+    - name: Build SPA
       run: yarn build
 
-    - name: Pushing ./dist to master:gh-pages
+    - name: Push ./dist to master:gh-pages
       working-directory: ./dist
       run: |
         git config --global user.email "${GITHUB_ACTOR}@https://users.noreply.github.com/"
@@ -32,4 +32,4 @@ jobs:
         git init
         git add --all
         git commit -m "Auto update pages on $(date +'%Y-%m-%d %H:%M:%S')"
-        git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git master:gh-pages
+        git push -f https://${{ secrets.ACCESS_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git master:gh-pages
