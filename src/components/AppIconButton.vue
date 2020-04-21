@@ -1,4 +1,6 @@
 <script>
+import { mergeData } from 'vue-functional-data-merge';
+
 export default {
   name: 'AppIconButton',
   functional: true,
@@ -19,8 +21,7 @@ export default {
       console.warn('[app-icon-button] Content is not a string!');
     }
 
-    return h('div', {
-      ...context.data,
+    return h('div', mergeData(context.data, {
       staticClass: 'app-icon-button',
       class: {
         'app-icon-button--light': context.props.light,
@@ -29,7 +30,7 @@ export default {
         name: 'sparks',
         value: context.props.light ? 'light' : 'primary',
       }],
-    }, [
+    }), [
       h('svg', {
         attrs: {
           xmlns: 'http://www.w3.org/2000/svg',
