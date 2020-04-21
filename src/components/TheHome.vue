@@ -44,11 +44,11 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../assets/sass/style'
+@use '@/assets/sass/const'
 
 .the-home
-  color: $primary
-  background: $background
+  color: const.$primary
+  background: const.$background
   height: 100%
   h1
     font-weight: normal
@@ -56,5 +56,4 @@ export default {
     margin-bottom: 16px
   a
     text-decoration: none
-
 </style>

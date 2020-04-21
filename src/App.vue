@@ -53,9 +53,6 @@ export default {
 </script>
 
 <style lang="sass">
-// Импорт всяких глобальных штук
-@import './assets/sass/style'
-
 #app
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale

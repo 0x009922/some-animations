@@ -22,17 +22,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-// @import '../assets/sass/style'
 .never-ending-fun
   height: 100%
   background: black
-
-// .canv-layout
-//   @include center-box
-//   height: 100%
-//   // border: 2px solid white
-//   padding: 5px
-//   canvas
-//     width: 700px
-//     height: 700px
 </style>

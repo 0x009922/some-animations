@@ -49,7 +49,8 @@ export default {
 </script>
 
 <style lang="sass">
-@import '@/assets/sass/style'
+@use '@/assets/sass/const'
+@use '@/assets/sass/easings'
 
 @mixin theme($color)
   border-color: $color
@@ -60,7 +61,7 @@ export default {
     background: transparentize($color, 0.75)
 
 .app-icon-button
-  @include theme($primary)
+  @include theme(const.$primary)
 
   border-width: 2px
   border-style: solid
@@ -72,16 +73,12 @@ export default {
   width: 44px
   height: 44px
   cursor: pointer
-  transition: transform .15s $ease-out-back
+  transition: transform .15s easings.$ease-out-back
   &:focus
     outline: none
   &:active
     transform: scale(0.9)
 
-  path
-    stroke: $primary
-    fill: $primary
-
   &--light
-    @include theme($background)
+    @include theme(const.$background)
 </style>

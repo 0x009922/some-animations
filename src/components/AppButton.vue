@@ -13,17 +13,17 @@ export default {
 </script>
 
 <style lang="sass">
-@import '../assets/sass/const'
-@import '../assets/sass/easings'
+@use '../assets/sass/const'
+@use '../assets/sass/easings'
 
 .app-button
   border: none
-  background: $primary
-  color: $background
+  background: const.$primary
+  color: const.$background
   padding: 10px
   font-size: 1em
   cursor: pointer
-  transition: transform .15s $ease-out-back
+  transition: transform .15s easings.$ease-out-back
   &:focus
     outline: none
   &:hover

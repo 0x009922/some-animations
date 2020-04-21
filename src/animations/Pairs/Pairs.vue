@@ -110,14 +110,14 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import './const'
+@use './const'
 
 .pairs-layout
   display: flex
   align-items: center
   justify-content: center
   height: 100%
-  background: $pairs-back
+  background: const.$pairs-back
   svg
     width: 600px
     height: 600px

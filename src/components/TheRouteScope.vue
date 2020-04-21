@@ -39,8 +39,6 @@ export default {
 </script>
 
 <style lang="sass">
-@import '../assets/sass/style'
-
 .the-route-scope
   height: 100vh
   position: relative

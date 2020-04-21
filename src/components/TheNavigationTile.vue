@@ -38,7 +38,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '../assets/sass/style'
+@use '@/assets/sass/const'
+@use '@/assets/sass/easings'
 
 @keyframes the-navigation-tile__chevron-animaion
   0%
@@ -53,23 +54,23 @@ export default {
   cursor: pointer
   width: 250px
   height: 150px
-  background: $background
-  color: $text-primary
+  background: const.$background
+  color: const.$text-primary
   font-size: 1.5em
   padding: 20px
-  transition: transform .3s $ease-out-back
+  transition: transform .3s easings.$ease-out-back
   position: relative
 
   &:active
     transform: scale(0.98)
 
   &--active
-    color: $primary
+    color: const.$primary
 
   &__active-chevron
     position: absolute
     bottom: 0
     left: 10px
-    animation: the-navigation-tile__chevron-animaion 1s $ease-out-expo
+    animation: the-navigation-tile__chevron-animaion 1s easings.$ease-out-expo
     animation-iteration-count: infinite
 </style>

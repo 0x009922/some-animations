@@ -99,7 +99,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '@/assets/sass/style'
+@use '@/assets/sass/easings'
 
 .the-controls
   &__scrim
@@ -123,7 +123,7 @@ export default {
     @mixin transition
       &-enter-active,
       &-leave-active
-        transition: all .4s $ease-in-out-expo
+        transition: all .4s easings.$ease-in-out-expo
       &-enter, &-leave-to
         opacity: 0
       &-enter

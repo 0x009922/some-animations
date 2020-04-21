@@ -36,7 +36,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import './const'
+@use './const'
 
 @keyframes rot
   from
@@ -63,17 +63,17 @@ export default {
 
 g.pair
   line
-    stroke: $pairs-fore
+    stroke: const.$pairs-fore
     stroke-width: 1.5
     opacity: 0
   circle
     stroke: none
     &.dot
-      fill: $pairs-fore
+      fill: const.$pairs-fore
       stroke: none
     &.round
       fill: none
-      stroke: $pairs-fore
+      stroke: const.$pairs-fore
       stroke-width: 1.5
       opacity: 0
 </style>

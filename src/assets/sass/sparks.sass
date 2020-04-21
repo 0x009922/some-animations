@@ -1,22 +1,25 @@
+@use 'const'
+@use 'easings'
+  
 .v-spark-dash
   position: absolute
   width: 6px
   height: 2px
   border-radius: 2px
-  background: $spark
+  background: const.$spark
   z-index: 99
   pointer-events: none
   $dur: .4s
-  $func: $ease-out-quart
+  $func: easings.$ease-out-quart
   transition: all $dur $func
   animation-timing-function: $func
   animation-duration: $dur + .05s
   &--primary
-    background: $spark-primary
+    background: const.$spark-primary
   &--dark
-    background: $spark-dark
+    background: const.$spark-dark
   &--light
-    background: $spark-light
+    background: const.$spark-light
 
 @keyframes sparkDashAnimation
   from
