@@ -39,18 +39,18 @@ export default {
 </script>
 
 <style lang="sass">
-@import '@/assets/sass/style'
+@use '@/assets/sass/const'
 
 @mixin path-color($color)
   path
     stroke: $color
     fill: $color
 
-svg.app-icon-button
+svg.app-icon
   &--primary
-    @include path-color($primary)
+    @include path-color(const.$primary)
   &--dark
-    @include path-color($text-primary)
+    @include path-color(const.$text-primary)
   &--light
-    @include path-color($background)
+    @include path-color(const.$background)
 </style>

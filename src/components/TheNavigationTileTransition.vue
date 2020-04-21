@@ -45,17 +45,17 @@ export default {
 </script>
 
 <style lang="sass">
-@import '@/assets/sass/style'
+@use '@/assets/sass/easings'
 
 .tile-transition
   &-enter-active
     transition-property: transform, opacity
-    transition-timing-function: $ease-out-quart
+    transition-timing-function: easings.$ease-out-quart
     transform-origin: 50% 0%
     transition-duration: .4s
   &-leave-active
     transition-property: transform, opacity
-    transition-timing-function: $ease-in-quart
+    transition-timing-function: easings.$ease-in-quart
     transform-origin: 50% 0%
     transition-duration: .3s
   &-enter

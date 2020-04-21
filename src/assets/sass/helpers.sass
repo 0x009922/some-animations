@@ -1,11 +1,27 @@
 .d-flex
   display: flex
 
-.align-center
-  align-items: center
+$flex-align-items-values: ('start': 'flex-start', 'end': 'flex-end', 'center': 'center', 'baseline': 'baseline')
+
+@each $short, $val in $flex-align-items-values
+  .align-#{$short}
+    align-items: #{$val}
 
 .justify-center
   justify-content: center
 
 .fill-height
   height: 100%
+
+@each $i in 'column', 'row'
+  .flex-#{$i}
+    flex-direction: #{$i}
+
+// Формирование хэлперов для отступов
+@each $full, $short in ('bottom': 'b', 'left': 'l', 'right': 'r', 'top': 't')
+  @for $i from 1 through 8
+    $post: #{$short}-#{$i}
+    .m#{$post}
+      margin-#{$full}: 4px * $i
+    .p#{$post}
+      padding-#{$full}: 4px * $i

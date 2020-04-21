@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '@/assets/sass/style'
+@use '@/assets/sass/const'
 
 .the-resizing-overlay
   position: fixed
@@ -33,6 +33,6 @@ export default {
   right: 0
   bottom: 0
   background: black
-  color: $primary
+  color: const.$primary
   font-size: 4em
 </style>

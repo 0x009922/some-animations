@@ -4,6 +4,7 @@ import router from './router';
 import store from './store';
 import Sparks from './directives/Sparks';
 import setupTicks from './animations/setup-ticks';
+import './assets/sass/style.sass';
 
 setupTicks(store);
 

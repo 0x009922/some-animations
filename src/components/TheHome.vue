@@ -6,39 +6,54 @@
     <div>
       <h1>Animations</h1>
 
-      <button @click="$store.commit('showNavigation')">
-        Открыть список
-      </button>
+      <div class="d-flex flex-column align-start">
+        <app-button @click="$store.commit('showNavigation')">
+          Открыть список
+        </app-button>
+
+        <a href="https://github.com/LiquidSolid/some-animations">
+          <app-button class="mt-2 d-flex align-end">
+            <app-icon
+              color="light"
+              class="mr-2"
+            >
+              {{ mdiGithub }}
+            </app-icon>
+
+            Github
+          </app-button>
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mdiGithub } from '@mdi/js';
+
+import AppIcon from './AppIcon';
+import AppButton from './AppButton';
+
 export default {
   name: 'Home',
+  components: { AppIcon, AppButton },
+  data: () => ({
+    mdiGithub,
+  }),
 };
 </script>
 
 <style lang="sass" scoped>
-@import '../assets/sass/style'
+@use '@/assets/sass/const'
 
 .the-home
-  color: $primary
-  background: $background
+  color: const.$primary
+  background: const.$background
   height: 100%
   h1
     font-weight: normal
     font-size: 5em
     margin-bottom: 16px
-  button
-    border: none
-    background: $primary
-    color: $background
-    padding: 10px
-    font-size: 1em
-    cursor: pointer
-    &:focus
-      outline: none
-    &:hover
-      opacity: 0.9
+  a
+    text-decoration: none
 </style>

@@ -128,8 +128,8 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-@import '@/assets/sass/style'
-
+@use '@/assets/sass/const'
+@use '@/assets/sass/easings'
 
 .the-navigation
   pointer-events: none
@@ -146,7 +146,7 @@ export default {
     width: calc(#{$radius} * 2)
     height: calc(#{$radius} * 2)
     // border: 2px solid $primary
-    background: $primary
+    background: const.$primary
     z-index: 9
     border-radius: 50%
     overflow: hidden
@@ -155,9 +155,9 @@ export default {
 
     &-transition
       &-enter-active
-        transition: transform 1.5s $ease-out-quart
+        transition: transform 1.5s easings.$ease-out-quart
       &-leave-active
-        transition: all .6s .5s $ease-out-quart
+        transition: all .6s .5s easings.$ease-out-quart
       &-enter
         transform: scale(0)
       &-leave-to
@@ -190,7 +190,7 @@ export default {
   &__tiles-category
     grid-column: 1 / 4
     font-size: 3em
-    color: $background
+    color: const.$background
 
     &--empty
       height: 20px

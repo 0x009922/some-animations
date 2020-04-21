@@ -22,7 +22,9 @@ jobs:
       uses: Borales/actions-yarn@v2.1.0
 
     - name: Build SPA
-      run: yarn build
+      run: vue-cli-service build
+      env:
+        PUBLIC_PATH: /some-animations/
 
     - name: Push ./dist to master:gh-pages
       working-directory: ./dist
