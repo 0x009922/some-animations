@@ -46,7 +46,7 @@ export default {
     stroke: $color
     fill: $color
 
-svg.app-icon-button
+svg.app-icon
   &--primary
     @include path-color($primary)
   &--dark
