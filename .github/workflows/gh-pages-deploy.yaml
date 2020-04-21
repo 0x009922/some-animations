@@ -18,15 +18,11 @@ jobs:
       with:
         node-version: 12.16
 
-    - name: Installing packages
+    - name: Set up Yarn
       uses: Borales/actions-yarn@v2.1.0
-      with:
-        cmd: install
 
     - name: Building SPA
-      uses: Borales/actions-yarn@v2.1.0
-      with:
-        cmd: build
+      run: yarn build
 
     - name: Config git and init rep in ./dist
       working-directory: ./dist
