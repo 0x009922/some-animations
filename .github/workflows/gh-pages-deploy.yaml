@@ -1,0 +1,51 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Set up Node.js 12.16
+      uses: actions/setup-node@v1.4.1
+      with:
+        node-version: 12.16
+
+    - name: Set up yarn
+      uses: Borales/actions-yarn@v2.1.0
+
+    - name: Set up project and building SPA
+      run: |
+        yarn install
+        yarn build
+
+    - name: Config git and init rep in ./dist
+      working-directory: ./dist
+      run: |
+        git config --global user.email "${GITHUB_ACTOR}@https://users.noreply.github.com/"
+        git config --global user.name "${GITHUB_ACTOR}"
+        git init
+        git add --all
+
+    - name: Commit and push
+      run: |
+        COMMIT_MESSAGE="Update pages on $(date +'%Y-%m-%d %H:%M:%S')"
+        git diff-index --quiet --cached HEAD -- && echo "No changes!" && exit 0 || echo $COMMIT_MESSAGE
+        git commit -m "${COMMIT_MESSAGE}"
+        git push -f https://${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git master:gh-pages
