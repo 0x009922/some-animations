@@ -3,28 +3,33 @@
     v-sparks="'dark'"
     class="the-home d-flex align-center justify-center"
   >
-    <div>
-      <h1>Animations</h1>
+    <transition
+      appear
+      name="the-home__appear-transition"
+    >
+      <div>
+        <h1>Animations</h1>
 
-      <div class="d-flex flex-column align-start">
-        <app-button @click="$store.commit('showNavigation')">
-          Открыть список
-        </app-button>
-
-        <a href="https://github.com/LiquidSolid/some-animations">
-          <app-button class="mt-2 d-flex align-end">
-            <app-icon
-              color="light"
-              class="mr-2"
-            >
-              {{ mdiGithub }}
-            </app-icon>
-
-            Github
+        <div class="d-flex flex-column align-start">
+          <app-button @click="$store.commit('showNavigation')">
+            Открыть список
           </app-button>
-        </a>
+
+          <a href="https://github.com/LiquidSolid/some-animations">
+            <app-button class="mt-2 d-flex align-end">
+              <app-icon
+                color="light"
+                class="mr-2"
+              >
+                {{ mdiGithub }}
+              </app-icon>
+
+              Github
+            </app-button>
+          </a>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -45,15 +50,23 @@ export default {
 
 <style lang="sass" scoped>
 @use '@/assets/sass/const'
+@use '@/assets/sass/easings'
 
 .the-home
   color: const.$primary
   background: const.$background
   height: 100%
+  perspective: 1000px
   h1
     font-weight: normal
     font-size: 5em
     margin-bottom: 16px
   a
     text-decoration: none
+  &__appear-transition
+    &-enter-active
+      transition: all .8s .3s easings.$ease-out-quart
+    &-enter
+      transform: translateZ(50px)
+      opacity: 0
 </style>
