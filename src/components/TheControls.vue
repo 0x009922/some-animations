@@ -4,6 +4,7 @@
   >
     <div class="the-controls__first">
       <transition
+        appear
         :name="`the-controls__menu-switch-transition${isNavigating ? '--delayed' : ''}`"
         @before-leave="$event.style.position = 'absolute'"
       >
@@ -27,6 +28,7 @@
 
     <div class="the-controls__second">
       <transition
+        appear
         name="the-controls__menu-switch-transition"
         @before-leave="$event.style.position = 'absolute'"
       >

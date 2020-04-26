@@ -3,7 +3,6 @@
     class="the-route-scope"
   >
     <div
-      v-show="!isResizing"
       class="the-route-scope__view"
       :class="{
         'the-route-scope__view--paused': isPaused,
@@ -45,13 +44,5 @@ export default {
   overflow: hidden
 
   &__view
-    perspective: 2000px
     height: 100%
-
-  &__route-transition
-    &-enter-active, &-leave-active
-      transition: all .6s ease
-    &-enter, &-leave-to
-      opacity: 0
-      transform: translateZ(-30px)
 </style>
