@@ -38,20 +38,11 @@
 
           <template v-for="(item, i) in items">
             <tile-transition :key="`${category}-${i}`">
-              <router-link
-                v-if="isNavigating"
-                #default="{ isActive, navigate, route }"
-                :to="{ name: item.route.name }"
-              >
-                <div>
-                  <tile
-                    :is-active="isActive"
-                    @click="isActive ? hideNavigation() : navigate(route)"
-                  >
-                    {{ item.tile }}
-                  </tile>
-                </div>
-              </router-link>
+              <div v-if="isNavigating">
+                <tile
+                  :animation="item"
+                />
+              </div>
             </tile-transition>
           </template>
         </template>
@@ -81,16 +72,12 @@ export default {
     TileTransition,
   },
   data: () => ({
-    animations: animations.map(({ route, tile }) => ({
-      to: { name: route.name },
-      tile,
-    })),
     categories: animationsCategories,
   }),
   computed: {
     ...mapState([
       'isNavigating',
-      'isPaused',
+      'isForcePaused',
     ]),
     categorizedAnimations() {
       const groups = animations.reduce((prev, val) => {
@@ -111,7 +98,7 @@ export default {
   watch: {
     $route() {
       this.hideNavigation();
-      if (this.isPaused) {
+      if (this.isForcePaused) {
         this.resume();
       }
     },
@@ -134,33 +121,42 @@ export default {
 .the-navigation
   pointer-events: none
   z-index: 10
-
-  $origin-x: 30px
-  $origin-y: 30px
-  $radius: max(140vw, 140vh)
-
   &__background
     position: fixed
-    top: calc(#{$origin-y} - #{$radius})
-    left: calc(#{$origin-x} - #{$radius})
-    width: calc(#{$radius} * 2)
-    height: calc(#{$radius} * 2)
+
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    opacity: 0.8
+    background: black
+    // $radius: max(140vw, 140vh)
+    // top: calc(-#{$radius})
+    // left: calc(-#{$radius})
+    // top: calc(#{$origin-y} - #{$radius})
+    // left: calc(#{$origin-x} - #{$radius})
+    // width: calc(#{$radius} * 2)
+    // height: calc(#{$radius} * 2)
     // border: 2px solid $primary
-    background: const.$primary
+    // background: const.$background
     z-index: 9
-    border-radius: 50%
+    // border-radius: 50%
     overflow: hidden
-    will-change: transform, opacity
+    will-change: opacity
     // pointer-events: auto
 
     &-transition
       &-enter-active
-        transition: transform 1.5s easings.$ease-out-quart
+        // top: 0
+        // left: 0
+        transition: all .6s easings.$ease-out-quart
       &-leave-active
+        // right: 100vh
+        // left: 100vw
         transition: all .6s .5s easings.$ease-out-quart
-      &-enter
-        transform: scale(0)
+      &-enter,
       &-leave-to
+        // transform: scale(0)
         opacity: 0
 
   &__content
@@ -184,13 +180,13 @@ export default {
     display: grid
     pointer-events: auto
     justify-content: center
-    grid-template-columns: repeat(3, max-content)
+    grid-template-columns: repeat(4, max-content)
     gap: 16px
 
   &__tiles-category
-    grid-column: 1 / 4
-    font-size: 3em
-    color: const.$background
+    grid-column: 1 / 5
+    font-size: 1.8em
+    color: const.$primary
 
     &--empty
       height: 20px

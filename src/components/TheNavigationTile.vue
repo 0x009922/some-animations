@@ -1,39 +1,44 @@
 <template>
-  <div
-    v-sparks="'dark'"
-    class="the-navigation-tile"
-    :class="{
-      'the-navigation-tile--active': isActive,
-    }"
-    @click="$emit('click')"
+  <router-link
+    #default="{ navigate, isExactActive }"
+    :to="to"
   >
-    <slot />
-
-    <!-- <app-icon
-      v-if="isActive"
-      class="the-navigation-tile__active-chevron"
-      size="40"
+    <div
+      v-sparks="'dark'"
+      class="the-navigation-tile"
+      :class="{
+        'the-navigation-tile--active': isExactActive,
+      }"
+      @click="isExactActive ? hideNavigation() : navigate($event)"
     >
-      {{ mdiChevronUp }}
-    </app-icon> -->
-  </div>
+      {{ animation.tile }}
+    </div>
+  </router-link>
 </template>
 
 <script>
-import { mdiChevronUp } from '@mdi/js';
-// import AppIcon from './AppIcon';
+import { mapMutations } from 'vuex';
 
 export default {
   name: 'TheNavigationTile',
-  // components: {
-  //   AppIcon,
-  // },
   props: {
-    isActive: Boolean,
+    // Информация об анимации. Объект из списка анимаций '@/animations'
+    animation: {
+      type: Object,
+      required: true,
+    },
   },
-  data: () => ({
-    mdiChevronUp,
-  }),
+  computed: {
+    to() {
+      const { route } = this.animation;
+      return route.name ? { name: route.name } : route.path;
+    },
+  },
+  methods: {
+    ...mapMutations([
+      'hideNavigation',
+    ]),
+  },
 };
 </script>
 
@@ -41,23 +46,14 @@ export default {
 @use '@/assets/sass/const'
 @use '@/assets/sass/easings'
 
-@keyframes the-navigation-tile__chevron-animaion
-  0%
-    opacity: 1
-    transform: translateY(5px)
-  20%
-    transform: none
-  100%
-    opacity: 0
-
 .the-navigation-tile
   cursor: pointer
-  width: 250px
-  height: 150px
+  width: 200px
+  height: 90px
   background: const.$background
   color: const.$text-primary
-  font-size: 1.5em
-  padding: 20px
+  font-size: 1.2em
+  padding: 12px
   transition: transform .3s easings.$ease-out-back
   position: relative
 
@@ -65,12 +61,6 @@ export default {
     transform: scale(0.98)
 
   &--active
-    color: const.$primary
-
-  &__active-chevron
-    position: absolute
-    bottom: 0
-    left: 10px
-    animation: the-navigation-tile__chevron-animaion 1s easings.$ease-out-expo
-    animation-iteration-count: infinite
+    background: const.$primary
+    color: const.$background
 </style>

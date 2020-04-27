@@ -5,7 +5,7 @@
     <div class="the-controls__first">
       <transition
         appear
-        :name="`the-controls__menu-switch-transition${isNavigating ? '--delayed' : ''}`"
+        name="the-controls__menu-switch-transition--delayed"
         @before-leave="$event.style.position = 'absolute'"
       >
         <icon-button
@@ -18,7 +18,6 @@
         <icon-button
           v-else
           key="two"
-          light
           @click="hideNavigation"
         >
           {{ mdiClose }}
@@ -39,7 +38,6 @@
             tag="div"
           >
             <icon-button
-              light
               @click="hideNavigation"
             >
               {{ mdiHome }}
@@ -50,9 +48,9 @@
           <icon-button
             v-else
             size="24"
-            @click="isPaused ? resume() : pause()"
+            @click="isForcePaused ? resume() : pause()"
           >
-            {{ isPaused ? mdiPlay : mdiPause }}
+            {{ isForcePaused ? mdiPlay : mdiPause }}
           </icon-button>
         </template>
       </transition>
@@ -84,7 +82,7 @@ export default {
   }),
   computed: {
     ...mapState([
-      'isPaused',
+      'isForcePaused',
       'isNavigating',
       // 'isResizin'
     ]),
@@ -126,14 +124,18 @@ export default {
       &-enter-active,
       &-leave-active
         transition: all .4s easings.$ease-in-out-expo
-      &-enter, &-leave-to
-        opacity: 0
       &-enter
+        opacity: 0
         transform: translateX(-50px) scale(0.8)
+      &-leave-to
+        opacity: 0
+        transform: translateX(50px) scale(0.8)
 
     @include transition
     &--delayed
       @include transition
       &-enter-active
-        transition-delay: .05s
+        transition-delay: .09s
+      // &-leave-active
+      //   transition-delay: .05s
 </style>

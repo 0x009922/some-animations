@@ -22,7 +22,7 @@
 
 <script>
 import { Vector2 } from 'three';
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 import Pair from './Pair';
 
 export default {
@@ -37,18 +37,9 @@ export default {
     };
   },
   computed: {
-    paused() {
-      return (
-        this.isPaused
-        || this.isNavigating
-        || this.isResizing
-      );
-    },
-    ...mapState([
-      'isPaused',
-      'isNavigating',
-      'isResiing',
-    ]),
+    ...mapGetters({
+      paused: 'isPaused',
+    }),
     dots() {
       const deltaAngle = Math.PI * 2 / this.dotsCount;
       return new Array(this.dotsCount).fill(0).map(
