@@ -1,15 +1,37 @@
 import * as THREE from 'three';
 import Animation from '@/utils/ThreeAnimation';
 
+// Скорость вращения, в радианах
 const ROTATION_SPEED = 1.1;
-const MIN_SIZE = 0.1;
-const MAX_SIZE = 1;
-const COUNT = 10;
-const RAD_SHIFT = 1.4;
+
+// Максимальный размер кубика
+const MAX_SIZE = 1.2;
+
+// Количество кубиков
+const CUBES_COUNT = 10;
+
+// Дистанция камеры от центра
 const CAMERA_DISTANCE = 1.5;
 
-const sizeStep = (MAX_SIZE - MIN_SIZE) / (COUNT - 1);
-const angleStep = RAD_SHIFT / (COUNT - 1);
+// Поворот каждого кубика относительно предыдущего
+const DELTA_ANGLE = 0.18;
+
+/**
+ * Рекурсивное формирование кубиков
+ * @typedef {{ size: number, angle: number }} CubeDef
+ * @param {number} count Сколько нужно сформировать
+ * @param {number} lastSize Размер предыдущего кубика
+ * @param {number} lastAngle Угол поворота предыдущего кубика
+ * @param {CubeDef[]} cubes Куда класть результат
+ * @returns {CubeDef[]}
+ */
+function generateCubes(count, lastSize, lastAngle = 0, cubes = []) {
+  if (count <= 0) return cubes;
+  const angle = lastAngle + DELTA_ANGLE;
+  const size = (lastSize * 0.95) / (Math.sin(DELTA_ANGLE) + Math.cos(DELTA_ANGLE));
+  cubes.push({ size, angle });
+  return generateCubes(count - 1, size, angle, cubes);
+}
 
 export default class extends Animation {
   constructor(canvas) {
@@ -25,15 +47,13 @@ export default class extends Animation {
       color: 0xffffff,
       linewidth: 2.5,
     });
-    for (let i = 0; i < COUNT; i++) {
-      const size = MAX_SIZE - i * sizeStep;
-      const angle = i * angleStep + Math.PI / 2;
+    generateCubes(CUBES_COUNT, MAX_SIZE).forEach(({ size, angle }) => {
       const geometry = new THREE.BoxGeometry(size, size, size);
       const edges = new THREE.EdgesGeometry(geometry);
       const lines = new THREE.LineSegments(edges, material);
       lines.rotateY(angle);
       this.scene.add(lines);
-    }
+    });
 
     this.viewAngle = 0;
   }
