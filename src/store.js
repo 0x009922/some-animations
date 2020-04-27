@@ -27,9 +27,9 @@ export default new Vuex.Store({
     loopError: null,
 
     /**
-     * Остановлен ли анимационный цикл
+     * Остановлен ли анимационный цикл вручную
      */
-    isPaused: false,
+    isForcePaused: false,
 
     /**
      * Происходит ли смена размеров окна
@@ -42,10 +42,13 @@ export default new Vuex.Store({
     isNavigating: false,
   },
   getters: {
-    loopPlaying: (state) => (
-      !state.isPaused
-      && !state.isResizing
-      && !state.isNavigating
+    isPaused: (state) => (
+      state.isForcePaused
+      || state.isResizing
+      || state.isNavigating
+    ),
+    loopPlaying: (state, getters) => (
+      !getters.isPaused
       && typeof state.loop === 'function'
     ),
   },
@@ -70,19 +73,19 @@ export default new Vuex.Store({
       state.loop = null;
     },
     loopErrorOccured(state, error) {
-      state.isPaused = true;
+      state.isForcePaused = true;
       state.loopError = error;
     },
 
     resume(state) {
       if (!state.isResizing) {
-        state.isPaused = false;
+        state.isForcePaused = false;
         state.loopError = null;
       }
     },
     pause(state) {
       if (!state.isResizing) {
-        state.isPaused = true;
+        state.isForcePaused = true;
       }
     },
 

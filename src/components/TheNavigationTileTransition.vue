@@ -1,7 +1,7 @@
 <script>
-function resetDelay(el) {
-  el.style.transitionDelay = '0s';
-}
+// function resetDelay(el) {
+//   el.style.transitionDelay = '0s';
+// }
 
 export default {
   name: 'TheNavigationTileTransition',
@@ -32,12 +32,12 @@ export default {
           const func = context.listeners['before-leave'];
           func && func(el);
         },
-        afterEnter(el) {
-          resetDelay(el);
+        // afterEnter(el) {
+        //   resetDelay(el);
 
-          const func = context.listeners['after-enter'];
-          func && func(el);
-        },
+        //   const func = context.listeners['after-enter'];
+        //   func && func(el);
+        // },
       },
     }, context.children);
   },
@@ -51,17 +51,12 @@ export default {
   &-enter-active
     transition-property: transform, opacity
     transition-timing-function: easings.$ease-out-quart
-    transform-origin: 50% 0%
     transition-duration: .4s
   &-leave-active
     transition-property: transform, opacity
     transition-timing-function: easings.$ease-in-quart
-    transform-origin: 50% 0%
     transition-duration: .3s
-  &-enter
-    transform: translateY(-50px)
-    opacity: 0
-  &-leave-to
-    transform: translateY(-50px)
+  &-enter, &-leave-to
+    transform: translateY(-30px)
     opacity: 0
 </style>

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'VAnimation',
@@ -40,7 +40,7 @@ export default {
     timeout: null,
   }),
   computed: {
-    ...mapState([
+    ...mapGetters([
       'isPaused',
     ]),
     transitionDuration() {

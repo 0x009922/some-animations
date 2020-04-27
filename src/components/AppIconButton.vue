@@ -1,5 +1,6 @@
 <script>
 import { mergeData } from 'vue-functional-data-merge';
+import Icon from './AppIcon';
 
 export default {
   name: 'AppIconButton',
@@ -9,18 +10,8 @@ export default {
       type: [String, Number],
       default: 20,
     },
-    light: {
-      type: Boolean,
-      default: false,
-    },
   },
   render(h, context) {
-    const [{ text: path }] = context.children;
-
-    if (typeof path !== 'string') {
-      console.warn('[app-icon-button] Content is not a string!');
-    }
-
     return h('div', mergeData(context.data, {
       staticClass: 'app-icon-button',
       class: {
@@ -28,21 +19,15 @@ export default {
       },
       directives: [{
         name: 'sparks',
-        value: context.props.light ? 'light' : 'primary',
+        value: 'primary',
       }],
     }), [
-      h('svg', {
-        attrs: {
-          xmlns: 'http://www.w3.org/2000/svg',
-          viewBox: '0 0 24 24',
-          width: context.props.size,
-          height: context.props.size,
+      h(Icon, {
+        props: {
+          size: 18,
+          color: 'primary',
         },
-      }, [
-        h('path', {
-          attrs: { d: path },
-        }),
-      ]),
+      }, context.children),
     ]);
   },
 };
@@ -52,33 +37,24 @@ export default {
 @use '@/assets/sass/const'
 @use '@/assets/sass/easings'
 
-@mixin theme($color)
-  border-color: $color
-  path
-    stroke: $color
-    fill: $color
-  &:hover
-    background: transparentize($color, 0.75)
-
 .app-icon-button
-  @include theme(const.$primary)
-
   border-width: 2px
   border-style: solid
   border-radius: 50%
+  border-color: const.$primary
   background: transparent
   display: flex
   align-items: center
   justify-content: center
-  width: 44px
-  height: 44px
+  $size: 40px
+  width: $size
+  height: $size
   cursor: pointer
   transition: transform .15s easings.$ease-out-back
   &:focus
     outline: none
   &:active
     transform: scale(0.9)
-
-  &--light
-    @include theme(const.$background)
+  &:hover
+    opacity: 0.9
 </style>
