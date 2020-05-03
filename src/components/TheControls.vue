@@ -11,16 +11,18 @@
         <icon-button
           v-if="!isNavigating"
           key="one"
+          size="24"
           @click="showNavigation"
         >
-          {{ mdiMenu }}
+          menu
         </icon-button>
         <icon-button
           v-else
           key="two"
+          size="24"
           @click="hideNavigation"
         >
-          {{ mdiClose }}
+          close
         </icon-button>
       </transition>
     </div>
@@ -40,7 +42,7 @@
             <icon-button
               @click="hideNavigation"
             >
-              {{ mdiHome }}
+              home
             </icon-button>
           </router-link>
 
@@ -50,7 +52,7 @@
             size="24"
             @click="isForcePaused ? resume() : pause()"
           >
-            {{ isForcePaused ? mdiPlay : mdiPause }}
+            {{ isForcePaused ? 'play' : 'pause' }}
           </icon-button>
         </template>
       </transition>
@@ -60,26 +62,12 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex';
-import {
-  mdiClose,
-  mdiMenu,
-  mdiPause,
-  mdiPlay,
-  mdiHome,
-} from '@mdi/js';
 
 import IconButton from './AppIconButton';
 
 export default {
   name: 'TheControls',
   components: { IconButton },
-  data: () => ({
-    mdiClose,
-    mdiMenu,
-    mdiPause,
-    mdiPlay,
-    mdiHome,
-  }),
   computed: {
     ...mapState([
       'isForcePaused',

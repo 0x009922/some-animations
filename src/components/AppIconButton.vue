@@ -24,7 +24,7 @@ export default {
     }), [
       h(Icon, {
         props: {
-          size: 18,
+          size: context.props.size,
           color: 'primary',
         },
       }, context.children),
