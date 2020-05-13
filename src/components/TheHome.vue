@@ -16,12 +16,12 @@
           </app-button>
 
           <a href="https://github.com/LiquidSolid/some-animations">
-            <app-button class="mt-2 d-flex align-end">
+            <app-button class="mt-2 d-flex align-center">
               <app-icon
                 color="light"
                 class="mr-2"
               >
-                {{ mdiGithub }}
+                github
               </app-icon>
 
               Github
@@ -34,17 +34,12 @@
 </template>
 
 <script>
-import { mdiGithub } from '@mdi/js';
-
 import AppIcon from './AppIcon';
 import AppButton from './AppButton';
 
 export default {
   name: 'Home',
   components: { AppIcon, AppButton },
-  data: () => ({
-    mdiGithub,
-  }),
 };
 </script>
 

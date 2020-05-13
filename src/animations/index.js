@@ -1,4 +1,4 @@
-const ctx = require.context('./', true, /^\.\/\w+\/index\.js$/);
+const ctx = require.context('./', true, /^\.\/.+\/index\.js$/);
 
 /**
  * @typedef {{

@@ -45,7 +45,10 @@ export default {
   bind(el, binding) {
     const color = binding.value || 'primary';
 
-    const listener = (e) => {
+    /**
+     * @param {MouseEvent} e
+     */
+    function listener(e) {
       window.requestAnimationFrame(() => {
         const { x, y } = e;
         const angle = Math.random() * Math.PI;
@@ -68,7 +71,7 @@ export default {
           });
         });
       });
-    };
+    }
 
     el.addEventListener('mousedown', listener);
     el[sparksSymbol] = listener;

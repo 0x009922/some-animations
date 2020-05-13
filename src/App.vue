@@ -9,8 +9,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import debounce from 'lodash/debounce';
 
+import { debounce } from '@/utils';
 import TheNavigation from '@/components/TheNavigation';
 import TheRouteScope from '@/components/TheRouteScope';
 import TheResizingOverlay from '@/components/TheResizingOverlay';

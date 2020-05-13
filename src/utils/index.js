@@ -8,6 +8,7 @@ export function tween(...args) {
   throw new TypeError('Invalid arguments:', args);
 }
 
+
 export function rgb(...args) {
   if (args.length === 1 && Array.isArray(args[0])) {
     return `rgb(${args[0].join(',')})`;
@@ -17,6 +18,7 @@ export function rgb(...args) {
   }
   throw new TypeError('Invalid arguments:', args);
 }
+
 
 export function sum(...args) {
   // if (Array.isArray(args[0])) {
@@ -32,6 +34,7 @@ export function sum(...args) {
   return args.reduce((prev, val) => prev + val, 0);
 }
 
+
 export function random(...params) {
   if (!params.length) return Math.random();
   let start = 0;
@@ -45,10 +48,26 @@ export function random(...params) {
   return (end - start) * Math.random() + start;
 }
 
+
 export function rgbByHex(hex) {
   return {
     r: hex >> 16,
     g: (hex & 0xff00) >> 8,
     b: hex & 0xff,
+  };
+}
+
+/**
+ * @param {Function} func
+ * @param {number} delay
+ */
+export function debounce(func, delay) {
+  let timer;
+  return function (...args) {
+    const self = this;
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      func.apply(self, args);
+    }, delay);
   };
 }

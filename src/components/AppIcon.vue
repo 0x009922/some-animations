@@ -15,25 +15,25 @@ export default {
     },
   },
   render(h, context) {
-    const [{ text: path }] = context.children;
+    const [{ text: iconName }] = context.children;
 
-    if (typeof path !== 'string') {
+    if (typeof iconName !== 'string') {
       console.warn('[app-icon] Content is not a string!');
     }
 
-    return h('svg', mergeData(context.data, {
-      staticClass: `app-icon app-icon--${context.props.color}`,
-      attrs: {
-        xmlns: 'http://www.w3.org/2000/svg',
-        viewBox: '0 0 24 24',
-        width: context.props.size,
-        height: context.props.size,
+    const size = `${context.props.size}px`;
+
+    return h('span', mergeData(context.data, {
+      class: [
+        'app-icon',
+        `app-icon--${context.props.color}`,
+        'mdi',
+        `mdi-${iconName.trim()}`,
+      ],
+      style: {
+        fontSize: size,
       },
-    }), [
-      h('path', {
-        attrs: { d: path },
-      }),
-    ]);
+    }));
   },
 };
 </script>
@@ -42,11 +42,10 @@ export default {
 @use '@/assets/sass/const'
 
 @mixin path-color($color)
-  path
-    stroke: $color
-    fill: $color
+  color: $color
 
-svg.app-icon
+.app-icon
+  line-height: 1em
   &--primary
     @include path-color(const.$primary)
   &--dark
