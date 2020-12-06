@@ -10,6 +10,7 @@ devDependencies:
   eslint: 7.15.0
   eslint-config-alloy: 3.8.2
   eslint-plugin-vue: 7.2.0_eslint@7.15.0
+  prettier: 2.2.1
   typescript: 4.1.2
   vite: 1.0.0-rc.13
   vite-tsconfig-paths: 1.1.0_vite@1.0.0-rc.13
@@ -2514,6 +2515,13 @@ packages:
       node: '>= 0.8.0'
     resolution:
       integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==
+  /prettier/2.2.1:
+    dev: true
+    engines:
+      node: '>=10.13.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
   /progress/2.0.3:
     dev: true
     engines:
@@ -3263,6 +3271,7 @@ specifiers:
   eslint: ^7.15.0
   eslint-config-alloy: ^3.8.2
   eslint-plugin-vue: ^7.2.0
+  prettier: ^2.2.1
   typescript: ^4.1.2
   vite: ^1.0.0-rc.13
   vite-tsconfig-paths: ^1.1.0

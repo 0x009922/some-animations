@@ -1,10 +1,5 @@
 <template>
-  <div
-    v-if="isResizing"
-    class="the-resizing-overlay d-flex align-center justify-center"
-  >
-    Resizing
-  </div>
+    <div v-if="isResizing" class="the-resizing-overlay d-flex align-center justify-center">Resizing</div>
 </template>
 
 <script>
@@ -13,12 +8,10 @@ import { mapState } from 'vuex';
 // todo - какую-нибудь анимацию вместо слова resizing
 
 export default {
-  name: 'TheResizingOverlay',
-  computed: {
-    ...mapState([
-      'isResizing',
-    ]),
-  },
+    name: 'TheResizingOverlay',
+    computed: {
+        ...mapState(['isResizing']),
+    },
 };
 </script>
 

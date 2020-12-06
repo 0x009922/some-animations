@@ -1,63 +1,34 @@
 <template>
-  <div
-    class="the-controls__scrim"
-  >
-    <div class="the-controls__first">
-      <transition
-        appear
-        name="the-controls__menu-switch-transition--delayed"
-        @before-leave="$event.style.position = 'absolute'"
-      >
-        <icon-button
-          v-if="!isNavigating"
-          key="one"
-          size="24"
-          @click="showNavigation"
-        >
-          menu
-        </icon-button>
-        <icon-button
-          v-else
-          key="two"
-          size="24"
-          @click="hideNavigation"
-        >
-          close
-        </icon-button>
-      </transition>
-    </div>
-
-    <div class="the-controls__second">
-      <transition
-        appear
-        name="the-controls__menu-switch-transition"
-        @before-leave="$event.style.position = 'absolute'"
-      >
-        <template v-if="$route.name !== 'home'">
-          <router-link
-            v-if="isNavigating"
-            to="/"
-            tag="div"
-          >
-            <icon-button
-              @click="hideNavigation"
+    <div class="the-controls__scrim">
+        <div class="the-controls__first">
+            <transition
+                appear
+                name="the-controls__menu-switch-transition--delayed"
+                @before-leave="$event.style.position = 'absolute'"
             >
-              home
-            </icon-button>
-          </router-link>
+                <icon-button v-if="!isNavigating" key="one" size="24" @click="showNavigation"> menu </icon-button>
+                <icon-button v-else key="two" size="24" @click="hideNavigation"> close </icon-button>
+            </transition>
+        </div>
 
+        <div class="the-controls__second">
+            <transition
+                appear
+                name="the-controls__menu-switch-transition"
+                @before-leave="$event.style.position = 'absolute'"
+            >
+                <template v-if="$route.name !== 'home'">
+                    <router-link v-if="isNavigating" to="/" tag="div">
+                        <icon-button @click="hideNavigation"> home </icon-button>
+                    </router-link>
 
-          <icon-button
-            v-else
-            size="24"
-            @click="isForcePaused ? resume() : pause()"
-          >
-            {{ isForcePaused ? 'play' : 'pause' }}
-          </icon-button>
-        </template>
-      </transition>
+                    <icon-button v-else size="24" @click="isForcePaused ? resume() : pause()">
+                        {{ isForcePaused ? 'play' : 'pause' }}
+                    </icon-button>
+                </template>
+            </transition>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -66,23 +37,18 @@ import { mapState, mapMutations } from 'vuex';
 import IconButton from './AppIconButton';
 
 export default {
-  name: 'TheControls',
-  components: { IconButton },
-  computed: {
-    ...mapState([
-      'isForcePaused',
-      'isNavigating',
-      // 'isResizin'
-    ]),
-  },
-  methods: {
-    ...mapMutations([
-      'pause',
-      'resume',
-      'showNavigation',
-      'hideNavigation',
-    ]),
-  },
+    name: 'TheControls',
+    components: { IconButton },
+    computed: {
+        ...mapState([
+            'isForcePaused',
+            'isNavigating',
+            // 'isResizin'
+        ]),
+    },
+    methods: {
+        ...mapMutations(['pause', 'resume', 'showNavigation', 'hideNavigation']),
+    },
 };
 </script>
 

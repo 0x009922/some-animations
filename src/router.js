@@ -7,14 +7,14 @@ import animations from '@/animations';
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    ...animations.map((val) => val.route),
-    // ...animations.three,
-    // ...animations.other,
-    {
-      path: '*',
-      name: 'home',
-      component: Home,
-    },
-  ],
+    routes: [
+        ...animations.map((val) => val.route),
+        // ...animations.three,
+        // ...animations.other,
+        {
+            path: '*',
+            name: 'home',
+            component: Home,
+        },
+    ],
 });

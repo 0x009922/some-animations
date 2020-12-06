@@ -1,37 +1,29 @@
 <script>
 export default {
-  name: 'Pair',
-  functional: true,
-  render(h, context) {
-    const {
-      num, distance, size, delay,
-    } = context.props;
-    const rad = distance / 2;
-    const animationDelay = `${delay}s`;
-    const gap = 3;
-    return (
-      <transition name="pair-rotation" vOn:after-enter={afterEnter}>
-        <g class="pair" key={num} style={{ animationDelay }}>
-          <circle cx="0" cy="0" r={rad} class="round" style={{ animationDelay }} />
-          <line
-            x1={rad - size - gap}
-            y1="0"
-            x2={-(rad - size - gap)}
-            y2="0"
-            style={{ animationDelay }}
-          />
-          <circle cx={-rad} cy="0" r={size} class="dot" />
-          <circle cx={rad} cy="0" r={size} class="dot" />
-        </g>
-      </transition>
-    );
+    name: 'Pair',
+    functional: true,
+    render(h, context) {
+        const { num, distance, size, delay } = context.props;
+        const rad = distance / 2;
+        const animationDelay = `${delay}s`;
+        const gap = 3;
+        return (
+            <transition name="pair-rotation" vOn:after-enter={afterEnter}>
+                <g class="pair" key={num} style={{ animationDelay }}>
+                    <circle cx="0" cy="0" r={rad} class="round" style={{ animationDelay }} />
+                    <line x1={rad - size - gap} y1="0" x2={-(rad - size - gap)} y2="0" style={{ animationDelay }} />
+                    <circle cx={-rad} cy="0" r={size} class="dot" />
+                    <circle cx={rad} cy="0" r={size} class="dot" />
+                </g>
+            </transition>
+        );
 
-    function afterEnter() {
-      if (context.listeners.done) {
-        context.listeners.done();
-      }
-    }
-  },
+        function afterEnter() {
+            if (context.listeners.done) {
+                context.listeners.done();
+            }
+        }
+    },
 };
 </script>
 

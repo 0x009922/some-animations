@@ -1,27 +1,23 @@
 <template>
-  <div class="fade-layout">
-    <div class="canvas-wrapper">
-      <canvas
-        ref="target"
-        width="1000"
-        height="1000"
-      />
+    <div class="fade-layout">
+        <div class="canvas-wrapper">
+            <canvas ref="target" width="1000" height="1000" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 import Scene from './Scene';
 
 export default {
-  name: 'Fade',
-  mounted() {
-    const scene = new Scene(this.$refs.target);
-    this.$store.commit('setLoop', scene.render.bind(scene));
-  },
-  beforeDestroy() {
-    this.$store.commit('clearLoop');
-  },
+    name: 'Fade',
+    mounted() {
+        const scene = new Scene(this.$refs.target);
+        this.$store.commit('setLoop', scene.render.bind(scene));
+    },
+    beforeDestroy() {
+        this.$store.commit('clearLoop');
+    },
 };
 </script>
 

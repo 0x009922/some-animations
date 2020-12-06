@@ -1,27 +1,23 @@
 <template>
-  <div class="galaxy-v2 d-flex align-center justify-center fill-height">
-    <div class="galaxy-v2--wrapper">
-      <canvas
-        ref="target"
-        width="1000"
-        height="1000"
-      />
+    <div class="galaxy-v2 d-flex align-center justify-center fill-height">
+        <div class="galaxy-v2--wrapper">
+            <canvas ref="target" width="1000" height="1000" />
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 import Scene from './galaxy-v2';
 
 export default {
-  name: 'SimpleCanvasScene',
-  mounted() {
-    const scene = new Scene(this.$refs.target);
-    this.$store.commit('setLoop', scene.render.bind(scene));
-  },
-  beforeDestroy() {
-    this.$store.commit('clearLoop');
-  },
+    name: 'SimpleCanvasScene',
+    mounted() {
+        const scene = new Scene(this.$refs.target);
+        this.$store.commit('setLoop', scene.render.bind(scene));
+    },
+    beforeDestroy() {
+        this.$store.commit('clearLoop');
+    },
 };
 </script>
 

@@ -2,13 +2,17 @@
 import { mergeData } from 'vue-functional-data-merge';
 
 export default {
-  name: 'AppButton',
-  functional: true,
-  render(h, context) {
-    return h('div', mergeData(context.data, {
-      staticClass: 'app-button',
-    }), context.children);
-  },
+    name: 'AppButton',
+    functional: true,
+    render(h, context) {
+        return h(
+            'div',
+            mergeData(context.data, {
+                staticClass: 'app-button',
+            }),
+            context.children,
+        );
+    },
 };
 </script>
 

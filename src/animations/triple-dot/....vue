@@ -1,36 +1,34 @@
 <template>
-  <div class="triple-dot d-flex align-center justify-center fill-height">
-    <div
-      v-for="(state, i) in states"
-      :key="i"
-      class="triple-dot__dot"
-      :class="`triple-dot__dot--${state}`"
-      :style="{ animationPlayState }"
-      @animationend="onAnimationEnd(i)"
-    />
-  </div>
+    <div class="triple-dot d-flex align-center justify-center fill-height">
+        <div
+            v-for="(state, i) in states"
+            :key="i"
+            class="triple-dot__dot"
+            :class="`triple-dot__dot--${state}`"
+            :style="{ animationPlayState }"
+            @animationend="onAnimationEnd(i)"
+        />
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'DotDotDot',
-  data: () => ({
-    states: ['appearing', 'appearing', 'appearing'],
-  }),
-  computed: {
-    animationPlayState() {
-      return this.$store.getters.isPaused
-        ? 'paused'
-        : 'running'
+    name: 'DotDotDot',
+    data: () => ({
+        states: ['appearing', 'appearing', 'appearing'],
+    }),
+    computed: {
+        animationPlayState() {
+            return this.$store.getters.isPaused ? 'paused' : 'running';
+        },
     },
-  },
-  methods: {
-    onAnimationEnd(num) {
-      const current = this.states[num];
-      const next = current === 'appearing' ? 'leaving' : 'appearing';
-      this.states.splice(num, 1, next);
+    methods: {
+        onAnimationEnd(num) {
+            const current = this.states[num];
+            const next = current === 'appearing' ? 'leaving' : 'appearing';
+            this.states.splice(num, 1, next);
+        },
     },
-  },
 };
 </script>
 

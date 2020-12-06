@@ -2,14 +2,14 @@ import View from '@/components/ThreeSceneView';
 import Animation from './Animation';
 
 export default {
-  route: {
-    name: 'first',
-    path: '/first',
-    component: View,
-    props: {
-      AnimationClass: Animation,
+    route: {
+        name: 'first',
+        path: '/first',
+        component: View,
+        props: {
+            AnimationClass: Animation,
+        },
     },
-  },
-  tile: 'First',
-  category: 'three',
+    tile: 'First',
+    category: 'three',
 };

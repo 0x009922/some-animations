@@ -1,44 +1,39 @@
 <template>
-  <router-link
-    #default="{ navigate, isExactActive }"
-    :to="to"
-  >
-    <div
-      v-sparks="'dark'"
-      class="the-navigation-tile"
-      :class="{
-        'the-navigation-tile--active': isExactActive,
-      }"
-      @click="isExactActive ? hideNavigation() : navigate($event)"
-    >
-      {{ animation.tile }}
-    </div>
-  </router-link>
+    <router-link #default="{ navigate, isExactActive }" :to="to">
+        <div
+            v-sparks="'dark'"
+            class="the-navigation-tile"
+            :class="{
+                'the-navigation-tile--active': isExactActive,
+            }"
+            @click="isExactActive ? hideNavigation() : navigate($event)"
+        >
+            {{ animation.tile }}
+        </div>
+    </router-link>
 </template>
 
 <script>
 import { mapMutations } from 'vuex';
 
 export default {
-  name: 'TheNavigationTile',
-  props: {
-    // Информация об анимации. Объект из списка анимаций '@/animations'
-    animation: {
-      type: Object,
-      required: true,
+    name: 'TheNavigationTile',
+    props: {
+        // Информация об анимации. Объект из списка анимаций '@/animations'
+        animation: {
+            type: Object,
+            required: true,
+        },
     },
-  },
-  computed: {
-    to() {
-      const { route } = this.animation;
-      return route.name ? { name: route.name } : route.path;
+    computed: {
+        to() {
+            const { route } = this.animation;
+            return route.name ? { name: route.name } : route.path;
+        },
     },
-  },
-  methods: {
-    ...mapMutations([
-      'hideNavigation',
-    ]),
-  },
+    methods: {
+        ...mapMutations(['hideNavigation']),
+    },
 };
 </script>
 

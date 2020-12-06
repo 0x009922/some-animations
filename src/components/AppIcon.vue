@@ -2,39 +2,37 @@
 import { mergeData } from 'vue-functional-data-merge';
 
 export default {
-  name: 'AppIcon',
-  functional: true,
-  props: {
-    size: {
-      type: [String, Number],
-      default: 20,
+    name: 'AppIcon',
+    functional: true,
+    props: {
+        size: {
+            type: [String, Number],
+            default: 20,
+        },
+        color: {
+            type: String,
+            default: 'primary',
+        },
     },
-    color: {
-      type: String,
-      default: 'primary',
+    render(h, context) {
+        const [{ text: iconName }] = context.children;
+
+        if (typeof iconName !== 'string') {
+            console.warn('[app-icon] Content is not a string!');
+        }
+
+        const size = `${context.props.size}px`;
+
+        return h(
+            'span',
+            mergeData(context.data, {
+                class: ['app-icon', `app-icon--${context.props.color}`, 'mdi', `mdi-${iconName.trim()}`],
+                style: {
+                    fontSize: size,
+                },
+            }),
+        );
     },
-  },
-  render(h, context) {
-    const [{ text: iconName }] = context.children;
-
-    if (typeof iconName !== 'string') {
-      console.warn('[app-icon] Content is not a string!');
-    }
-
-    const size = `${context.props.size}px`;
-
-    return h('span', mergeData(context.data, {
-      class: [
-        'app-icon',
-        `app-icon--${context.props.color}`,
-        'mdi',
-        `mdi-${iconName.trim()}`,
-      ],
-      style: {
-        fontSize: size,
-      },
-    }));
-  },
 };
 </script>
 

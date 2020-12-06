@@ -6,56 +6,56 @@
  * @todo Сделать замедление и ускорение времени. При паузе и вручную
  */
 export default function (store) {
-  let lastFrame = window.performance.now();
-  let elapsed = 0;
-  let frame = null;
+    let lastFrame = window.performance.now();
+    let elapsed = 0;
+    let frame = null;
 
-  // Запускаю/останавливаю цикл в зависимости от состояния приложения
-  store.watch(
-    (state, getters) => getters.loopPlaying,
-    (val) => {
-      if (val) {
-        run();
-      } else {
-        stop();
-      }
-    },
-    { immediate: true },
-  );
+    // Запускаю/останавливаю цикл в зависимости от состояния приложения
+    store.watch(
+        (state, getters) => getters.loopPlaying,
+        (val) => {
+            if (val) {
+                run();
+            } else {
+                stop();
+            }
+        },
+        { immediate: true },
+    );
 
-  /**
-   * Запуск цикла
-   */
-  function run() {
-    tick();
-  }
-
-  /**
-   * Остановка цикла
-   */
-  function stop() {
-    cancelAnimationFrame(frame);
-  }
-
-  /**
-   * Тик. Самовоспроизводящаяся функция цикла.
-   * Считает время и запускает loop в хранилище
-   */
-  function tick() {
-    const now = performance.now();
-    const delta = now - lastFrame;
-    lastFrame = now;
-
-    if (delta < 300) {
-      try {
-        elapsed += delta;
-        store.state.loop(delta, elapsed);
-      } catch (err) {
-        console.error('Error in loop:', err);
-        store.commit('loopErrorOccured', err);
-      }
+    /**
+     * Запуск цикла
+     */
+    function run() {
+        tick();
     }
 
-    frame = requestAnimationFrame(tick);
-  }
+    /**
+     * Остановка цикла
+     */
+    function stop() {
+        cancelAnimationFrame(frame);
+    }
+
+    /**
+     * Тик. Самовоспроизводящаяся функция цикла.
+     * Считает время и запускает loop в хранилище
+     */
+    function tick() {
+        const now = performance.now();
+        const delta = now - lastFrame;
+        lastFrame = now;
+
+        if (delta < 300) {
+            try {
+                elapsed += delta;
+                store.state.loop(delta, elapsed);
+            } catch (err) {
+                console.error('Error in loop:', err);
+                store.commit('loopErrorOccured', err);
+            }
+        }
+
+        frame = requestAnimationFrame(tick);
+    }
 }

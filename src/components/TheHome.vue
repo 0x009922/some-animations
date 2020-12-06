@@ -1,36 +1,23 @@
 <template>
-  <div
-    v-sparks="'dark'"
-    class="the-home d-flex align-center justify-center"
-  >
-    <transition
-      appear
-      name="the-home__appear-transition"
-    >
-      <div>
-        <h1>Animations</h1>
+    <div v-sparks="'dark'" class="the-home d-flex align-center justify-center">
+        <transition appear name="the-home__appear-transition">
+            <div>
+                <h1>Animations</h1>
 
-        <div class="d-flex flex-column align-start">
-          <app-button @click="$store.commit('showNavigation')">
-            Открыть список
-          </app-button>
+                <div class="d-flex flex-column align-start">
+                    <app-button @click="$store.commit('showNavigation')"> Открыть список </app-button>
 
-          <a href="https://github.com/LiquidSolid/some-animations">
-            <app-button class="mt-2 d-flex align-center">
-              <app-icon
-                color="light"
-                class="mr-2"
-              >
-                github
-              </app-icon>
+                    <a href="https://github.com/LiquidSolid/some-animations">
+                        <app-button class="mt-2 d-flex align-center">
+                            <app-icon color="light" class="mr-2"> github </app-icon>
 
-              Github
-            </app-button>
-          </a>
-        </div>
-      </div>
-    </transition>
-  </div>
+                            Github
+                        </app-button>
+                    </a>
+                </div>
+            </div>
+        </transition>
+    </div>
 </template>
 
 <script>
@@ -38,8 +25,8 @@ import AppIcon from './AppIcon';
 import AppButton from './AppButton';
 
 export default {
-  name: 'Home',
-  components: { AppIcon, AppButton },
+    name: 'Home',
+    components: { AppIcon, AppButton },
 };
 </script>
 

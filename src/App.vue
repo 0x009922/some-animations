@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
-    <the-navigation />
-    <the-route-scope />
-    <the-resizing-overlay />
-    <the-controls />
-  </div>
+    <div id="app">
+        <the-navigation />
+        <the-route-scope />
+        <the-resizing-overlay />
+        <the-controls />
+    </div>
 </template>
 
 <script>
@@ -17,38 +17,33 @@ import TheResizingOverlay from '@/components/TheResizingOverlay';
 import TheControls from '@/components/TheControls';
 
 export default {
-  name: 'App',
-  components: {
-    TheRouteScope,
-    TheNavigation,
-    TheResizingOverlay,
-    TheControls,
-  },
-  computed: {
-    ...mapState([
-      'isResizing',
-    ]),
-  },
-  mounted() {
-    // Слежу за изменением размеров окна
-    window.addEventListener('resize', this.resized);
-  },
-  methods: {
-    resized() {
-      this.debouncedUpdateViewport();
-
-      if (!this.$store.state.isResizing) {
-        this.$store.commit('resizing');
-      }
+    name: 'App',
+    components: {
+        TheRouteScope,
+        TheNavigation,
+        TheResizingOverlay,
+        TheControls,
     },
-    debouncedUpdateViewport: debounce(
-      function () {
-        this.$store.commit('updateViewport');
-        this.$store.commit('resizingDone');
-      },
-      800,
-    ),
-  },
+    computed: {
+        ...mapState(['isResizing']),
+    },
+    mounted() {
+        // Слежу за изменением размеров окна
+        window.addEventListener('resize', this.resized);
+    },
+    methods: {
+        resized() {
+            this.debouncedUpdateViewport();
+
+            if (!this.$store.state.isResizing) {
+                this.$store.commit('resizing');
+            }
+        },
+        debouncedUpdateViewport: debounce(function () {
+            this.$store.commit('updateViewport');
+            this.$store.commit('resizingDone');
+        }, 800),
+    },
 };
 </script>
 

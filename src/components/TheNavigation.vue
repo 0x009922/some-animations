@@ -1,58 +1,45 @@
 <template>
-  <div class="the-navigation">
-    <transition
-      name="the-navigation__background-transition"
-      :duration="{ leave: 1100 }"
-    >
-      <div
-        v-if="isNavigating"
-        v-sparks="'light'"
-        class="the-navigation__background"
-      />
-    </transition>
+    <div class="the-navigation">
+        <transition name="the-navigation__background-transition" :duration="{ leave: 1100 }">
+            <div v-if="isNavigating" v-sparks="'light'" class="the-navigation__background" />
+        </transition>
 
-    <div
-      v-sparks="'light'"
-      class="the-navigation__content"
-      :class="{
-        'the-navigation__content--enable-pointer-events': isNavigating,
-      }"
-    >
-      <div
-        class="the-navigation__tiles-grid"
-      >
-        <template v-for="[category, items] in categorizedAnimations">
-          <tile-transition :key="`category-${category}`">
-            <div
-              v-if="isNavigating"
-              class="the-navigation__tiles-category"
-              :class="{
-                'the-navigation__tiles-category--empty': !category
-              }"
-            >
-              <template v-if="category in categories">
-                {{ categories[category].title }}
-              </template>
+        <div
+            v-sparks="'light'"
+            class="the-navigation__content"
+            :class="{
+                'the-navigation__content--enable-pointer-events': isNavigating,
+            }"
+        >
+            <div class="the-navigation__tiles-grid">
+                <template v-for="[category, items] in categorizedAnimations">
+                    <tile-transition :key="`category-${category}`">
+                        <div
+                            v-if="isNavigating"
+                            class="the-navigation__tiles-category"
+                            :class="{
+                                'the-navigation__tiles-category--empty': !category,
+                            }"
+                        >
+                            <template v-if="category in categories">
+                                {{ categories[category].title }}
+                            </template>
+                        </div>
+                    </tile-transition>
+
+                    <template v-for="(item, i) in items">
+                        <tile-transition :key="`${category}-${i}`">
+                            <div v-if="isNavigating">
+                                <tile :animation="item" />
+                            </div>
+                        </tile-transition>
+                    </template>
+                </template>
             </div>
-          </tile-transition>
+        </div>
 
-          <template v-for="(item, i) in items">
-            <tile-transition :key="`${category}-${i}`">
-              <div v-if="isNavigating">
-                <tile
-                  :animation="item"
-                />
-              </div>
-            </tile-transition>
-          </template>
-        </template>
-      </div>
+        <global-events @keyup.esc="toggleNavigation" />
     </div>
-
-    <global-events
-      @keyup.esc="toggleNavigation"
-    />
-  </div>
 </template>
 
 <script>
@@ -65,52 +52,44 @@ import animations from '@/animations';
 import animationsCategories from '@/animations/categories';
 
 export default {
-  name: 'TheNavigation',
-  components: {
-    Tile,
-    GlobalEvents,
-    TileTransition,
-  },
-  data: () => ({
-    categories: animationsCategories,
-  }),
-  computed: {
-    ...mapState([
-      'isNavigating',
-      'isForcePaused',
-    ]),
-    categorizedAnimations() {
-      const groups = animations.reduce((prev, val) => {
-        const cat = val.category || null;
-
-        if (prev.has(cat)) {
-          prev.get(cat).push(val);
-        } else {
-          prev.set(cat, [val]);
-        }
-
-        return prev;
-      }, new Map());
-
-      return [...groups];
+    name: 'TheNavigation',
+    components: {
+        Tile,
+        GlobalEvents,
+        TileTransition,
     },
-  },
-  watch: {
-    $route() {
-      this.hideNavigation();
-      if (this.isForcePaused) {
-        this.resume();
-      }
+    data: () => ({
+        categories: animationsCategories,
+    }),
+    computed: {
+        ...mapState(['isNavigating', 'isForcePaused']),
+        categorizedAnimations() {
+            const groups = animations.reduce((prev, val) => {
+                const cat = val.category || null;
+
+                if (prev.has(cat)) {
+                    prev.get(cat).push(val);
+                } else {
+                    prev.set(cat, [val]);
+                }
+
+                return prev;
+            }, new Map());
+
+            return [...groups];
+        },
     },
-  },
-  methods: {
-    ...mapMutations([
-      'showNavigation',
-      'hideNavigation',
-      'toggleNavigation',
-      'resume',
-    ]),
-  },
+    watch: {
+        $route() {
+            this.hideNavigation();
+            if (this.isForcePaused) {
+                this.resume();
+            }
+        },
+    },
+    methods: {
+        ...mapMutations(['showNavigation', 'hideNavigation', 'toggleNavigation', 'resume']),
+    },
 };
 </script>
 

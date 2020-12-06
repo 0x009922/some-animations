@@ -26,46 +26,46 @@ const DELTA_ANGLE = 0.18;
  * @returns {CubeDef[]}
  */
 function generateCubes(count, lastSize, lastAngle = 0, cubes = []) {
-  if (count <= 0) return cubes;
-  const angle = lastAngle + DELTA_ANGLE;
-  const size = (lastSize * 0.95) / (Math.sin(DELTA_ANGLE) + Math.cos(DELTA_ANGLE));
-  cubes.push({ size, angle });
-  return generateCubes(count - 1, size, angle, cubes);
+    if (count <= 0) return cubes;
+    const angle = lastAngle + DELTA_ANGLE;
+    const size = (lastSize * 0.95) / (Math.sin(DELTA_ANGLE) + Math.cos(DELTA_ANGLE));
+    cubes.push({ size, angle });
+    return generateCubes(count - 1, size, angle, cubes);
 }
 
 export default class extends Animation {
-  constructor(canvas) {
-    super();
-    this.scene = new THREE.Scene();
-    this.camera = new THREE.PerspectiveCamera(65, 1, 0.1, 1000);
-    this.renderer = new THREE.WebGLRenderer({
-      canvas,
-      antialias: true,
-    });
+    constructor(canvas) {
+        super();
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera(65, 1, 0.1, 1000);
+        this.renderer = new THREE.WebGLRenderer({
+            canvas,
+            antialias: true,
+        });
 
-    const material = new THREE.LineBasicMaterial({
-      color: 0xffffff,
-      linewidth: 2.5,
-    });
-    generateCubes(CUBES_COUNT, MAX_SIZE).forEach(({ size, angle }) => {
-      const geometry = new THREE.BoxGeometry(size, size, size);
-      const edges = new THREE.EdgesGeometry(geometry);
-      const lines = new THREE.LineSegments(edges, material);
-      lines.rotateY(angle);
-      this.scene.add(lines);
-    });
+        const material = new THREE.LineBasicMaterial({
+            color: 0xffffff,
+            linewidth: 2.5,
+        });
+        generateCubes(CUBES_COUNT, MAX_SIZE).forEach(({ size, angle }) => {
+            const geometry = new THREE.BoxGeometry(size, size, size);
+            const edges = new THREE.EdgesGeometry(geometry);
+            const lines = new THREE.LineSegments(edges, material);
+            lines.rotateY(angle);
+            this.scene.add(lines);
+        });
 
-    this.viewAngle = 0;
-  }
+        this.viewAngle = 0;
+    }
 
-  animate(delta) {
-    this.viewAngle += ROTATION_SPEED * delta * 0.001;
-    this.camera.position.set(
-      Math.cos(this.viewAngle) * CAMERA_DISTANCE,
-      Math.cos(Math.PI / 4) * CAMERA_DISTANCE,
-      Math.sin(this.viewAngle) * CAMERA_DISTANCE,
-    );
-    this.camera.lookAt(0, 0, 0);
-    this.render();
-  }
+    animate(delta) {
+        this.viewAngle += ROTATION_SPEED * delta * 0.001;
+        this.camera.position.set(
+            Math.cos(this.viewAngle) * CAMERA_DISTANCE,
+            Math.cos(Math.PI / 4) * CAMERA_DISTANCE,
+            Math.sin(this.viewAngle) * CAMERA_DISTANCE,
+        );
+        this.camera.lookAt(0, 0, 0);
+        this.render();
+    }
 }

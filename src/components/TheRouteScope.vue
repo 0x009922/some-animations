@@ -1,14 +1,12 @@
 <template>
-  <div
-    class="the-route-scope"
-  >
-    <router-view :key="$route.path" />
-  </div>
+    <div class="the-route-scope">
+        <router-view :key="$route.path" />
+    </div>
 </template>
 
 <script>
 export default {
-  name: 'TheRouteScope',
+    name: 'TheRouteScope',
 };
 </script>
 
