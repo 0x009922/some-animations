@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "lint": "prettier -w -u src && eslint --ext ts,vue .",
     "build": "vuedx-typecheck . && vite build"
   },
   "dependencies": {
@@ -22,5 +23,18 @@
     "vite": "^1.0.0-rc.13",
     "vite-tsconfig-paths": "^1.1.0",
     "vue-eslint-parser": "^7.2.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "alloy",
+      "alloy/typescript",
+      "alloy/vue"
+    ],
+    "env": {
+      "browser": true
+    },
+    "parserOptions": {
+      "parser": "@typescript-eslint/parser"
+    }
   }
 }
