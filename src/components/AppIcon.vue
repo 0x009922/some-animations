@@ -1,53 +1,41 @@
-<script>
-import { mergeData } from 'vue-functional-data-merge';
+<script lang="ts">
+import { defineComponent, FunctionalComponent, h, mergeProps } from 'vue';
 
-export default {
-    name: 'AppIcon',
-    functional: true,
-    props: {
-        size: {
-            type: [String, Number],
-            default: 20,
-        },
-        color: {
-            type: String,
-            default: 'primary',
-        },
+interface Props {
+    name: string;
+    size: string | number;
+}
+
+const component: FunctionalComponent<Props> = (props, { attrs }) => {
+    const fontSize = `${props.size}px`;
+
+    return h(
+        'span',
+        mergeProps(
+            {
+                class: ['app-icon', 'mdi', `mdi-${props.name}`],
+                style: { fontSize },
+            },
+            attrs,
+        ),
+    );
+};
+
+component.props = {
+    name: {
+        type: String,
+        required: true,
     },
-    render(h, context) {
-        const [{ text: iconName }] = context.children;
-
-        if (typeof iconName !== 'string') {
-            console.warn('[app-icon] Content is not a string!');
-        }
-
-        const size = `${context.props.size}px`;
-
-        return h(
-            'span',
-            mergeData(context.data, {
-                class: ['app-icon', `app-icon--${context.props.color}`, 'mdi', `mdi-${iconName.trim()}`],
-                style: {
-                    fontSize: size,
-                },
-            }),
-        );
+    size: {
+        type: [String, Number],
+        default: 20,
     },
 };
+
+export default component;
 </script>
 
 <style lang="sass">
-@use '@/assets/sass/const'
-
-@mixin path-color($color)
-  color: $color
-
 .app-icon
   line-height: 1em
-  &--primary
-    @include path-color(const.$primary)
-  &--dark
-    @include path-color(const.$text-primary)
-  &--light
-    @include path-color(const.$background)
 </style>

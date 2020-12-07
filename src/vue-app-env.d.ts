@@ -18,6 +18,13 @@ declare namespace NodeJS {
 
 // declare let process: NodeJS.Process;
 
+declare module '*.vue' {
+    import { defineComponent } from 'vue';
+
+    const component: ReturnType<typeof defineComponent>;
+    export default component;
+}
+
 declare module '*.gif' {
     const src: string;
     export default src;

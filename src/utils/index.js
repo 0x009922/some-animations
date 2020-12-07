@@ -53,17 +53,17 @@ export function rgbByHex(hex) {
     };
 }
 
-/**
- * @param {Function} func
- * @param {number} delay
- */
-export function debounce(func, delay) {
-    let timer;
-    return function (...args) {
-        const self = this;
-        clearTimeout(timer);
-        timer = setTimeout(() => {
-            func.apply(self, args);
-        }, delay);
-    };
-}
+// /**
+//  * @param {Function} func
+//  * @param {number} delay
+//  */
+// export function debounce(func, delay) {
+//     let timer;
+//     return function (...args) {
+//         const self = this;
+//         clearTimeout(timer);
+//         timer = setTimeout(() => {
+//             func.apply(self, args);
+//         }, delay);
+//     };
+// }

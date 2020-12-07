@@ -1,8 +1,4 @@
-# Анимации
-
-Здесь собраны различные Web-анимации.
-
-[Открыть демо](https://liquidsolid.github.io/some-animations).
+# [Performance Compendium](https://lqdsld.github.io/performance)
 
 ### TODO
 

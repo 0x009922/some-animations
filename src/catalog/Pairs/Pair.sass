@@ -1,0 +1,40 @@
+@use './const'
+
+@keyframes rot
+  from
+    transform: rotate(0)
+  to
+    transform: rotate(180deg)
+@keyframes fade
+  10%
+    opacity: 0
+  50%
+    opacity: 0.66
+  90%
+    opacity: 0
+
+@mixin anim($name)
+  animation: $name 1.8s cubic-bezier(0.45, 0, 0.55, 1)
+
+.pair-rotation-enter-active
+  @include anim(rot)
+  line,
+  circle.round
+    @include anim(fade)
+    @include anim(fade)
+
+g.pair
+  line
+    stroke: const.$pairs-fore
+    stroke-width: 1.5
+    opacity: 0
+  circle
+    stroke: none
+    &.dot
+      fill: const.$pairs-fore
+      stroke: none
+    &.round
+      fill: none
+      stroke: const.$pairs-fore
+      stroke-width: 1.5
+      opacity: 0

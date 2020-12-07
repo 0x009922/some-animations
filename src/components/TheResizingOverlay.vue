@@ -1,31 +1,21 @@
-<template>
-    <div v-if="isResizing" class="the-resizing-overlay d-flex align-center justify-center">Resizing</div>
-</template>
-
-<script>
-import { mapState } from 'vuex';
+<script lang="ts">
+import { defineComponent } from 'vue';
+import { useMainStore } from '../state/main-store';
 
 // todo - какую-нибудь анимацию вместо слова resizing
 
-export default {
+export default defineComponent({
     name: 'TheResizingOverlay',
-    computed: {
-        ...mapState(['isResizing']),
+    setup() {
+        const { isResizing } = useMainStore();
+
+        return { isResizing };
     },
-};
+});
 </script>
 
-<style lang="sass" scoped>
-@use '@/assets/sass/const'
-
-.the-resizing-overlay
-  position: fixed
-  z-index: 8
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  background: black
-  color: const.$primary
-  font-size: 4em
-</style>
+<template>
+    <div v-show="isResizing" class="h-screen w-screen fixed inset-0 flex items-center justify-center text-9xl bg-white">
+        Resizing
+    </div>
+</template>
