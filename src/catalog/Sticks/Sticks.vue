@@ -1,14 +1,94 @@
+<script lang="ts">
+import { useMainStore } from '@/state/main-store';
+import { LoopFn } from '@/utils/use-loop-fn';
+import { computed, defineComponent, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue';
+
+function createSticks(rows: number, columns: number): { row: number; col: number }[] {
+    const arr = [];
+    for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < columns; col++) {
+            arr.push({ row, col });
+        }
+    }
+    return arr;
+}
+
+const DELTAS = [
+    [405, 45, 45, 45, -45, 135, 45, -135],
+    [-45, -45, 405, -495, -45, -45, -45, -45],
+    [45, 45, 45, 45, 45, 45, -405, 315],
+    [-45, -45, -45, -45, 45, -135, 405, -315],
+    [45, -315, 225, 45, 45, 45, 45, 45],
+];
+
+const INTERVAL = 450;
+const ROWS = DELTAS.length;
+const COLUMNS = 5;
+
+const STICKS = createSticks(ROWS, COLUMNS);
+
+export default defineComponent({
+    name: 'Sticks',
+    setup() {
+        // номер итерации
+        const iteration = ref(-1);
+
+        // Текущие ротации, по строкам
+        const rotations: number[] = reactive(new Array(ROWS).fill(0));
+
+        // Текущие дельты - зависят от итерации
+        const currentDeltas = computed<number[]>(() => DELTAS.map((list) => list[iteration.value % list.length]));
+
+        // Обновление ротаций, когда меняются текущие дельты
+        watch(iteration, (val) => {
+            for (let i = 0; i < ROWS; i++) {
+                rotations[i] += currentDeltas.value[i];
+            }
+        });
+
+        // Обновление счётчика итераций
+        let elapsed = 0;
+        const loop: LoopFn = (dt) => {
+            elapsed += dt;
+            while (elapsed >= INTERVAL) {
+                elapsed %= INTERVAL;
+                iteration.value += 1;
+            }
+        };
+
+        // Настройка обновления через глобальный стор
+        const store = useMainStore();
+        onMounted(() => {
+            store.setLoop(loop);
+        });
+        onBeforeUnmount(() => {
+            store.dropLoop();
+        });
+
+        // PROFIT
+
+        return {
+            STICKS,
+            ROWS,
+            COLUMNS,
+
+            rotations,
+        };
+    },
+});
+</script>
+
 <template>
-    <div class="sticks-layout d-flex align-center justify-center">
+    <div class="flex items-center justify-center bg-black h-full">
         <div
             class="grid"
             :style="{
-                gridTemplateRows: `repeat(${rows}, auto)`,
-                gridTemplateColumns: `repeat(${columns}, auto)`,
+                gridTemplateRows: `repeat(${ROWS}, auto)`,
+                gridTemplateColumns: `repeat(${COLUMNS}, auto)`,
             }"
         >
             <div
-                v-for="{ row, col } in sticks"
+                v-for="{ row, col } in STICKS"
                 :key="`${row} ${col}`"
                 class="stick-wrapper d-flex align-center justify-center"
                 :style="{
@@ -22,76 +102,12 @@
     </div>
 </template>
 
-<script>
-const deltas = [
-    [405, 45, 45, 45, -45, 135, 45, -135],
-    [-45, -45, 405, -495, -45, -45, -45, -45],
-    [45, 45, 45, 45, 45, 45, -405, 315],
-    [-45, -45, -45, -45, 45, -135, 405, -315],
-    [45, -315, 225, 45, 45, 45, 45, 45],
-];
-
-export default {
-    name: 'Sticks',
-    data() {
-        return {
-            iteration: -1,
-            elapsed: 0,
-            columns: 5,
-            rows: 5,
-            interval: 450,
-            rotations: [0, 0, 0, 0, 0],
-        };
-    },
-    computed: {
-        currentDeltas() {
-            return deltas.map((list) => list[this.iteration % list.length]);
-        },
-        sticks() {
-            const arr = [];
-            for (let row = 0; row < this.rows; row++) {
-                for (let col = 0; col < this.columns; col++) {
-                    arr.push({ row, col });
-                }
-            }
-            return arr;
-        },
-    },
-    watch: {
-        currentDeltas(values) {
-            this.rotations = this.rotations.map((current, i) => current + values[i]);
-        },
-    },
-    mounted() {
-        this.$store.commit('setLoop', this.loop);
-    },
-    beforeDestroy() {
-        this.$store.commit('clearLoop');
-    },
-    methods: {
-        loop(delta) {
-            this.elapsed += delta;
-            if (this.elapsed >= this.interval) {
-                this.iteration += 1;
-                this.elapsed %= this.interval;
-            }
-        },
-    },
-};
-</script>
-
 <style lang="sass" scoped>
-.sticks-layout
-  color: white
-  // @include center-box
-  height: 100%
-  .grid
-    display: grid
-  .stick-wrapper
+.stick-wrapper
     width: 100px
     height: 100px
     // @include center-box
-  .stick
+.stick
     width: 65px
     border: 4px solid white
     background: white

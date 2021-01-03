@@ -1,4 +1,3 @@
-import asyncComponentFactory from '../async-component-factory';
 import { AnimationDefinition } from '../types';
 
 const def: AnimationDefinition = {

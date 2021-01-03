@@ -1,13 +1,17 @@
 import * as THREE from 'three';
-import Animation from '@/utils/ThreeAnimation';
 import { tween } from '@/utils';
+import { AnimationTickFn, createResizer, ThreeAnimationFactory } from '@/modules/simple-three-setup';
 
 const _count = 1000;
 const _speed = [5, 10];
 const _spawn = -5;
 
 class Line {
-    constructor(scene) {
+    private line: THREE.Line;
+
+    private speed: number;
+
+    public constructor(scene: THREE.Scene) {
         const geo = new THREE.Geometry();
         geo.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, Math.random()));
         const material = new THREE.LineBasicMaterial({
@@ -23,7 +27,7 @@ class Line {
         scene.add(this.line);
     }
 
-    update(delta) {
+    public update(delta: number) {
         this.line.position.z += this.speed * delta;
         if (this.line.position.z >= 6) {
             this.line.position.z = _spawn;
@@ -31,25 +35,31 @@ class Line {
     }
 }
 
-export default class extends Animation {
-    constructor(target) {
-        super();
-        this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera();
-        this.renderer = new THREE.WebGLRenderer({ canvas: target });
+const factory: ThreeAnimationFactory = (canvas) => {
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera();
+    const renderer = new THREE.WebGLRenderer({ canvas });
 
-        this.lines = [];
-        for (let i = 0; i < _count; i++) {
-            this.lines.push(new Line(this.scene));
-        }
-        this.camera.position.z = 5;
+    const lines: Line[] = [];
+    for (let i = 0; i < _count; i++) {
+        lines.push(new Line(scene));
     }
+    camera.position.z = 5;
 
-    animate(delta) {
-        delta *= 0.001;
+    const render = () => renderer.render(scene, camera);
+
+    const animate: AnimationTickFn = (dt) => {
+        const delta = dt * 0.001;
         for (let i = 0; i < _count; i++) {
-            this.lines[i].update(delta);
+            lines[i].update(delta);
         }
-        this.render();
-    }
-}
+        render();
+    };
+
+    return {
+        animate,
+        setSize: createResizer({ camera, renderer, render }),
+    };
+};
+
+export default factory;

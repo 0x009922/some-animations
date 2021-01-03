@@ -10,9 +10,11 @@ import Fade from './Fade';
 import NEF from './NeverEndingFun';
 import Pairs from './Pairs';
 import RedRoom from './RedRoom';
-import GalaxyV2 from './GalaxyV2';
 import Galaxy from './Galaxy';
+import GalaxyV2 from './GalaxyV2';
+import Space from './Space';
 import Cubes from './ConcentricCubes';
+import Sticks from './Sticks';
 
 const items: AnimationDefinition[] = [
     V,
@@ -25,7 +27,9 @@ const items: AnimationDefinition[] = [
     RedRoom,
     Galaxy,
     GalaxyV2,
+    Space,
     Cubes,
+    Sticks,
 ];
 
 export function animationNameToRouteName(v: string): string {
