@@ -2,7 +2,7 @@
 
 Здесь собраны различные Web-анимации.
 
-[Открыть демо](https://liquidsolid.github.io/some-animations).
+[Открыть демо](https://0x009922.github.io/some-animations).
 
 ### TODO
 
