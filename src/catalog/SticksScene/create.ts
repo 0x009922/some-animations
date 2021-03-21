@@ -1,6 +1,6 @@
 import { Mesh, CylinderGeometry, MeshDepthMaterial, Scene, WebGLRenderer, PerspectiveCamera, Vector3 } from 'three';
-import { AnimationTickFn, createResizer, ThreeAnimationFactory } from '@/modules/simple-three-setup';
-import { createArrayFrom } from '@/utils/create-array';
+import { AnimationTickFn, createResizer, ThreeAnimationFactory } from '~/modules/simple-three-setup';
+import { createArrayFrom } from '~/utils/create-array';
 
 const _length = 2;
 const _rad = 0.05;

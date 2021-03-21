@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import ThreeAnimation from '@/utils/ThreeAnimation';
+import ThreeAnimation from '~/utils/ThreeAnimation';
 
 export default class extends ThreeAnimation {
     constructor(target) {

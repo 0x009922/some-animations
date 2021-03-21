@@ -1,6 +1,6 @@
-import { AnimationDefinition } from '../types';
+import { defineAnimation } from '~/catalog/types';
 
-const def: AnimationDefinition = {
+export default defineAnimation({
     name: 'sticks-scene',
     componentLoader: () => import('./Animation.vue'),
     summary: 'Sticks scene',

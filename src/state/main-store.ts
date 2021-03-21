@@ -1,9 +1,9 @@
 import { computed, readonly, ref } from 'vue';
 import { syncRef } from '@vueuse/core';
-import createProvidableState from '@/utils/create-providable-state';
-import { mapState } from '@/utils/map-reactive-state';
-import useLoopFn, { LoopFn } from '@/utils/use-loop-fn';
-import useViewport from '@/utils/use-viewport';
+import createProvidableState from '~/utils/create-providable-state';
+import { mapState } from '~/utils/map-reactive-state';
+import useLoopFn, { LoopFn } from '~/utils/use-loop-fn';
+import useViewport from '~/utils/use-viewport';
 
 export const { inject: useMainStore, ...tools } = createProvidableState({
     symbolDescription: 'Main store',

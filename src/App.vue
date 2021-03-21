@@ -3,7 +3,7 @@ import { defineComponent } from 'vue';
 import { tools as mainStoreTools } from './state/main-store';
 // import { mapState } from 'vuex';
 
-// import { debounce } from '@/utils';
+// import { debounce } from '~/utils';
 import TheNavigation from './components/TheNavigation.vue';
 import TheRouteScope from './components/TheRouteScope.vue';
 import TheResizingOverlay from './components/TheResizingOverlay.vue';

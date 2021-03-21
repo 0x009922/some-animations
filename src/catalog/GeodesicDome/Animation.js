@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import ThreeAnimation from '@/utils/ThreeAnimation';
-import { tween, random } from '@/utils';
+import ThreeAnimation from '~/utils/ThreeAnimation';
+import { tween, random } from '~/utils';
 
 const { Vector3 } = THREE;
 

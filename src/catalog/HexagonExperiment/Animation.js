@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import Animation from '@/utils/ThreeAnimation';
+import Animation from '~/utils/ThreeAnimation';
 
 const _hz = [0.05, 0.3];
 const _amp = [0.3, 1];

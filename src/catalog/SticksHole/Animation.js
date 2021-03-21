@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import Animation from '@/utils/ThreeAnimation';
-import { tween } from '@/utils';
+import Animation from '~/utils/ThreeAnimation';
+import { tween } from '~/utils';
 
 const _length = 2;
 const _rad = 0.02;

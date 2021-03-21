@@ -10,8 +10,8 @@ import TheNavigationItem from './TheNavigationItem.vue';
 
 // import Tile from './TheNavigationTile';
 // import TileTransition from './TheNavigationTileTransition';
-// import animations from '@/animations';
-// import animationsCategories from '@/animations/categories';
+// import animations from '~/animations';
+// import animationsCategories from '~/animations/categories';
 
 function useKeyPress(params: { handler: () => unknown }) {
     function listener(e: KeyboardEvent) {

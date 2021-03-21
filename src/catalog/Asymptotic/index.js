@@ -1,4 +1,4 @@
-import View from '@/components/ThreeSceneView';
+import View from '~/components/ThreeSceneView';
 import Animation from './Animation';
 
 export default {

@@ -8,3 +8,7 @@ export interface AnimationDefinition {
     componentLoader: () => Promise<Component>;
     category?: AnimationCategory;
 }
+
+export function defineAnimation(v: AnimationDefinition): AnimationDefinition {
+    return v;
+}

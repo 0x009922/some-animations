@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import Animation from '@/utils/ThreeAnimation';
-import { tween, random } from '@/utils';
+import Animation from '~/utils/ThreeAnimation';
+import { tween, random } from '~/utils';
 
 const config = {
     xRange: [55, 0],

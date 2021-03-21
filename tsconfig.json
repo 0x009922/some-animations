@@ -7,14 +7,15 @@
         "strict": true,
         "jsx": "preserve",
         "sourceMap": true,
-        "allowJs": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
         "lib": ["esnext", "dom"],
-        "noEmit": true,
+        "types": ["vite/client"],
         "plugins": [{ "name": "@vuedx/typescript-plugin-vue" }],
         "paths": {
-            "@/*": ["src/*"]
+            "~/*": ["src/*"]
         }
     },
-    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "src/**/*.js"],
+    "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
     "exclude": ["src/utils/three/**/*"]
 }
