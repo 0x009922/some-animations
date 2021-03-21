@@ -17,6 +17,7 @@
     },
     "devDependencies": {
         "@types/debounce": "^1.2.0",
+        "@types/three": "^0.126.1",
         "@typescript-eslint/eslint-plugin": "^4.18.0",
         "@typescript-eslint/parser": "^4.18.0",
         "@vitejs/plugin-vue": "^1.1.5",

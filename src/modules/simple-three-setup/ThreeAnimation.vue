@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue';
-import { ThreeAnimationFactory, ThreeAnimation } from '~/utils/ThreeAnimation';
+import { ThreeAnimationFactory, ThreeAnimation } from './types';
 import { useMainStore } from '~/state/main-store';
 
 /**

@@ -21,10 +21,10 @@ export function animationNameToRouteName(v: string): string {
     return `item-${v}`;
 }
 
-const catalogRoutes: RouteRecordRaw[] = items.map(({ name, componentLoader }) => ({
+const catalogRoutes: RouteRecordRaw[] = items.map(({ name, component }) => ({
     name: animationNameToRouteName(name),
     path: `/perf/${name}`,
-    component: componentLoader,
+    component: component,
 }));
 
 export { items, catalogRoutes };

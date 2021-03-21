@@ -7,6 +7,7 @@ dependencies:
   vue-router: 4.0.5_vue@3.0.7
 devDependencies:
   '@types/debounce': 1.2.0
+  '@types/three': 0.126.1
   '@typescript-eslint/eslint-plugin': 4.18.0_ef0f217f6395606fd8bbe7b0291eff7e
   '@typescript-eslint/parser': 4.18.0_eslint@7.22.0+typescript@4.2.3
   '@vitejs/plugin-vue': 1.1.5_@vue+compiler-sfc@3.0.7
@@ -489,6 +490,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-my6fLBvpY70KattTNzYOK6KU1oR1+UCz9ug/JbcF5UrEmeCt9P7DV2t7L8+t18mMPINqGQCE4O8PLOPbI84gxw==
+  /@types/three/0.126.1:
+    dev: true
+    resolution:
+      integrity: sha512-GR7e3d9CYYmwIR3HDiRZDFpoHIp2Vg5IbULcIjL296C8VbjruGwJ7Br1GTBkslEVfkezKrtJTf7KuqoIt3oYTg==
   /@typescript-eslint/eslint-plugin/4.18.0_ef0f217f6395606fd8bbe7b0291eff7e:
     dependencies:
       '@typescript-eslint/experimental-utils': 4.18.0_eslint@7.22.0+typescript@4.2.3
@@ -2732,6 +2737,7 @@ packages:
 specifiers:
   '@mdi/font': ^5.9.55
   '@types/debounce': ^1.2.0
+  '@types/three': ^0.126.1
   '@typescript-eslint/eslint-plugin': ^4.18.0
   '@typescript-eslint/parser': ^4.18.0
   '@vitejs/plugin-vue': ^1.1.5

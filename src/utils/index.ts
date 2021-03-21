@@ -1,38 +1,33 @@
-export function tween(...args) {
+export function tween(...args: any[]) {
     if (args.length === 2) {
         return args[1] * (args[0][1] - args[0][0]) + args[0][0];
     }
     if (args.length === 3) {
         return args[2] * (args[1] - args[0]) + args[0];
     }
-    throw new TypeError('Invalid arguments:', args);
+    throw new TypeError(`Invalid arguments: ${args}`);
 }
 
-export function rgb(...args) {
+export function rgb(...args: any[]) {
     if (args.length === 1 && Array.isArray(args[0])) {
         return `rgb(${args[0].join(',')})`;
     }
     if (args.length === 3) {
         return `rgb(${args.join(',')})`;
     }
-    throw new TypeError('Invalid arguments:', args);
+    throw new TypeError(`Invalid arguments: ${args}`);
 }
 
-export function sum(...args) {
-    // if (Array.isArray(args[0])) {
-    //   return args[0].reduce((sum, v) => sum + v, 0)
-    // }
-    if ('length' in args[0]) {
-        let result = 0;
-        for (let i = 0; i < args[0].length; i++) {
-            result += args[0][i];
-        }
-        return result;
-    }
-    return args.reduce((prev, val) => prev + val, 0);
+export function sum(...args: any[]) {
+    const arr = Array.isArray(args[0]) ? args[0] : args;
+    return arr.reduce((prev, val) => prev + val, 0);
 }
 
-export function random(...params) {
+export function random(): number;
+export function random(to: number): number;
+export function random(from: number, to: number): number;
+
+export function random(...params: number[]) {
     if (!params.length) return Math.random();
     let start = 0;
     let end = 1;
@@ -45,7 +40,7 @@ export function random(...params) {
     return (end - start) * Math.random() + start;
 }
 
-export function rgbByHex(hex) {
+export function rgbByHex(hex: number) {
     return {
         r: hex >> 16,
         g: (hex & 0xff00) >> 8,

@@ -2,7 +2,7 @@ import { defineAnimation } from '~/catalog/types';
 
 export default defineAnimation({
     name: '...',
-    componentLoader: () => import('./....vue'),
+    component: () => import('./....vue'),
     summary: '...',
     category: 'other',
 });
