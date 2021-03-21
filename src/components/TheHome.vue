@@ -28,7 +28,14 @@ export default {
                 <h1 class="text-6xl">Performance<br />Compendium</h1>
 
                 <div class="d-flex flex-column align-start">
-                    <it-button @click="openNavigation"> Открыть список </it-button>
+                    <div
+                        class="border px-2 py-1 inline-block rounded focus:ring focus:outline-none hover:bg-gray-50 transition"
+                        role="button"
+                        tabindex="0"
+                        @click="openNavigation"
+                    >
+                        Открыть список
+                    </div>
 
                     <!-- <a href="https://github.com/LiquidSolid/some-animations" target="_blank">
                         <app-button class="mt-2 d-flex align-center">
