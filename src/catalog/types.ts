@@ -8,10 +8,10 @@ export interface AnimationDefinition {
     component: Component;
     category?: AnimationCategory;
 
-    /**
-     * Номер анимации?
-     */
-    num?: number;
+    // /**
+    //  * Номер анимации?
+    //  */
+    // num?: number;
 }
 
 export function defineAnimation(v: AnimationDefinition): AnimationDefinition {

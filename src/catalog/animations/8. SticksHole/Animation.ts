@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import Animation from '~/utils/ThreeAnimation';
 import { tween } from '~/utils';
+import LegacyThreeAnimation, { Animatable } from '../../LegacyThreeAnimation';
 
 const _length = 2;
 const _rad = 0.02;
@@ -11,7 +11,9 @@ const _start = -10;
 const _end = 8;
 
 class Stick {
-    constructor() {
+    public stick: THREE.Mesh;
+
+    public constructor() {
         const geom = new THREE.CylinderGeometry(_rad, _rad, _length, 32);
         const material = new THREE.MeshStandardMaterial({
             color: 0xffffff,
@@ -30,7 +32,7 @@ class Stick {
         );
     }
 
-    update(delta) {
+    public update(delta: number) {
         this.stick.position.z += delta * _speed;
         if (this.stick.position.z >= _end) {
             this.stick.position.z = _start;
@@ -41,7 +43,7 @@ class Stick {
     }
 }
 
-function createGrid(scene) {
+function createGrid(scene: THREE.Scene) {
     const _width = 3;
     const _yStart = 1;
 
@@ -49,8 +51,10 @@ function createGrid(scene) {
         color: 0x101010,
         linewidth: 6,
     });
-    const geometry = new THREE.Geometry();
-    geometry.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(_width, 0, 0));
+    const geometry = new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(0, 0, 0),
+        new THREE.Vector3(_width, 0, 0),
+    ]);
 
     for (let i = 0; i < 10; i++) {
         const line = new THREE.Line(geometry, material);
@@ -66,8 +70,10 @@ function createGrid(scene) {
     }
 }
 
-export default class extends Animation {
-    constructor(canvas) {
+export default class extends LegacyThreeAnimation implements Animatable {
+    private sticks: Stick[];
+
+    public constructor(canvas: HTMLCanvasElement) {
         super();
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer({
@@ -90,8 +96,8 @@ export default class extends Animation {
         this.scene.add(...this.sticks.map((x) => x.stick));
     }
 
-    animate(delta) {
-        delta *= 0.001;
+    public animate(deltaMs: number) {
+        const delta = deltaMs * 0.001;
         this.sticks.forEach((x) => x.update(delta));
 
         this.render();

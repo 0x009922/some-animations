@@ -1,8 +1,10 @@
 import * as THREE from 'three';
-import ThreeAnimation from '~/utils/ThreeAnimation';
+import LegacyThreeAnimation, { Animatable } from '../../LegacyThreeAnimation';
 
-export default class extends ThreeAnimation {
-    constructor(target) {
+export default class extends LegacyThreeAnimation implements Animatable {
+    private cube: THREE.Mesh;
+
+    public constructor(target: HTMLCanvasElement) {
         super();
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
@@ -33,7 +35,7 @@ export default class extends ThreeAnimation {
         this.scene = scene;
     }
 
-    animate() {
+    public animate() {
         this.cube.rotation.x += 0.01;
         this.cube.rotation.y += 0.02;
         this.render();

@@ -1,13 +1,26 @@
 import * as THREE from 'three';
-import Animation from '~/utils/ThreeAnimation';
+import { ThreeAnimationFactory } from '~/modules/simple-three-setup';
+import LegacyThreeAnimation, { Animatable } from '../../LegacyThreeAnimation';
 
-const _hz = [0.05, 0.3];
-const _amp = [0.3, 1];
+const _hz: [number, number] = [0.05, 0.3];
+const _amp: [number, number] = [0.3, 1];
 const _rad = 1;
 const _gap = 2;
 
-export default class extends Animation {
-    constructor(target) {
+const factory: ThreeAnimationFactory = (canvas) => {
+    const anim = new Animation(canvas);
+    return {
+        animate: anim.animate.bind(anim),
+        setSize: anim.setSize.bind(anim),
+    };
+};
+
+export default factory;
+
+class Animation extends LegacyThreeAnimation implements Animatable {
+    private hexs: Hexagon[];
+
+    public constructor(target: HTMLCanvasElement) {
         super();
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera();
@@ -50,16 +63,16 @@ export default class extends Animation {
             [Math.sqrt(3), Math.PI * (5 / 3)],
         ];
 
-        this.hexs = [];
-        for (let i = 0; i < positions.length; i++) {
+        this.hexs = positions.reduce<Hexagon[]>((prev, pos) => {
             const hex = new THREE.Mesh(geometry, material);
-            hex.position.x = _gap * positions[i][0] * Math.cos(positions[i][1]);
-            hex.position.y = _gap * positions[i][0] * Math.sin(positions[i][1]);
+            hex.position.x = _gap * pos[0] * Math.cos(pos[1]);
+            hex.position.y = _gap * pos[0] * Math.sin(pos[1]);
             hex.rotation.x = Math.PI / 2;
             hex.rotation.y = Math.PI / 6;
             this.scene.add(hex);
-            this.hexs.push(new Hexagon(hex));
-        }
+            prev.push(new Hexagon(hex));
+            return prev;
+        }, []);
 
         this.camera.position.x = -5;
         this.camera.position.y = -5;
@@ -87,28 +100,31 @@ export default class extends Animation {
         }
     }
 
-    animate(delta, elapsed) {
-        elapsed /= 1000;
-        for (let i = 0; i < this.hexs.length; i++) {
-            this.hexs[i].update(elapsed);
-        }
+    public animate(delta: number, elapsedMs: number) {
+        const elapsed = elapsedMs / 1000;
+        this.hexs.forEach((x) => x.update(elapsed));
         this.render();
     }
 }
 
 class Hexagon {
-    constructor(mesh) {
+    private mesh: THREE.Mesh;
+    private hz: number;
+    private amp: number;
+    private num: number;
+
+    public constructor(mesh: THREE.Mesh) {
         this.mesh = mesh;
         this.hz = between(_hz, Math.random());
         this.amp = between(_amp, Math.random());
         this.num = Math.random();
     }
 
-    update(elapsed) {
+    public update(elapsed: number) {
         this.mesh.position.z = this.amp * Math.cos((elapsed * this.hz + this.num) * Math.PI * 2);
     }
 }
 
-function between(pair, n) {
+function between(pair: [number, number], n: number) {
     return n * (pair[1] - pair[0]) + pair[0];
 }

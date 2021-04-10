@@ -12,12 +12,16 @@ export default defineComponent({
             type: Object,
             required: true,
         },
+        order: {
+            type: Number,
+            default: null,
+        },
     },
 });
 </script>
 
 <template>
     <router-link :to="to" class="px-4 py-2 block text-gray-500 hover:text-black" active-class="text-blue-500">
-        {{ title }}
+        <template v-if="order !== null">{{ order }}. </template>{{ title }}
     </router-link>
 </template>

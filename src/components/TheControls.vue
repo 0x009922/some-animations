@@ -1,3 +1,24 @@
+<script>
+import { mapState, mapMutations } from 'vuex';
+
+import IconButton from './AppIconButton';
+
+export default {
+    name: 'TheControls',
+    components: { IconButton },
+    computed: {
+        ...mapState([
+            'isForcePaused',
+            'isNavigating',
+            // 'isResizin'
+        ]),
+    },
+    methods: {
+        ...mapMutations(['pause', 'resume', 'showNavigation', 'hideNavigation']),
+    },
+};
+</script>
+
 <template>
     <div class="the-controls__scrim">
         <div class="the-controls__first">
@@ -30,27 +51,6 @@
         </div>
     </div>
 </template>
-
-<script>
-import { mapState, mapMutations } from 'vuex';
-
-import IconButton from './AppIconButton';
-
-export default {
-    name: 'TheControls',
-    components: { IconButton },
-    computed: {
-        ...mapState([
-            'isForcePaused',
-            'isNavigating',
-            // 'isResizin'
-        ]),
-    },
-    methods: {
-        ...mapMutations(['pause', 'resume', 'showNavigation', 'hideNavigation']),
-    },
-};
-</script>
 
 <style lang="sass" scoped>
 @use '@/assets/sass/easings'

@@ -51,12 +51,14 @@ export default defineComponent({
 
         const items: {
             title: string;
+            order: number;
             to: RouteLocationRaw;
         }[] = catalogItems.map((x) => ({
             title: x.summary,
             to: {
                 name: animationNameToRouteName(x.name),
             },
+            order: x.order,
         }));
 
         return {
@@ -116,8 +118,8 @@ export default defineComponent({
             <div>
                 <the-navigation-item :to="{ name: 'home' }" title="Домашняя страница" />
 
-                <template v-for="{ title, to } in items">
-                    <the-navigation-item v-bind="{ to, title }" />
+                <template v-for="(item, i) in items" :key="i">
+                    <the-navigation-item v-bind="item" />
                 </template>
             </div>
         </div>
