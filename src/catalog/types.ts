@@ -7,6 +7,11 @@ export interface AnimationDefinition {
     summary: string;
     component: Component;
     category?: AnimationCategory;
+
+    /**
+     * Номер анимации?
+     */
+    num?: number;
 }
 
 export function defineAnimation(v: AnimationDefinition): AnimationDefinition {

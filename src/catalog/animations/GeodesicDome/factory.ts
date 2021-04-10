@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import ThreeAnimation from '~/utils/ThreeAnimation';
 import { tween, random } from '~/utils';
+import { createResizer, ThreeAnimationFactory } from '~/modules/simple-three-setup';
 
 const { Vector3 } = THREE;
 
@@ -34,9 +34,44 @@ const config = {
     camStartElapsed: random(100),
 };
 
-export default class extends ThreeAnimation {
-    constructor(canvas) {
-        super();
+interface Light {
+    value: THREE.Color;
+    position: THREE.Vector3;
+}
+
+const factory: ThreeAnimationFactory = (canvas) => {
+    const animation = new Animation(canvas);
+
+    return {
+        animate(delta, elapsed) {
+            animation.animate(delta, elapsed);
+        },
+        setSize: createResizer({
+            render: () => animation.render(),
+            renderer: animation.renderer,
+            camera: animation.camera,
+        }),
+    };
+};
+
+export default factory;
+
+class Animation {
+    public scene: THREE.Scene;
+
+    public camera: THREE.PerspectiveCamera;
+
+    public renderer: THREE.WebGLRenderer;
+
+    private geometry: THREE.IcosahedronBufferGeometry;
+
+    private faces: { center: THREE.Vector3; direction: THREE.Vector3 }[] = [];
+
+    private source: number[] = [];
+
+    private elapsed = 0;
+
+    public constructor(canvas: HTMLCanvasElement) {
         this.geometry = new THREE.IcosahedronBufferGeometry(config.icosahedronRadius, config.detail);
         this.geometry.setAttribute(
             'color',
@@ -44,7 +79,7 @@ export default class extends ThreeAnimation {
         );
         const material = new THREE.MeshBasicMaterial({
             side: THREE.BackSide,
-            vertexColors: THREE.VertexColors,
+            vertexColors: (THREE as any).VertexColors,
         });
         const mesh = new THREE.Mesh(this.geometry, material);
 
@@ -63,13 +98,18 @@ export default class extends ThreeAnimation {
         this.updateLook();
     }
 
-    animate(delta, elapsed) {
-        this.updateLook(elapsed * 0.001);
+    public animate(delta: number): void {
+        this.elapsed += delta * 0.001;
+        this.updateLook();
         this.render();
     }
 
-    updateLook(elapsed) {
-        elapsed += config.camStartElapsed;
+    public render() {
+        this.renderer.render(this.scene, this.camera);
+    }
+
+    private updateLook() {
+        const elapsed = this.elapsed + config.camStartElapsed;
         const y = -elapsed * config.camYSpeed;
         const x = elapsed * config.camXSpeed;
 
@@ -85,10 +125,10 @@ export default class extends ThreeAnimation {
         this.camera.position.set(...pos.toArray());
     }
 
-    prepareFaces() {
+    private prepareFaces() {
         this.faces = [];
 
-        const { array } = this.geometry.attributes.position;
+        const array = this.geometry.attributes.position.array as number[];
         for (let i = 0; i < array.length; i += 9) {
             const vts = [
                 new THREE.Vector3(...array.slice(i, i + 3)),
@@ -121,44 +161,48 @@ export default class extends ThreeAnimation {
         this.geometry.attributes.position.needsUpdate = true;
     }
 
-    skew() {
+    private skew() {
         this.faces.forEach(({ direction }, i) => {
             const shift = random(config.maxShift);
             const deltas = direction.toArray().map((coord) => coord * shift);
             const { array: positions } = this.geometry.attributes.position;
             for (let index = i * 9; index < i * 9 + 9; index++) {
-                positions[index] = this.source[index] + deltas[index % 3];
+                (positions as number[])[index] = this.source[index] + deltas[index % 3];
             }
         });
         this.geometry.attributes.position.needsUpdate = true;
     }
 
-    computeColors() {
+    private computeColors() {
         const { array: colors } = this.geometry.attributes.color;
 
         this.faces.forEach(({ center }, index) => {
             const summary = [0, 0, 0];
-            for (let j = 0; j < config.lights.length; j++) {
-                const computed = compute(config.lights[j], center);
-                Object.keys(computed).forEach((key) => {
-                    summary[key] += computed[key];
+            for (const light of config.lights) {
+                compute(light, center).forEach((value, index) => {
+                    summary[index] += value;
                 });
+                // Object.keys(computed).forEach((key) => {
+                //     summary[key] += computed[key];
+                // });
             }
             for (let j = 0; j < 9; j++) {
-                colors[index * 9 + j] = summary[j % 3] / 3;
+                (colors as number[])[index * 9 + j] = summary[j % 3] / 3;
             }
         });
 
         this.geometry.attributes.color.needsUpdate = true;
 
-        function compute(light, vec) {
+        function compute(light: Light, vec: THREE.Vector3) {
             const pos = light.position;
             const length = new Vector3(pos.x - vec.x, pos.y - vec.y, pos.z - vec.z).length();
             if (length <= config.lightsRange[0]) return light.value.toArray();
             if (length >= config.lightsRange[1]) return config.defaultColor.toArray();
             let x = length - config.lightsRange[0];
             x /= config.lightsRange[1] - config.lightsRange[0];
-            return ['r', 'g', 'b'].map((component) => tween(light.value[component], config.defaultColor[component], x));
+            return (['r', 'g', 'b'] as (keyof Pick<THREE.Color, 'r' | 'g' | 'b'>)[]).map((component) =>
+                tween(light.value[component], config.defaultColor[component], x),
+            );
         }
     }
 }

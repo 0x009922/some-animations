@@ -1,4 +1,4 @@
-export function tween(...args: any[]) {
+export function tween(...args: any[]): number {
     if (args.length === 2) {
         return args[1] * (args[0][1] - args[0][0]) + args[0][0];
     }
@@ -8,7 +8,7 @@ export function tween(...args: any[]) {
     throw new TypeError(`Invalid arguments: ${args}`);
 }
 
-export function rgb(...args: any[]) {
+export function rgb(...args: any[]): string {
     if (args.length === 1 && Array.isArray(args[0])) {
         return `rgb(${args[0].join(',')})`;
     }
