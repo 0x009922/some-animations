@@ -12,8 +12,10 @@ class Line {
     private speed: number;
 
     public constructor(scene: THREE.Scene) {
-        const geo = new THREE.Geometry();
-        geo.vertices.push(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, Math.random()));
+        const geo = new THREE.BufferGeometry().setFromPoints([
+            new THREE.Vector3(0, 0, 0),
+            new THREE.Vector3(0, 0, Math.random()),
+        ]);
         const material = new THREE.LineBasicMaterial({
             color: 0xffffff,
         });
