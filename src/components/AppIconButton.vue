@@ -3,33 +3,43 @@ import { mergeData } from 'vue-functional-data-merge';
 import Icon from './AppIcon';
 
 export default {
-  name: 'AppIconButton',
-  functional: true,
-  props: {
-    size: {
-      type: [String, Number],
-      default: 20,
-    },
-  },
-  render(h, context) {
-    return h('div', mergeData(context.data, {
-      staticClass: 'app-icon-button',
-      class: {
-        'app-icon-button--light': context.props.light,
-      },
-      directives: [{
-        name: 'sparks',
-        value: 'primary',
-      }],
-    }), [
-      h(Icon, {
-        props: {
-          size: context.props.size,
-          color: 'primary',
+    name: 'AppIconButton',
+    functional: true,
+    props: {
+        size: {
+            type: [String, Number],
+            default: 20,
         },
-      }, context.children),
-    ]);
-  },
+    },
+    render(h, context) {
+        return h(
+            'div',
+            mergeData(context.data, {
+                staticClass: 'app-icon-button',
+                class: {
+                    'app-icon-button--light': context.props.light,
+                },
+                directives: [
+                    {
+                        name: 'sparks',
+                        value: 'primary',
+                    },
+                ],
+            }),
+            [
+                h(
+                    Icon,
+                    {
+                        props: {
+                            size: context.props.size,
+                            color: 'primary',
+                        },
+                    },
+                    context.children,
+                ),
+            ],
+        );
+    },
 };
 </script>
 
