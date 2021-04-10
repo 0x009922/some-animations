@@ -1,5 +1,5 @@
 module.exports = {
-    purge: ['./src/**/*.vue'],
+    purge: ['./src/**/*.vue', './src/**/*.tsx', './src/**/*.jsx'],
     theme: {
         // extend: {
         //     boxShadow: {
