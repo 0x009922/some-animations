@@ -1,5 +1,5 @@
 <script>
-import AppIcon from './AppIcon.vue';
+// import AppIcon from './AppIcon.vue';
 // import AppButton from './AppButton.vue';
 import { useMainStore } from '../state/main-store';
 // import { Button } from 'equal-vue';
@@ -25,7 +25,7 @@ export default {
     <div class="h-screen flex items-center justify-center">
         <transition appear name="the-home__appear-transition">
             <div class="space-y-4">
-                <h1 class="text-6xl">Performance<br />Compendium</h1>
+                <h1 class="text-6xl">Some<br />Animations</h1>
 
                 <div class="d-flex flex-column align-start">
                     <div

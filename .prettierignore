@@ -1,5 +1,4 @@
 dist
 .vscode
 pnpm-lock.yaml
-README.md
 public/fonts

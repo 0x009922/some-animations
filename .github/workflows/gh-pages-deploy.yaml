@@ -1,37 +1,35 @@
 name: CI
 
 on:
-    push:
-        branches: [master]
-    pull_request:
-        branches: [master]
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-            - name: Set up Node.js 12.16
-              uses: actions/setup-node@v1.4.1
-              with:
-                  node-version: 12.16
+      - name: Set up Node.js 12.16
+        uses: actions/setup-node@v1.4.1
+        with:
+          node-version: 12.16
 
-            - name: Install packages
-              uses: Borales/actions-yarn@v2.1.0
+      - name: Install packages
+        run: pnpm install
 
-            - name: Build SPA
-              run: yarn build
-              env:
-                  PUBLIC_PATH: /some-animations/
+      - name: Build SPA
+        run: pnpm build
 
-            - name: Push ./dist to master:gh-pages
-              working-directory: ./dist
-              run: |
-                  git config --global user.email "${GITHUB_ACTOR}@https://users.noreply.github.com/"
-                  git config --global user.name "${GITHUB_ACTOR}"
-                  git init
-                  git add --all
-                  git commit -m "Auto update pages on $(date +'%Y-%m-%d %H:%M:%S')"
-                  git push -f https://${{ secrets.ACCESS_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git master:gh-pages
+      - name: Push ./dist to master:gh-pages
+        working-directory: ./dist
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}@https://users.noreply.github.com/"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git init
+          git add --all
+          git commit -m "Auto update pages on $(date +'%Y-%m-%d %H:%M:%S')"
+          git push -f https://${{ secrets.ACCESS_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git master:gh-pages

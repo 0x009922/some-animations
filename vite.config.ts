@@ -4,6 +4,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 
 export default defineConfig({
     plugins: [vue(), vueJsx()],
+    base: '/some-animations/',
     build: {
         // chunkSizeWarningLimit: 600,
         rollupOptions: {

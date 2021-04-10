@@ -2,10 +2,10 @@
     "name": "performance-compendium",
     "version": "0.0.0",
     "scripts": {
-        "dev": "vite --port 8080",
+        "dev": "vite --mode development --port 8080",
         "lint": "prettier -w -u . && eslint --ext ts,vue --fix .",
-        "build:typecheck": "vue-tsc --noEmit && vite build",
-        "build": "vite build"
+        "typecheck": "vue-tsc",
+        "build": "vite build --mode gh-pages"
     },
     "dependencies": {
         "@mdi/font": "^5.9.55",
