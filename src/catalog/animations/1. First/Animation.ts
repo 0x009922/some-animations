@@ -23,7 +23,7 @@ export default class extends LegacyThreeAnimation implements Animatable {
         scene.add(light);
 
         scene.add(new THREE.GridHelper(3, 3));
-        scene.add(new THREE.AxesHelper(5, 5, 5));
+        scene.add(new THREE.AxesHelper(5));
 
         light.position.set(0, 0, 2);
         camera.position.set(0, 3, 5);
