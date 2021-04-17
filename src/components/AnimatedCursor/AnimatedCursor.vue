@@ -50,8 +50,15 @@ export default defineComponent({
         onMounted(() => {
             const { bind } = useDisposer();
 
-            const renderer = bind(new WebGLRenderer({ canvas: unrefElement(canv), alpha: true }));
+            const renderer = bind(
+                new WebGLRenderer({
+                    canvas: unrefElement(canv),
+                    alpha: true,
+                    antialias: true,
+                }),
+            );
             renderer.setClearColor(0x444444, 0);
+            renderer.setPixelRatio(window.devicePixelRatio);
             const camera = new PerspectiveCamera(30, 0, 0.1, 20);
             const scene = new Scene();
             camera.position.set(0, 0, 10);
