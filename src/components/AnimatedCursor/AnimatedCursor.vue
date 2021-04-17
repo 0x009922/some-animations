@@ -30,6 +30,10 @@ export default defineComponent({
     name: 'AnimatedCursor',
     props: {
         active: Boolean,
+        loopOnlyOnActive: {
+            type: Boolean,
+            default: true,
+        },
         viewport: {
             type: Object as PropType<{ width: number; height: number }>,
             required: true,
@@ -104,7 +108,7 @@ export default defineComponent({
             );
 
             watch(
-                () => props.active,
+                () => props.active || !props.loopOnlyOnActive,
                 (flag) => (flag ? resume() : pause()),
                 { immediate: true },
             );
