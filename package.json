@@ -5,7 +5,7 @@
         "dev": "vite",
         "lint": "prettier -w -u . && eslint --ext ts,vue --fix .",
         "typecheck": "vue-tsc --noEmit",
-        "build": "vite build --mode gh-pages"
+        "build": "vite build"
     },
     "dependencies": {
         "@mdi/font": "^5.9.55",
