@@ -1,14 +1,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import Layout from './layout/Layout.vue';
-import TheNavOverlay from './components/TheNavOverlay';
+import NavOverlay from './components/TheNavOverlay.vue';
+import ResizeBadge from './components/TheResizeBadge.vue';
 import { tools as mainStoreTools } from './state/main-store';
 
 export default defineComponent({
     name: 'App',
     components: {
         Layout,
-        TheNavOverlay,
+        NavOverlay,
+        ResizeBadge,
     },
     setup() {
         mainStoreTools.createAndProvide();
@@ -20,6 +22,6 @@ export default defineComponent({
     <layout>
         <router-view />
     </layout>
-
-    <the-nav-overlay />
+    <nav-overlay />
+    <resize-badge />
 </template>
