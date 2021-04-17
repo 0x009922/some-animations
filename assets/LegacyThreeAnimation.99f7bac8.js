@@ -1,0 +1,1 @@
+class e{setSize({width:e,height:r}){this.renderer&&this.camera&&(this.renderer.setSize(e,r),this.camera.aspect=e/r,this.camera.updateProjectionMatrix(),this.render())}destroy(){this.renderer.dispose()}render(){this.renderer.render(this.scene,this.camera)}}export{e as L};
